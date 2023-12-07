@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toyota牛頭牌</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+            font: inherit;
+        }
+
+        .products-group {
+            width: 960px;
+            margin: auto;
+            margin-bottom: 75px;
+            /* background-color: red; */
+            text-align: center;
+            position: relative;
+            padding-top: 80.82px;
+            padding-bottom: 234px;
+        }
+
+        .products-group .product-image {
+            width: 695px;
+            margin: auto;
+            position: relative;
+        }
+
+        .products-group::before {
+            content: "";
+            width: 439px;
+            height: 290px;
+            background-color: #eeeeee;
+            opacity: 0.6;
+            position: absolute;
+            top: 30px;
+            right: 0;
+        }
+
+        .products-group .product-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .products-group .product-theme {
+            position: absolute;
+            width: 355px;
+            top: 0;
+            left: 0;
+            text-align: left;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .product-theme .theme-title {
+            background-color: #BB0404;
+            font-size: 50px;
+            letter-spacing: 0.5px;
+        }
+
+        .product-theme .theme-title span {
+            writing-mode: vertical-lr;
+            vertical-align: middle;
+            font-size: 75px;
+        }
+
+        .product-theme .theme-point {
+            background-color: #090909;
+            padding: 15px;
+        }
+
+        .product-theme .theme-point h3{
+            font-size: 24px;
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+
+        .product-theme .theme-point p{
+            font-size: 20px;
+            letter-spacing: 1px;
+            line-height: 1.5;
+            padding-bottom: 25px;
+        }
+
+        .products-group .product-advantage {
+            position: absolute;
+            width: 682px;
+            background-color: #ededed;
+            padding: 15px;
+            text-align: left;
+            bottom: 0;
+            left: 50px;
+        }
+
+        .product-advantage p {
+            color: #bd0c0c;
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 5px;
+        }
+
+        .product-advantage p span{
+            display:inline-block;
+            width: 490px;
+            height: 1px;
+            background-color: #bd0c0c;
+            vertical-align: 8px;
+        }
+
+        .product-advantage h4 {
+            color: white;
+            background-color: #090909;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 2px 6px;
+            display: inline-block;
+        }
+
+        .product-advantage p~p {
+            color: #7c7c7c;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 3px 0;
+            text-indent: -26px;
+            padding-left: 20px;
+        }
+
+        .product-advantage p~p::before {
+            content: "";
+            width: 4px;
+            height: 4px;
+            display: inline-block;
+            background-color: #bd0c0c;
+            margin: 0 3px 4px 15px;
+        }
+
+        section:nth-child(even) .product-image {
+            right: 132.5px;
+        }
+
+        section:nth-child(even) .products-group::before {
+            right: 132.5px;
+        }
+
+        section:nth-child(even) .product-theme{
+            left: unset;
+            right: 0;
+        }
+
+        section:nth-child(even) .product-advantage{
+            left: unset;
+            right: 0;
+        }
+
+        section:nth-child(even) .product-theme .theme-title{
+            direction: rtl;
+            text-align: right;
+        }
+
+
+
+
+    </style>
+
+</head>
+<body>
+
+    <section>
+        <div class="products-group">
+            <div class="product-image">
+                <img src="https://img.ltn.com.tw/Upload/auto/bphoto/normal/2019/04/28/20190428-19940-5.png" alt="牛頭牌圖片">
+            </div>
+            <div class="product-theme">
+                <h2 class="theme-title">
+                    <span>01</span>操控樂趣
+                </h2>
+                <div class="theme-point">
+                    <h3>
+                        人人滿意的駕駛體驗
+                    </h3>
+                    <p>
+                        透過最佳重量分配，實現平順起步，直線穩定加速，過彎同時保持車身平穩，帶給駕駛更靈敏的道路反饋，享受隨心馳騁的行駛快感。
+                    </p>
+                </div>
+            </div>
+            <div class="product-advantage">
+                <p>
+                    因為我們做了這些革新
+                    <span></span>
+                </p>
+                <h4>
+                    低重心設計
+                </h4>
+                <p>
+                    透過低重心設計，不僅呈現更低伏的外觀，更能減少車身側傾，保持高速行駛穩定性。
+                </p>
+                <h4>
+                    車體剛性強化
+                </h4>
+                <p>
+                    車身結構採用超高強度鋼材，提高車輛穩定性，同時藉由雷射強化焊接技術，大幅增加焊點數量，提升車身抗扭剛性，強化駕馭穩定性及安全性。
+                </p>
+                <h4>
+                    四輪獨立懸吊
+                </h4>
+                <p>
+                    搭載全新四輪獨立懸吊設定，透過懸吊的高承載強度，保持輪胎抓地力，同時兼顧轉向靈敏度與清晰路感回饋，提升駕馭樂趣。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="products-group">
+            <div class="product-image">
+                <img src="https://www.toyota.com.tw/asset/img/tech_tnga/advantage-2-video-button-bg.png?af18d668" alt="牛頭牌圖片">
+            </div>
+            <div class="product-theme">
+                <h2 class="theme-title">
+                    <span>02</span>安全守護
+                </h2>
+                <div class="theme-point">
+                    <h3>
+                        行車更安心的高剛性車體
+                    </h3>
+                    <p>
+                        您的愛車會妥善保護您，強悍穩固的車身可使您安全無虞。世界級的安全功能讓您輕鬆自如享受旅程，毫無後顧之憂。
+                    </p>
+                </div>
+            </div>
+            <div class="product-advantage">
+                <p>
+                    因為我們做了這些革新
+                    <span></span>
+                </p>
+                <h4>
+                    主動安全
+                </h4>
+                <p>
+                    可以先進的TSS系統主動偵測路況，輔助駕駛判斷路況並維持行車安全。
+                </p>
+                <h4>
+                    被動安全
+                </h4>
+                <p>
+                    堅固的高剛性車體，使用熱沖壓材料的高強度抗扭鋼板，強化座艙對意外事故的保護力。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="products-group">
+            <div class="product-image">
+                <img src="https://www.toyota.com.tw/asset/img/tech_tnga/advantage-3-video-button-bg.png?705545c7" alt="牛頭牌圖片">
+            </div>
+            <div class="product-theme">
+                <h2 class="theme-title">
+                    <span>03</span>乘坐舒適
+                </h2>
+                <div class="theme-point">
+                    <h3>
+                        令人放鬆舒適的車室空間
+                    </h3>
+                    <p>
+                        車室空間設計著重人體工學，透過方向盤，踏板等位置優化，追求更舒適的駕駛位置，並以新型座椅設計，提高座椅包覆性，致力實現長途駕駛疲勞的舒適駕馭體驗。
+                    </p>
+                </div>
+            </div>
+            <div class="product-advantage">
+                <p>
+                    因為我們做了這些革新
+                    <span></span>
+                </p>
+                <h4>
+                    駕駛位置最佳化
+                </h4>
+                <p>
+                    針對駕駛位置進行徹底的修改，讓駕駛者可如同握手般自然且舒適地操控方向盤。
+                </p>
+                <h4>
+                    駕馭視野佳
+                </h4>
+                <p>
+                    考量駕駛坐進車內的高度，透過前擋風玻璃位置的調整，達到盲區極小化，使駕駛視野更開闊，同步提升駕取安全。
+                </p>
+                <h4>
+                    更寧靜的車室
+                </h4>
+                <p>
+                    採用最新三層結構的隔音材料，與引擎，變速箱的零件改革，將座艙的震動抑制在最小限度，提供乘客舒適安靜的感受。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="products-group">
+            <div class="product-image">
+                <img src="https://www.toyota.com.tw/asset/img/tech_tnga/advantage-4-video-button-bg.png?24515544" alt="牛頭牌圖片">
+            </div>
+            <div class="product-theme">
+                <h2 class="theme-title">
+                    <span>04</span>以人為本
+                </h2>
+                <div class="theme-point">
+                    <h3>
+                        使用者導向的貼心設計
+                    </h3>
+                    <p>
+                        藉由高度人性化的介面整合，傳遞車輛資訊，豐富日常駕駛體驗。從提升油耗表現到行李廂空間最適化，均細心考量，更加貼近使用者真正所需與習慣，並給予即時回應。
+                    </p>
+                </div>
+            </div>
+            <div class="product-advantage">
+                <p>
+                    因為我們做了這些革新
+                    <span></span>
+                </p>
+                <h4>
+                    優異油耗表現
+                </h4>
+                <p>
+                    以Corolla Sport為例，更強勁的高效引擎將熱效率提升至40％，達到世界級水準，屡屡突破燃油效率新境界。
+                </p>
+                <h4>
+                    行李箱空間最適化
+                </h4>
+                <p>
+                    以第四代Prius為例，透過將電池位置移到後座下方，讓行李箱擁有更大的空間。
+                </p>             
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="products-group">
+            <div class="product-image">
+                <img src="https://www.toyota.com.tw/asset/img/tech_tnga/advantage-5-video-button-bg.png?ad476b92" alt="牛頭牌圖片">
+            </div>
+            <div class="product-theme">
+                <h2 class="theme-title">
+                    <span>05</span>引以為傲
+                </h2>
+                <div class="theme-point">
+                    <h3>
+                        極具吸引力的精心設計
+                    </h3>
+                    <p>
+                        TNGA車款擁有讓人忍不住回頭的新潮外觀，讓駕駛充滿自信的駕馭快感！不僅讓車主能展現個人風格，能讓擁有者都能引以為傲。
+                    </p>
+                </div>
+            </div>
+            <div class="product-advantage">
+                <p>
+                    因為我們做了這些革新
+                    <span></span>
+                </p>
+                <h4>
+                    設計概念
+                </h4>
+                <p>
+                    TNGA低重心設計，不僅呈現更低伏的運動化外觀，更講究高品質內裝的一致性。
+                </p>
+                <h4>
+                    環保概念
+                </h4>
+                <p>
+                    為了對環境保護盡一份心力，我們全面提升傳統引擎，變速箱與油電複合動力的動力效能。
+                </p>             
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

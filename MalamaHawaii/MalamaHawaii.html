@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MalamaHawaii</title>
+
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+        }
+
+        section {
+            width: 1200px;
+            margin: auto;
+        }
+
+        .information-title h1{
+            font-size: 26px;
+            color: #202124;
+            letter-spacing: -0.02em;
+            font-family: YakuHanJP, "游ゴシック Medium", YuGothic, YuGothicM, "Noto Sans Japanese", sans-serif;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .information-title h1 > span{
+            font-size: 14px;
+            font-weight: 500;
+            color: #6c6d6e;
+            letter-spacing: 0.04em;
+            font-family: neue-haas-grotesk-display, sans-serif;
+            padding-left: 14px;
+        }
+
+        .information-title h1 span+span{
+            position: absolute;
+            line-height: 1;
+            right: 28px;
+            bottom: 50%;
+            transform: translateY(50%);
+            font-size: 13px;
+            font-weight: bold;
+            color: #f65936;
+            font-family: YakuHanJP, "游ゴシック Medium", YuGothic, YuGothicM, "Noto Sans Japanese", sans-serif;
+        }
+
+        .information-title h1 a {
+            text-decoration: none;
+            color: #f65936;
+        }
+
+        .information-title h1{
+            font-size: 26px;
+            color: #202124;
+        }
+
+        .information-items {
+            display: flex;
+            width: 100%;
+            margin: auto;
+        }
+
+        .information-items a {
+            text-decoration: none;
+        }
+
+        .information-items .icon-ocean {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .information-items .icon-ocean img{
+            vertical-align: -5px;
+        }
+
+        .information-items .items-left {
+            width: 600px;
+            padding-right: 30px;
+            box-sizing: border-box;
+        }
+
+        .items-left .item-img img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .items-left .item-post {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .items-left .item-post .itme-title {
+            width: 275px;
+            font-size: 24px;
+            color: #202124;
+            letter-spacing: -0.02em;
+            font-family: YakuHanJP, "游ゴシック Medium", YuGothic, YuGothicM, "Noto Sans Japanese", sans-serif;
+        }
+
+        .items-left .item-post .item-content {
+            width: 275px;
+            font-size: 13px;
+            color: #202124;
+            font-family: YakuHanJP, "游ゴシック Medium", YuGothic, YuGothicM, "Noto Sans Japanese", sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .items-left .item-post .item-content time{
+            font-size: 12px;
+            color: #202124;
+            font-family: YakuHanJP, "游ゴシック Medium", YuGothic, YuGothicM, "Noto Sans Japanese", sans-serif;
+            margin-top: auto;
+        }
+
+        .information-items .items-right {
+            width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .items-right .item {
+            width: 285px;
+            padding-bottom: 32px;
+            display: flex;
+            /* flex-direction: column; */
+        }
+
+
+        .items-right img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .items-right .icon-other {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1;
+            color: #202124;
+            margin-bottom: 8px;
+        }
+
+        .items-right .icon-other span {
+            display: inline-block;
+            padding-bottom: 18px;
+        }
+
+        .items-right .icon-other img{
+            vertical-align: -5px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .items-right .item h2{
+            font-size: 16px;
+            color: #202124;
+            letter-spacing: -0.02em;
+            font-family: YakuHanJP, "游ゴシック Medium", YuGothic, YuGothicM, "Noto Sans Japanese", sans-serif;
+            padding-top: 15px;
+            padding-bottom: 12px;
+        }
+
+        .items-right .item time{
+            font-size: 12px;
+            color: #202124;
+            font-family: YakuHanJP, "游ゴシック Medium", YuGothic, YuGothicM, "Noto Sans Japanese", sans-serif;
+            margin-top: auto;
+        }
+        
+        .items-right .item a{
+            display: flex;
+            flex-direction: column;
+            /* flex-grow: 1; */
+        }
+
+
+        /* 因為第二個標籤是<hr>，所以用section:nth-child(even)會有問題 */
+        /* section:nth-child(even) .information-items {
+            flex-direction: row-reverse;
+        } */
+
+        section:nth-of-type(even) .information-items {
+            flex-direction: row-reverse;
+        }
+
+        section:nth-of-type(even) .items-left {
+            padding: 0 0 0 30px;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+    <section class="information-group">
+        <div class="information-title">
+            <h1>旅行者にできること
+                <span>
+                    What Travelers Can Do
+                </span>
+                <span>
+                    <a href="https://www.allhawaii.jp/malamahawaii/travelers_can_do/">すべて見る →</a>
+                </span>
+            </h1>
+        </div>
+
+        <div class="information-items">
+            <div class="items-left">
+                <a href="https://www.allhawaii.jp/malamahawaii/travelers_can_do/3255/">
+                    <div class="icon-ocean">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/themes/malamahawaii/img/common/icon/icon_ocean.svg">
+                        海
+                    </div>
+                    <div class="item-img">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2023/11/230820_Puerto-Morelos-Limones_LJM07316-2048x1369.jpg" alt="11月はサンゴ白化啓発月間　〜日常でできること〜">
+                    </div>
+                    <div class="item-post">
+                        <div class="itme-title">
+                            <h2>11月はサンゴ白化啓発月間　〜日常でできること〜</h2>
+                        </div>
+                        <div class="item-content">
+                            <p>世界のサンゴ礁を救うことを使命としている環境NGO団体コーラル・リーフ・アライアンス（The Coral Reef Alliance）は、2023年11月を「サ</p>
+                            <time>2023.11.09</time>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="items-right">
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/travelers_can_do/3249/">
+                        <div class="icon-other">
+                            <img src="https://www.allhawaii.jp/malamahawaii/wp-content/themes/malamahawaii/img/common/icon/icon_other.svg">
+                            その他                            
+                        </div>
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2023/08/%E7%B1%B3%E5%9B%BD%E3%83%8F%E3%83%AF%E3%82%A4%E5%B7%9E%E3%83%9E%E3%82%A6%E3%82%A4%E9%83%A1%E3%83%9E%E3%82%A6%E3%82%A4%E5%B3%B6%E3%81%AE%E5%B1%B1%E7%81%AB%E4%BA%8B%E6%95%91%E6%8F%B4%E9%87%91-640-%C3%97-427-px-1.png" alt="マウイ島の山火事救援金、日本円で受付開始">
+                        <h2>マウイ島の山火事救援金、日本円で受付開始</h2>
+                        <time>2023.08.18</time>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/travelers_can_do/3241/">
+                        <div class="icon-other">
+                            <span></span>                  
+                        </div>
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2023/07/image.png" alt="2023年7月後半～9月にハワイで開催されるカルチャーイベント">
+                        <h2>2023年7月後半～9月にハワイで開催</h2>
+                        <time>2023.07.20</time>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/travelers_can_do/3224/">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2023/06/MGF-2022-PLHF-Halau-Hula-Ka-Noeau-Kumu-Hula-Michael-Pili-Pang-7-16-22-DSC_8772.jpg" alt="第46回プリンスロット•フラフェスティバル、7月に開催">
+                        <h2>第46回プリンスロット•フラフェス</h2>
+                        <time>2023.06.22</time>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/travelers_can_do/3219/">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2021/04/Screenshot-107.png" alt="今年もアースデーにビーチクリーンを開催！">
+                        <h2>今年もアースデーにビーチクリーンを開催！</h2>
+                        <time>2023.04.18</time>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <section class="information-group">
+        <div class="information-title">
+            <h1>企業の取組み
+                <span>
+                    Corporate Initiatives
+                </span>
+                <span>
+                    <a href="https://www.allhawaii.jp/malamahawaii/initiatives/corporate/">すべて見る →</a>
+                </span>
+            </h1>
+        </div>
+
+        <div class="information-items">
+            <div class="items-left">
+                <a href="https://www.allhawaii.jp/malamahawaii/initiative/3173/">
+                    <div class="icon-ocean">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/themes/malamahawaii/img/common/icon/icon_ocean.svg">
+                        海
+                    </div>
+                    <div class="item-img">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2022/11/12-Group-photo.jpeg" alt="【チームJALハワイ】ビーチクリーンアップ活動で地元コミュニティに貢献">
+                    </div>
+                    <div class="item-post">
+                        <div class="itme-title">
+                            <h2>【チームJALハワイ】ビーチクリーンアップ活動で地元コミュニティに貢献</h2>
+                        </div>
+                        <div class="item-content">
+                            <p>JALハワイ支店とJALPAK International Hawaiiで構成された“チームJALハワイ”は、ハワイ州観光局が提唱する「マラマハワイ～ハワイを思</p>
+                            <time>2023.11.02</time>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="items-right">
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/initiative/3142/">
+                        <div class="icon-other">
+                            <img src="https://www.allhawaii.jp/malamahawaii/wp-content/themes/malamahawaii/img/common/icon/icon_other.svg">
+                            その他                            
+                        </div>
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2022/05/IMG_7294.jpg" alt="廃棄された漁網を服に生まれ変わらせる！海を守ろうと活動する人々が主役のドキュメンタリーを作るプロジェクトをサポートしませんか？">
+                        <h2>マウイ島の山火事救援金、日本円で</h2>
+                        <time>2023.07.27</time>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/initiative/3115/" >
+                        <div class="icon-other">
+                            <span></span>                  
+                        </div>
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2022/06/Malama-Honu-Malama-Honua_Pii_2-2-2048x1365.jpg" alt="第33回タートル・インディペンデンス・デイ開催">
+                        <h2>第33回タートル・インディペンデンス・デイ開催</h2>
+                        <time>2023.07.01</time>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/initiative/3060/">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2022/06/R5TM3376.jpg" alt="「シーアスパラガス」を生産している「オラカイ」のサステナブルな取り組み">
+                        <h2>「シーアスパラガス」を生産している「オラカイ」のサステナブルな取り組み</h2>
+                        <time>2023.06.15</time>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="https://www.allhawaii.jp/malamahawaii/initiative/3048/">
+                        <img src="https://www.allhawaii.jp/malamahawaii/wp-content/uploads/2022/06/21040914144482018.jpg" alt="【ザ・リッツ・カールトン・レジデンス ワイキキビーチ】オアフ島内最大運河、アラワイ運河の浄化プロジェクト「ゲンキ・アラワイ・プロジェクト」の協力パートナーに">
+                        <h2>【ザ・リッツ・カールトン・レジデンス ワイキキビーチ】オアフ島内最大運河、アラワイ運河の浄化プロジェクト「ゲンキ・アラワイ・プロジェクト」の協力パートナーに</h2>
+                        <time>2022.06.14</time>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    
+</body>
+</html>
