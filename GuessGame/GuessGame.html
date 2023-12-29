@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GuessGame</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+
+        font-family: Microsoft JhengHei,Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        
+        background-image: 
+                  linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5));
+        background-size: cover;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .btnGroup {
+        margin: 10px;
+      }
+      .btnGroup {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        background-color: rgb(192, 255, 217);
+        border-radius: 50%;
+      }
+
+      .btnGroup:hover {
+        background-color: rgb(0, 128, 102);
+        border-radius: 50%;
+        color: aliceblue;
+      }
+
+
+      input {
+        padding: 8px;
+        font-size: 16px;
+        margin-right: 8px;
+        text-align: center;
+      }
+
+      #result {
+        font-size: 18px;
+        margin-top: 10px;
+      }
+
+      #feedback {
+        margin-top: 20px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game-container">
+      <h1>猜數字遊戲</h1>
+      <div>
+        <input type="button" class="btnGroup" value="1" />
+        <input type="button" class="btnGroup" value="2" />
+        <input type="button" class="btnGroup" value="3" />
+        <input type="button" class="btnGroup" value="4" />
+        <input type="button" class="btnGroup" value="5" />
+        <input type="button" class="btnGroup" value="6" />
+        <input type="button" class="btnGroup" value="7" />
+        <input type="button" class="btnGroup" value="8" />
+        <input type="button" class="btnGroup" value="9" />
+        <input type="button" class="btnGroup" value="0" />
+      </div>
+
+      <input type="text" id="guess-input" />
+      <input type="button" value="確認" />
+      <input type="button" value="清除" onclick=""/>
+      <input type="button" value="看答案" />
+      <input type="button" value="重新開始" />
+      <p id="result">Fighting</p>
+      <p class="highlight">請輸入1~100之間的數字</p>
+      
+    </div>
+
+    <script>
+      
+        let minNumber = 1, maxNumber = 100, randomInt = getRandomInt(minNumber, maxNumber);
+
+        window.onload = function() {
+
+            numClickEvent();
+
+            resultCheck();
+
+            inputClear();
+
+            answerAlert();
+
+            resetGame();
+          
+        }
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);  // 無條件進位，回傳大於所給數字的最小整數
+            max = Math.floor(max); // 無條件捨去，回傳小於所給數字的最大整數
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+
+        function numClickEvent() {
+            const btnNumbers = document.querySelectorAll(".btnGroup");
+            const numInput = document.getElementById("guess-input");
+            btnNumbers.forEach( function(btnNumber) {
+                btnNumber.addEventListener("click", function() {
+                    let inputValue = parseInt(numInput.value) || 1;
+                    if (!isNaN(inputValue) && 0 < parseInt(inputValue) && parseInt(inputValue) < 100 && numInput.value.length < 2) {
+                        numInput.value += this.getAttribute("value");
+                    }
+                    else {
+                        alert("請確認輸入的是 1~100 之間的數字");
+                    }
+                })
+            })
+        }
+
+        function resultCheck() {
+            const numInput = document.getElementById("guess-input");
+            const confirm = document.querySelector("input[value='確認']");
+            const reminder = document.querySelector(".highlight");
+            confirm.addEventListener("click", function() {
+                if (!isNaN(numInput.value) && 0 < parseInt(numInput.value) && parseInt(numInput.value) < 100) {
+                    if (parseInt(numInput.value) == randomInt) {
+                        alert("真的猜對了，假的猜錯了");
+                    }
+                    else {
+                        if (parseInt(numInput.value) > randomInt && parseInt(numInput.value) < maxNumber) {
+                            maxNumber = parseInt(numInput.value)
+                        }
+                        else if (parseInt(numInput.value) < randomInt && parseInt(numInput.value) > minNumber) {
+                            minNumber = parseInt(numInput.value)
+                        }
+
+                        reminder.innerText = `請輸入${minNumber}~${maxNumber}之間的數字！`
+                    }
+                    numInput.value = "";
+                }
+                else {
+                    alert("請確認輸入的是 1~100 之間的數字");
+                }
+            })
+        }
+
+        function inputClear() {
+            const numInput = document.getElementById("guess-input");
+            const clear = document.querySelector("input[value='清除']");
+            clear.addEventListener("click", function() {
+                numInput.value = "";
+            })
+        }
+
+        function answerAlert() {
+            const answer = document.querySelector("input[value='看答案']");
+            answer.addEventListener("click", function() {
+                alert(`答案是${randomInt}`);
+            })
+        }
+
+        function resetGame() {
+            const reset = document.querySelector("input[value='重新開始']");
+            reset.addEventListener("click", function() {
+                window.location.reload();
+            })
+        }
+  
+    </script>
+    
+  </body>
+</html>
