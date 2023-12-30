@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GuessNumber</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class = "w-75 mx-auto mb-3">
+        <div class="btn-group w-100" role="group" aria-label="Basic mixed styles example">
+            <button type="button" class="btn btn-warning">開始</button>
+            <button type="button" class="btn btn-info">放棄重來</button>
+            <button type="button" class="btn btn-secondary">看答案</button>
+        </div>
+    </div>
+
+    <ul class="list-group w-75 mx-auto mb-3">
+        <li class="list-group-item active">遊戲歷程</li>
+    </ul>
+    
+    <div class="input-group flex-nowrap w-75 mx-auto">
+        <span class="input-group-text" id="addon-wrapping">猜答案</span>
+        <input type="text" class="form-control" placeholder="輸入4個不重複的數字,例如: 1234" aria-label="Username" aria-describedby="addon-wrapping">
+        <button class="btn btn-outline-secondary btn-light" type="button" id="button-addon2">確定!</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        const btnStart = document.querySelector(".btn.btn-warning")
+        const btnGuessNum = document.querySelector("#button-addon2")
+        const btnGiveUp = document.querySelector(".btn.btn-info")
+        const btnAnswer = document.querySelector(".btn.btn-secondary")
+        let randomNum;
+
+        btnGuessNum.disabled = true;
+        btnGiveUp.disabled = true;
+        btnAnswer.disabled = true;
+
+        window.onload = function() {
+            btnStart.addEventListener("click", startGame);
+            btnGuessNum.addEventListener("click", guessNumber);
+            btnGiveUp.addEventListener("click", giveUpGame);
+            btnAnswer.addEventListener("click", showAnswer);
+        }
+
+        function getRandomNum() {
+            randomNum = "";
+            for (let i = 0; i < 4; i++) {
+                randomNum += Math.floor(Math.random() * 10);
+            }
+            return randomNum;
+        }
+
+        function startGame() {
+            getRandomNum();
+
+            const gameHistory = document.querySelector("ul.list-group");
+            const lis = gameHistory.querySelectorAll("li + li");
+            lis.forEach((li) => {
+                // gameHistory.removeChild(li);
+                li.remove(); 
+            })
+
+            btnGuessNum.disabled = false;
+            btnGiveUp.disabled = false;
+            btnAnswer.disabled = false;
+        }
+
+        function giveUpGame() {
+            alert(`答案:${randomNum}`);
+            startGame();
+        }
+
+        function showAnswer() {
+            alert(`答案:${randomNum}`);
+        }
+
+        function guessNumber() {
+            let textBox = document.querySelector(".form-control")
+            let input = textBox.value.trim();
+            textBox.value = "";
+            if (input.length !== 4 || new Set(input).size !== 4 || isNaN(Number(input))) {
+                alert("請輸入4個不重複的數字!");
+                return;
+            }
+
+            let inputArray = input.split("");
+            let a = 0, b = 0;
+            for (let i = 0; i < 4; i++) {
+                if (inputArray[i] == randomNum.split("")[i]) {
+                    a++;
+                }
+                else if (randomNum.includes(inputArray[i])) {
+                    b++;
+                }
+            }
+
+            AppendHistory(input, a, b);
+
+            if (a === 4 && b === 0) {
+                alert("過關!")
+            }
+        }
+
+        function AppendHistory(input, a, b) {
+            const gameHistory = document.querySelector("ul.list-group")
+            const li = document.createElement("li");
+            li.setAttribute("class", "list-group-item d-flex align-items-center")
+            const span = document.createElement("span");
+            span.className = "badge bg-danger rounded-pill"
+            span.innerText = `${a}A${b}B`;
+            const div = document.createElement("div");
+            div.classList.add("ms-2");
+            div.innerText = input
+            li.append(span, div);
+            gameHistory.append(li);
+
+            if (a === 4 && b === 0) {
+                span.className = "badge bg-success rounded-pill"
+            }
+        }
+
+    </script>
+
+</body>
+</html>
