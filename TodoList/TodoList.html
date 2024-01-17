@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="input-group mb-4 mt-3 w-75 mx-auto">
+        <input type="text" class="form-control" placeholder="todo..." aria-label="todo..." id="todo_input">
+        <button class="btn btn-outline-secondary btn-primary text-white" type="button" id="new_todo">
+            新增
+        </button>
+    </div>
+
+    <div class="todo-area">
+        <!-- <div class="input-group justify-content-around w-75 mx-auto p-3 mb-1 border">
+            <div class="input-group w-75">
+                <div class="input-group-text">
+                    <input class="form-check-input a checkbox_item" type="checkbox">
+                </div>
+                <input type="text" class="form-control">
+            </div>
+            <div>
+                <button class="btn btn-warning edit" type="button">編輯</button>
+                <button class="btn btn-success save" type="button">保存</button>
+                <button class="btn btn-danger delete" type="button">刪除</button>
+            </div>
+        </div>
+
+        <div class="input-group justify-content-around w-75 mx-auto p-3 mb-1 border">
+            <div class="input-group w-75">
+                <div class="input-group-text">
+                    <input class="form-check-input" type="checkbox" value="">
+                </div>
+                <input type="text" class="form-control">
+            </div>
+            <div>
+                <button class="btn btn-warning edit" type="button">編輯</button>
+                <button class="btn btn-success save" type="button">保存</button>
+                <button class="btn btn-danger delete" type="button">刪除</button>
+            </div>
+        </div> -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+
+    <script>
+        const btnNewTodo = document.querySelector("#new_todo");
+        const todoInput = document.querySelector("#todo_input");
+
+        const todoObjKey = "my-todo";
+        let todoItemObj = [];
+
+        btnNewTodo.addEventListener("click", () => {
+            newTodo();
+            todoInput.value = "";
+        });
+
+        window.onload = function() {
+            initTodoList();
+        };
+
+        function renderingTodoList() {
+            // 渲染TodoList DOM
+            const todoArea = document.querySelector(".todo-area");
+            todoArea.innerHTML = "";
+
+            todoItemObj.forEach((item, index) => {
+                const todoItem = document.createElement("div");
+                todoItem.classList.add("input-group", "justify-content-around", "w-75", "mx-auto", "p-3", "mb-1", "border");
+                const inputGroup = document.createElement("div");
+                inputGroup.classList.add("input-group", "w-75");
+                const divCheckBox = document.createElement("div");
+                divCheckBox.classList.add("input-group-text");
+                const inputCheckBox = document.createElement("input");
+                inputCheckBox.setAttribute("class", "form-check-input a checkbox_item");
+                inputCheckBox.setAttribute("type", "checkbox");
+                divCheckBox.append(inputCheckBox);
+                const inputText = document.createElement("input");
+                inputText.setAttribute("class", "form-control");
+                inputText.setAttribute("type", "text");
+                inputGroup.append(divCheckBox, inputText);
+                const buttonGroup = document.createElement("div");
+                const btnEdit = document.createElement("button");
+                btnEdit.setAttribute("class", "btn btn-warning edit");
+                btnEdit.setAttribute("type", "button");
+                const btnSave = document.createElement("button");
+                btnSave.className = "btn btn-success save";
+                btnSave.setAttribute("type", "button");
+                const btnDelete = document.createElement("button");
+                btnDelete.setAttribute("class", "btn btn-danger delete");
+                btnDelete.setAttribute("type", "button");
+                buttonGroup.append(btnEdit, btnSave, btnDelete);
+                todoItem.append(inputGroup, buttonGroup);
+                todoArea.append(todoItem);
+
+                btnSave.innerText = "保存";
+                btnEdit.innerText = "編輯";
+                btnDelete.innerText = "刪除";
+                inputText.value = item.todo;
+                inputCheckBox.checked = item.checked;
+                inputText.disabled = true;
+                btnSave.style.display = "none";
+
+                // 監聽 CheckBox 勾選狀態
+                inputCheckBox.addEventListener("change", function (e) {
+                    const findTodoItem = todoItemObj.find(itemObj => itemObj.todo === item.todo); //閉包特性
+                    if (findTodoItem) {
+                        findTodoItem.checked = e.target.checked;
+                        localStorage.setItem(todoObjKey, JSON.stringify(todoItemObj));
+                    }
+                });
+                // 刪除 TodoItem
+                btnDelete.addEventListener("click", function(e) {
+                    const idx = todoItemObj.indexOf(item); //閉包特性
+                    todoItemObj.splice(idx, 1);
+                    localStorage.setItem(todoObjKey, JSON.stringify(todoItemObj));
+                    e.target.parentNode.parentNode.remove();
+                });
+                // 編輯 TodoItem
+                btnEdit.addEventListener("click", function() {
+                    inputText.disabled = false;
+                    btnEdit.style.display = "none";
+                    btnSave.style.display = "inline-block";
+                    btnSave.addEventListener("click", () => {
+                        const idx = todoItemObj.indexOf(item); //閉包特性
+                        todoItemObj[idx].todo = inputText.value;
+                        localStorage.setItem(todoObjKey, JSON.stringify(todoItemObj));
+                        inputText.disabled = true;
+                        btnSave.style.display = "none";
+                        btnEdit.style.display = "inline-block";
+                    })
+                });
+            });
+        }
+
+        function newTodo() {
+            const todoContent = todoInput.value.trim();
+            if (todoContent === "") {
+                return;
+            }
+
+            setTodoToStorage(todoContent, false); //剛新增的Todo，預設checked狀態為false
+
+            renderingTodoList();
+        }
+
+        function initTodoList() {
+            getTodoFromStorage();
+            renderingTodoList(todoItemObj);
+        }
+
+        function setTodoToStorage(content, isChecked) {
+            todoItemObj.push({ todo: content, checked: isChecked });            
+            const todoItemJson = JSON.stringify(todoItemObj);
+            localStorage.setItem(todoObjKey, todoItemJson);
+        }
+
+        function getTodoFromStorage() {
+            const jsonParse = JSON.parse(localStorage.getItem(todoObjKey));
+            if (jsonParse.length > 0) {
+                todoItemObj = jsonParse;
+            }
+        }
+
+    </script>
+
+
+</body>
+
+</html>
