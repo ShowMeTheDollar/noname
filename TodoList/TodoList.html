@@ -162,10 +162,23 @@
             todoItemObj.push({ todo: content, checked: isChecked });            
             const todoItemJson = JSON.stringify(todoItemObj);
             localStorage.setItem(todoObjKey, todoItemJson);
+
+            // 之後設計可以考慮使用這種寫法 setTodoToStorage
+            // todoItemObj = Array.from(document.querySelectorAll('.divItem'))
+            //                     .map(divItem => {
+            //                         $inputTodo = divItem.querySelector('.inputTodo');
+            //                         $check = divItem.querySelector('.check');
+            //                         return {
+            //                             value: $inputTodo.value,
+            //                             completed: $check.checked,
+            //                         };
+            //                     });
+
+            // localStorage.setItem('items', JSON.stringify(items));
         }
 
         function getTodoFromStorage() {
-            const jsonParse = JSON.parse(localStorage.getItem(todoObjKey));
+            const jsonParse = JSON.parse(localStorage.getItem(todoObjKey)) || [];
             if (jsonParse.length > 0) {
                 todoItemObj = jsonParse;
             }
