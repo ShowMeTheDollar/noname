@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoomIntroduction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .icon-comment img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .icon-rightarrow {
+            width: 12px;
+            height: 12px;
+        }
+
+        .icon-service-group {
+            width: 24px;
+            height: 24px;
+        }
+
+        .mapintroduce-ellipsis, .trafficintroduce-ellipsis, .locationintroduce-ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .roomintroduce-ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+        }
+
+        .order-card {
+            top: 10%;            
+        }
+
+        .btn-orderchoice  {
+            outline: 1px solid;
+        }
+
+        .btn-orderchoice:focus {
+            border: 2px solid black;
+            border-radius: 0.375rem !important;
+        }
+
+        .btn-count {
+            outline: 1px solid #B0B0B0;
+        }
+
+        .btn-count:hover {
+            border: 1px solid black;
+        }
+
+
+        @media screen and (max-width: 767px) {
+            .order-card-area {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin-top: 200px;
+            }
+
+            .order-card-body {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .order-card-body .order-button {
+                width: 25% !important;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <main class="container row row-cols-1 g-0 mx-auto mb-5 mb-md-0">
+        <section class="mt-4 d-flex flex-column flex-md-row justify-content-between">
+            <div class="order-md-0 order-1">
+                <h1 class="fs-2">31台中火車站 一中 宮原眼科 （不挑房）。</h1>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-md-none">
+                    <a href="">
+                        <span>
+                            <img src="./svgs/left-arrow.svg" class="w-50 h-50" alt="leftarrow-icon">
+                        </span>
+                    </a>
+                </div>
+                <div class="btn-group order-md-1 order-0">
+                    <button type="button" class="btn btn-outline-light text-black d-flex align-items-md-end">
+                        <div class="me-2">
+                            <img src="./svgs/share.svg" class="w-50 h-50" alt="share-icon">
+                        </div>
+                        <div class="text-decoration-underline d-none d-md-block">
+                            分享
+                        </div>
+                    </button>
+                    <button type="button" class="btn btn-outline-light text-black d-flex align-items-md-end" data-bs-toggle="modal" data-bs-target="#wishlistModal">
+                        <div class="me-2">
+                            <img src="./svgs/collect.svg" class="w-50 h-50" alt="collect-icon">
+                        </div>
+                        <div class="text-decoration-underline d-none d-md-block">
+                            儲存
+                        </div>
+                    </button>
+                    <!-- 心願單彈跳窗 -->
+                    <div class="modal fade" id="wishlistModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="btn-close m-0 w-auto h-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h1 class="fs-6 m-0 mx-auto">建立心願單</h1> 
+                                </div>
+                                <div class="modal-body">
+                                    <div class="my-2">
+                                        <input type="text" class="form-control form-control-lg" placeholder="心願單名稱">
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-outline-light text-dark">
+                                        清除
+                                    </button>
+                                    <button type="button" class="btn btn-dark">
+                                        建立
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper mb-4 d-md-none" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/600/400/?random=1" class="img-fluid" alt="...">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/600/400/?random=2" class="img-fluid" alt="...">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/600/400/?random=3" class="img-fluid" alt="...">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/600/400/?random=4" class="img-fluid" alt="...">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://picsum.photos/600/400/?random=5" class="img-fluid" alt="...">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row g-2 mt-4 d-none d-md-flex">
+            <div type="button" class="col-md-6" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                <img src="https://picsum.photos/600/400/?random=1" class="img-fluid rounded-start-4" alt="...">
+            </div>
+            <div class="col-md-3 d-flex flex-column justify-content-between">
+                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/600/400/?random=2" class="img-fluid" alt="...">
+                </div>
+                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/600/400/?random=3" class="img-fluid" alt="...">
+                </div>
+            </div>
+            <div class="col-md-3 d-flex flex-column justify-content-between">
+                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/600/400/?random=4" class="img-fluid rounded-end-4 rounded-bottom-0" alt="...">
+                </div>
+                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/600/400/?random=5" class="img-fluid rounded-bottom-4 rounded-start-0" alt="...">
+                </div>
+            </div>
+        </section>
+        <!-- 房間照片彈跳窗 -->
+        <div class="modal fade" id="roomphotosModal">
+            <div class="modal-dialog modal-fullscreen ">
+                <div class="modal-content">
+                    <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-body p-0 p-md-3 row g-0 justify-content-center">
+                        <div class="col-12 col-md-7 row row-cols-2 g-0">
+                            <img src="https://picsum.photos/600/400/?random=1" class="img-fluid pe-2 pb-2" alt="...">
+                            <div class="row row-cols-1 g-0 pb-2">
+                                <img src="https://picsum.photos/600/400/?random=2" class="img-fluid pb-1" alt="...">
+                                <img src="https://picsum.photos/600/400/?random=3" class="img-fluid pt-1" alt="...">
+                            </div>
+                            <div class="row row-cols-1 g-0 pe-2 pb-2">
+                                <img src="https://picsum.photos/600/400/?random=4" class="img-fluid pb-1" alt="...">
+                                <img src="https://picsum.photos/600/400/?random=5" class="img-fluid pt-1" alt="...">
+                            </div>
+                            <img src="https://picsum.photos/600/400/?random=6" class="img-fluid pb-2" alt="...">
+                            <img src="https://picsum.photos/600/400/?random=7" class="img-fluid col-12" alt="...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <section class="row mt-4">
+            <div class="col-12 col-md-7">
+                <div class="pb-4 border-bottom">
+                    <h2 class="fs-4 mb-0">位於臺灣台中市Central District的房間</h2>
+                    <p class="mb-2">2 間臥室1 張床共用衛浴</p>
+                    <div>
+                        <span class="icon-comment align-baseline">
+                            <img src="./svgs/star.svg" alt="star-icon">
+                        </span>
+                        <span class="align-middle">4.87</span>
+                        <span class="align-middle">·</span>
+                        <span type="button" class="align-middle text-decoration-underline">124 則評價</span>
+                    </div>
+                </div>
+
+                <div class="py-4 border-bottom d-flex align-items-center">
+                    <a href="#landlord-profile" class="me-4">
+                        <img src="https://picsum.photos/40/40/?random=8" class="img-fluid rounded-circle" alt="...">
+                    </a>
+                    <div>
+                        <p class="mb-0">房東／體驗達人：Wi</p>
+                        <p class="mb-0">超讚房東8 年待客經驗</p>
+                    </div>
+                </div>
+
+                <div class="py-4 border-bottom row row-cols-1 gy-4">
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">
+                            <img src="./svgs/room.svg" alt="room-icon">
+                        </div>
+                        <div>
+                            <p class="mb-0">出租房源裡的房間</p>
+                            <p class="mb-0">在房源內享有專屬的房間，也能使用共用空間。</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-4 px-1">
+                            <img src="./svgs/space.svg" alt="room-icon">
+                        </div>
+                        <div>
+                            <p class="mb-0">共用的公共空間</p>
+                            <p class="mb-0">你將共享房源的部分空間。</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-4 px-1">
+                            <img src="./svgs/bathroom.svg" alt="room-icon">
+                        </div>
+                        <div>
+                            <p class="mb-0">共用衛浴</p>
+                            <p class="mb-0">你會與他人共用浴室。</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-4 px-1">
+                            <img src="./svgs/calendar.svg" alt="room-icon">
+                        </div>
+                        <div>
+                            <p class="mb-0">在2月11日下午2:00前可以免費取消</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-4 border-bottom">
+                    <div>
+                        系統已自動翻譯部分資訊。
+                        <span type="button" class="text-decoration-underline">顯示原文</span>
+                    </div>
+                </div>
+
+                <div class="py-4 border-bottom">
+                    <h3 class="fs-5 mb-4" id="landlord-profile">房東簡介</h3>
+                    <div class="py-4 rounded-4" style="background-color: #f0efe9;">
+                        <div class="w-75 mx-auto">
+                            <div type="button" class="card py-3 rounded-5 shadow">                                
+                                <div class="row g-0 justify-content-evenly">
+                                    <div class="col-4 text-center align-self-center">
+                                        <div class="w-75">
+                                            <img src="https://picsum.photos/240/240/?random=8" class="img-fluid rounded-circle mb-2" alt="...">
+                                            <div class="fs-4">Wi</div>
+                                            <div>超讚房東</div>
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-4 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <div class="fs5">333</div>
+                                            <div style="font-size: small;">評價</div>
+                                        </div>
+                                        <hr>
+                                        <div>                                              
+                                            <div class="fs5">4.91</div>
+                                            <div style="font-size: small;">評分</div>
+                                        </div>
+                                        <hr>
+                                        <div>
+                                            <div class="fs5">8</div>
+                                            <div style="font-size: small;">年待客經驗</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="d-flex align-items-center mt-4">
+                                <div class="me-1">
+                                    <img src="./svgs/briefcase.svg" class="w-75 h75" alt="briefcase-icon">
+                                </div>
+                                <div>
+                                    <p class="mb-0">我的工作：個人工作室</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-3">
+                                <div class="me-1">
+                                    <img src="./svgs/globe.svg" class="w-75 h75" alt="globe-icon">
+                                </div>
+                                <div>
+                                    <p class="mb-0">我住在台中市, 臺灣</p>
+                                </div>
+                            </div>
+                            <p class="mt-4">
+                                房源就在台中火車站斜對面，樓下就是干城車站。是在地的台中人。喜歡到處旅遊親近自然，搜挖各地美食與文化。跟大部份喜愛旅遊的人一樣，從事美術設計與創作的事業。相逢相識即是緣分，歡迎光臨指教。
+                            </p>
+                            <div>
+                                <a href="#" class="text-dark">顯示更多內容
+                                    <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                                </a>
+                            </div>
+                            <div class="py-4 border-bottom border-secondary">
+                                <button type="button" class="btn btn-dark btn-lg">傳訊息給房東</button>
+                            </div>
+                            <p class="my-3">
+                                為了確保你的付款安全，請勿透過 Airbnb 網站或應用程式以外的方式來匯款或聯絡。
+                            </p>
+                        </div>
+                    </div>
+                    
+
+                    <div class="mt-5">
+                        <h3 class="fs-5 mb-4">房源介紹</h3>
+                        <p class="roomintroduce-ellipsis">
+                            乾淨 整潔 簡約 舒適 溫馨 雙人套房 ,房間乾淨清雅,每個房間皆是溫馨的和室木地板.有32吋液晶電視,小冰箱,冷氣,衛浴設備,距離火車站徒步約8分鐘,住宿地方徒步5分鐘有"宮原眼科"冰品 綠川廊道景點,想逛美食"一中商圈"徒步約15分鐘  整條皆為可吃可逛的不夜城。
+                            <br>
+                            *附近有收費停車場，停車方便。附近有多線公車直達-逢甲夜市-東海大學-梧棲魚港-彩虹眷村-高美濕地---南投縣、日月潭-埔里-清境農場-溪頭-衫林溪----鹿港小鎮@多處景點。
+                            <br>
+                            #請留意~入住前需先提供您的身份証或健保卡圖供大樓作登記，如不方便提供者請勿訂房，謝謝。
+                        </p>
+                        <div>
+                            <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#roomintroduceModal">顯示更多內容
+                                <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                            </a>
+                        </div>
+                        <!-- 房源介紹彈跳窗 -->
+                        <div class="modal fade" id="roomintroduceModal">
+                            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-body m-4">
+                                        <button type="button" class="btn-close mb-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h3 class="fs-4 mt-2 mb-4">房源介紹</h3>
+                                        <p>
+                                            乾淨 整潔 簡約 舒適 溫馨 雙人套房 ,房間乾淨清雅,每個房間皆是溫馨的和室木地板.有32吋液晶電視,小冰箱,冷氣,衛浴設備,距離火車站徒步約8分鐘,住宿地方徒步5分鐘有"宮原眼科"冰品 綠川廊道景點,想逛美食"一中商圈"徒步約15分鐘  整條皆為可吃可逛的不夜城。
+                                            <br>
+                                            *附近有收費停車場，停車方便。附近有多線公車直達-逢甲夜市-東海大學-梧棲魚港-彩虹眷村-高美濕地---南投縣、日月潭-埔里-清境農場-溪頭-衫林溪----鹿港小鎮@多處景點。
+                                            <br>
+                                            <br>
+                                            #請留意~入住前需先提供您的身份証或健保卡圖供大樓作登記，如不方便提供者請勿訂房，謝謝。
+                                            <br>
+                                            ###有潔癖要求完美無瑕疵者請勿訂房、有潔癖要求完美無瑕疵者請勿訂房、有潔癖要求完美無瑕疵者請勿訂房
+                                            <br>
+                                            很重要所以說三次，謝謝🙏
+                                        </p>
+                                        <h4 class="fs-6">房源空間</h4>
+                                        <p>
+                                            乾淨 整潔 簡約 舒適 溫馨 雙人套房 ,房間乾淨清雅,每個房間皆是溫馨的和室木地板.有32吋液晶電視,小冰箱,冷氣,衛浴設備,距離火車站徒步約8分鐘,住宿地方徒步5分鐘有"宮原眼科"冰品 綠川廊道景點,想逛美食"一中商圈"徒步約15分鐘 整條皆為可吃可逛的不夜城。
+                                            <br>
+                                            *附近有收費停車場，停車方便。附近有多線公車直達-逢甲夜市-東海大學-梧棲魚港-彩虹眷村-高美濕地---南投縣、日月潭-埔里-清境農場-溪頭-衫林溪----鹿港小鎮@多處景點。
+                                            <br>
+                                            <br>
+                                            #請留意~入住前需先提供您的身份証或健保卡圖供大樓作登記，如不方便提供者請勿訂房，謝謝。
+                                            <br>
+                                            ###要求完美無瑕疵者請勿訂房、要求完美無瑕疵者請勿訂房、要求完美無瑕疵者請勿訂房
+                                            <br>
+                                            很重要所以說三次，謝謝🙏
+                                        </p>
+                                        <h4 class="fs-6">住宿期間</h4>
+                                        <p>
+                                            #請留意~入住前需先提供您的身份証或健保卡圖供大樓作登記，如不方便提供者請勿訂房，謝謝。
+                                            <br>
+                                            ###有潔癖要求完美無瑕疵者請勿訂房、有潔癖要求完美無瑕疵者請勿訂房、有潔癖要求完美無瑕疵者請勿訂房
+                                            <br>
+                                            很重要所以說三次，謝謝🙏
+                                        </p>
+                                        <h4 class="fs-6">其他注意事項</h4>
+                                        <p>
+                                            #請留意~入住前需先提供您的身份証或健保卡圖供大樓作登記，如不方便提供者請勿訂房，謝謝。
+                                            <br>
+                                            ###有潔癖要求完美無瑕疵者請勿訂房、有潔癖要求完美無瑕疵者請勿訂房、有潔癖要求完美無瑕疵者請勿訂房
+                                            <br>
+                                            很重要所以說三次，謝謝🙏
+                                            <br>
+                                            <br>
+                                            #為免不必要紛爭，當房客入住後我們就不會再進入房間。如續住套房內不做任何整理工作,床包組亦不更換,不便之處請見諒。
+                                            <br>
+                                            #請留意每間房只提供一件被子，無法再增加被子。
+                                            <br>
+                                            <br>
+                                            *室內全面禁止吸煙、喧嘩、賭博、辦派對、轟趴、嗑藥、酗酒、嚼檳榔。
+                                            <br>
+                                            *房內嚴禁進行召妓 . 販毒等非法行為。
+                                            <br>
+                                            <br>
+                                            *請勿破壞或私自帶走房內的物品、設備 退租時若經發現損壞或遺失,需照價賠償。
+                                            <br>
+                                            熱水源供應為大型電能熱水器加熱，恆溫--無瓦斯無氣爆-安全無慮-，管線共享每個房間，如管線末端的間房開啟使用熱水源時需等待約3~30秒 。我們水壓很足夠且強大。如多間房客同時沐浴使用熱水,才會發生水壓減壓現象。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-4 border-bottom">
+                    <h3 class="fs-5 mb-4">有提供的設備與服務</h3>
+                    <div class="row row-cols-1 row-cols-md-2 gy-3 mb-4">
+                        <div>
+                            <img src="./svgs/door-lock.svg" class="icon-service-group me-2" alt="doorlock-icon">
+                            <span class="align-middle">臥室門可上鎖</span>
+                        </div>
+                        <div>
+                            <img src="./svgs/tv.svg" class="icon-service-group me-2"  alt="tv-icon">
+                            <span class="align-middle">電視</span>
+                        </div>
+                        <div>
+                            <img src="./svgs/elevator.svg" class="icon-service-group me-2" alt="elevator-icon">
+                            <span class="align-middle">電梯</span>
+                        </div>
+                        <div>
+                            <img src="./svgs/air-conditioner.svg" class="icon-service-group me-2" alt="airconditioner-icon">
+                            <span class="align-middle">空調設備</span>
+                        </div>
+                        <div class="d-none d-md-block">
+                            <img src="./svgs/baggage.svg" class="icon-service-group me-2" alt="baggage-icon">
+                            <span class="align-middle">可存放行李</span>
+                        </div>
+                        <div class="d-none d-md-block">
+                            <img src="./svgs/hair-dryer.svg" class="icon-service-group me-2" alt="hairdryer-icon">
+                            <span class="align-middle">吹風機</span>
+                        </div>
+                        <div class="d-none d-md-block">
+                            <img src="./svgs/fridge.svg" class="icon-service-group me-2" alt="fridge-icon">
+                            <span class="align-middle">冰箱</span>
+                        </div>
+                        <div>
+                            <img src="./svgs/monitor.svg" class="icon-service-group me-2" alt="monitor-icon">
+                            <span class="align-middle">房源內的監視錄影器</span>
+                        </div>
+                        <div>
+                            <img src="./svgs/siren-square.svg" class="icon-service-group me-2" alt="siren-icon">
+                            <span class="align-middle text-decoration-line-through">一氧化碳警報器</span>
+                        </div>                       
+                        <div>
+                            <img src="./svgs/siren-circle.svg" class="icon-service-group me-2" alt="siren-icon">
+                            <span class="align-middle text-decoration-line-through">煙霧警報器</span>
+                        </div>    
+                    </div>
+                    <div class="row-cols-1">
+                        <button type="button" class="btn btn-outline-light border border-dark text-black col-md-auto" data-bs-toggle="modal" data-bs-target="#serviceModal">顯示全部 15 項設備與服務</button>
+                    </div>
+                    <!-- 設備與服務彈跳窗 -->
+                    <div class="modal fade" id="serviceModal">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-body mx-2 my-4">
+                                    <button type="button" class="btn-close mb-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h3 class="fs-4 mt-2 mb-4">有提供的設備與服務</h3>
+                                    <h4 class="fs-5 mb-4">衛浴</h4>
+                                    <div>
+                                        <img src="./svgs/hair-dryer.svg" class="icon-service-group me-2" alt="hairdryer-icon">
+                                        <span class="align-middle">吹風機</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/shampoo.svg" class="icon-service-group me-2" alt="shampoo-icon">
+                                        <span class="align-middle">洗髮露</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/hot-water.svg" class="icon-service-group me-2" alt="hotwater-icon">
+                                        <span class="align-middle">熱水</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">臥室和洗衣</h4>
+                                    <div>
+                                        <img src="./svgs/daily-supplies.svg" class="icon-service-group me-2" alt="dailysupplies-icon">
+                                        <span class="align-middle">生活必需品</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/hanger.svg" class="icon-service-group me-2" alt="hanger-icon">
+                                        <span class="align-middle">衣架</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">娛樂</h4>
+                                    <div>
+                                        <img src="./svgs/tv.svg" class="icon-service-group me-2" alt="tv-icon">
+                                        <span class="align-middle">電視</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">暖氣和冷氣</h4>
+                                    <div>
+                                        <img src="./svgs/air-conditioner.svg" class="icon-service-group me-2" alt="airconditioner-icon">
+                                        <span class="align-middle">空調設備</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">隱私與安全</h4>
+                                    <div>
+                                        <img src="./svgs/door-lock.svg" class="icon-service-group me-2" alt="doorlock-icon">
+                                        <span class="align-middle">臥室門可上鎖</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/monitor.svg" class="icon-service-group me-2" alt="monitor-icon">
+                                        <span class="align-middle">房源內的監視錄影器</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">廚房和餐飲</h4>
+                                    <div>
+                                        <img src="./svgs/fridge.svg" class="icon-service-group me-2" alt="fridge-icon">
+                                        <span class="align-middle">冰箱</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">停車位和設施</h4>
+                                    <div>
+                                        <img src="./svgs/elevator.svg" class="icon-service-group me-2" alt="elevator-icon">
+                                        <span class="align-middle">電梯</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/parking.svg" class="icon-service-group me-2" alt="parking-icon">
+                                        <span class="align-middle">建築物外有收費停車位</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">服務</h4>
+                                    <div>
+                                        <img src="./svgs/baggage.svg" class="icon-service-group me-2" alt="baggage-icon">
+                                        <span class="align-middle">可存放行李</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/key.svg" class="icon-service-group me-2" alt="key-icon">
+                                        <span class="align-middle">自助入住</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/passwordkey.svg" class="icon-service-group me-2" alt="passwordkey-icon">
+                                        <span class="align-middle">大門密碼鎖</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">不提供</h4>
+                                    <div>
+                                        <img src="./svgs/kitchen.svg" class="icon-service-group me-2" alt="kitchen-icon">
+                                        <span class="align-middle text-decoration-line-through">廚房</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/wifi.svg" class="icon-service-group me-2" alt="wifi-icon">
+                                        <span class="align-middle text-decoration-line-through">WiFi</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/washing-machine.svg" class="icon-service-group me-2" alt="washingmachine-icon">
+                                        <span class="align-middle text-decoration-line-through">洗衣機</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/clothes-dryer.svg" class="icon-service-group me-2" alt="clothesdryer-icon">
+                                        <span class="align-middle text-decoration-line-through">烘衣機</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/siren-circle.svg" class="icon-service-group me-2" alt="siren-icon">
+                                        <span class="align-middle text-decoration-line-through">煙霧警報器</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/siren-square.svg" class="icon-service-group me-2" alt="siren-icon">
+                                        <span class="align-middle text-decoration-line-through">一氧化碳警報器</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/heating.svg" class="icon-service-group me-2" alt="heating-icon">
+                                        <span class="align-middle text-decoration-line-through">暖氣</span>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="py-4">
+                    <h3 class="fs-5">選擇入住日期</h3>
+                    <p>新增旅行日期，查看確切價格</p>
+                    <!-- 插入日期選擇器 -->
+                    <div class="date-picker">
+                        插入日期選擇器
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-light rounded-circle d-none d-md-block">
+                            <img src="./svgs/keyboard.svg" class="w-75 h-100" alt="keyboard-icon">
+                        </button>
+                        <button type="button" class="btn btn-outline-light text-black text-decoration-underline">
+                            清除日期
+                        </button>
+                    </div>                
+                </div>
+            </div>
+            
+            <div class="col-12 col-md-5 pb-4 row g-0 align-items-start order-card-area">
+                <div class="card col-12 col-md-9 ms-md-auto rounded-3 shadow sticky-md-top order-card">
+                    <div class="card-body order-card-body">
+                        <h5 class="mb-4">$1,914 TWD
+                            <span style="font-size: medium;">晚</span>
+                        </h5>
+
+                        <button type="button" class="w-100 btn btn-orderchoice rounded-bottom-0 d-none d-md-block">
+                            <div class="row row-cols-2 text-start">
+                                <div class="border-end border-secondary">
+                                    <div style="font-size: 0.7rem;">入住</div>
+                                    <div class="text-secondary" style="font-size: small;">選取日期</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.7rem;">退房</div>
+                                    <div class="text-secondary" style="font-size: small;">選取日期</div>
+                                </div>
+                            </div>
+                        </button>
+                        <div class="dropdown mb-3 d-none d-md-block">
+                            <button type="button" class="w-100 btn btn-orderchoice rounded-top-0 dropdown-toggle d-flex justify-content-between align-items-center" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                <div>
+                                    <div style="font-size: 0.7rem;">旅客</div>
+                                    <div style="font-size:small;">1 人</div>
+                                </div>
+                            </button>
+                            <div class="dropdown-menu w-100">
+                                <div class="row row-cols-2 gy-3 gx-0 py-3 px-2 justify-content-between">
+                                    <div>
+                                        <div>成人</div>
+                                        <div style="font-size: 0.75rem;">年滿 13 歲</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="button" class="btn rounded-circle me-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+                                        </button>
+                                        <span class="align-middle">0</span> 
+                                        <button type="button" class="btn rounded-circle ms-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+                                        </button>                                       
+                                    </div>
+                                    <div>
+                                        <div>兒童</div>
+                                        <div style="font-size: 0.75rem;">2 - 12 歲</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="button" class="btn rounded-circle me-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+                                        </button>
+                                        <span class="align-middle">0</span> 
+                                        <button type="button" class="btn rounded-circle ms-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <div>嬰幼兒</div>
+                                        <div style="font-size: 0.75rem;">2 歲以下</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="button" class="btn rounded-circle me-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+                                        </button>
+                                        <span class="align-middle">0</span> 
+                                        <button type="button" class="btn rounded-circle ms-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <div>寵物</div>
+                                        <div class="text-decoration-underline" style="font-size: 0.75rem;">會攜帶服務性動物嗎？</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="button" class="btn rounded-circle me-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+                                        </button>
+                                        <span class="align-middle">0</span> 
+                                        <button type="button" class="btn rounded-circle ms-1 px-2 py-1 btn-count">
+                                            <img src="./svgs/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+                                        </button>
+                                    </div>
+                                    <div class="col-12" style="font-size: 0.75rem;">
+                                        此房源最多可供 2 人入住（不包括嬰幼兒）。不接受寵物入住。
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-light text-dark text-decoration-underline d-block ms-auto mb-3">
+                                    關閉
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="w-100 btn btn-danger order-button">
+                            預訂
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row py-4 border-top order-2 order-md-0">
+            <div>
+                評價區
+            </div>
+        </section>
+
+        <section class="row row-cols-1 py-4 border-top order-1 order-md-0">
+            <h3 class="fs-5 mb-3">住宿地點</h3>
+            <!-- 插入地圖 -->
+            <div class="map">
+                插入地圖
+            </div>
+            <div class="mt-3">
+                <h3 class="fs-6 mb-3">Central District、台中市、臺灣</h3>
+                <p class="mapintroduce-ellipsis">
+                    乾淨 整潔 簡約 舒適 溫馨 雙人套房 ,房間乾淨清雅,每個房間皆是溫馨的和室木地板.有32吋液晶電視,小冰箱,冷氣,衛浴設備,距離火車站徒步約8分鐘,住宿地方徒步5分鐘有"宮原眼科"冰品 綠川廊道景點,想逛美食"一中商圈"徒步約15分鐘  整條皆為可吃可逛的不夜城。
+                    <br>
+                    *附近有收費停車場，停車方便。附近有多線公車直達-逢甲夜市-東海大學-梧棲魚港-彩虹眷村-高美濕地---南投縣、日月潭-埔里-清境農場-溪頭-衫林溪----鹿港小鎮@多處景點。
+                    <br>
+                    #請留意~入住前需先提供您的身份証或健保卡圖供大樓作登記，如不方便提供者請勿訂房，謝謝。
+                </p>
+                <div>
+                    <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#locationModal">顯示更多內容
+                        <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                    </a>
+                </div>
+            </div>
+            <!-- 插入住宿地點彈跳窗 -->
+            <div class="modal fade" id="locationModal">
+                <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+                    <div class="modal-content flex-wrap row container-fluid">
+                        <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>                    
+                        <div class="modal-body mb-4 h-75 col-12 col-md-4">
+                            <div class="fs-3 mb-4">住宿地點</div>
+                            <div class="fs-6 mb-2">West District、台中市、臺灣</div>
+                            <div class="fs-6 locationintroduce-ellipsis">
+                                16號小築高樓景觀公寓為短期月租套房，因位於台中最繁華的市中心,，所以極吸引各地（國）商務客來短期租賃，這裡不僅有金典綠園道、SOGO百貨公司及各種不同風味的餐館,更有令人陶醉的人文氣息,步行5分鐘走進綠園道便可沿途拜訪勤美術館、范特喜文創園區、審計新村文創園區及國立台灣美術館。
+                                <br>
+                                <br>
+                                每到週末時分,綠園道便會出現各種特色工藝品的攤販以及讓人目不轉睛的街頭藝人表演,美的文化不斷滋養著這塊寶地,而藝術與創意也正同時地豐富了我們的生活
+                            </div>
+                            <div class="fs-6 mb-4">
+                                <a href="#" class="text-dark">閱讀詳情
+                                    <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                                </a>
+                            </div>
+                            <div class="fs-6 mb-2">周邊交通</div>
+                            <div class="fs-6 trafficintroduce-ellipsis">
+                                如何到達高樓景觀公寓?
+                                <br>
+                                台中火車站：搭乘300~310任何一號的公車於科博館站下車，車程約10分鐘
+                                <br>
+                                台中高鐵站：搭乘159號公車於廣三SOGO站下車，車程約20分鐘
+                                <br>
+                                台中機場：搭乘302號公車於科博館站下車，車程約40分鐘
+                                <br>
+                                桃園機場：搭乘國光客運或統聯客運於科博館站下車，車程約1小時40分鐘
+                                <br>
+                                台北轉運站：搭乘國光客運或統聯客運於科博站下車，車程約2小時10分鐘
+                                <br>
+                                <br>
+                                周邊景點：
+                                <br>
+                                步行:5分鐘內可到台中科學博物館、綠園道、勤美誠品、SOGO百貨
+                                <br>
+                                公車:10分鐘直達新光三越、15分鐘直達逢甲夜市、15分鐘直達一中街商圈、20分鐘直達東海大學、30分鐘直達彩虹眷村、50分鐘直達高美溼地
+                                <br>
+                                <br>
+                                旅店門口即是公車站(科博館站)及U-Bike停放站,使用悠遊卡搭乘公車可享每次前10公里免費,使用悠遊卡騎乘U-Bike只要先註冊好便可享每次前30分鐘免費。旅店門口亦有排班的計程車(的士)可搭乘。
+                            </div>
+                            <div class="fs-6 mb-4">
+                                <a href="#" class="text-dark">閱讀詳情
+                                    <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- 插入地圖 -->
+                        <div class="h-100 d-none d-md-block col-md-8 ps-0 pt-2 mt-5">
+                            插入地圖
+                        </div>
+                    </div>            
+                </div>
+            </div>
+        </section>
+
+        <section class="row row-cols-1 py-4 border-top order-last mb-3 mb-md-0">
+            <h3 class="fs-5 mb-3 d-none d-md-block">注意事項</h3>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="mb-4">
+                    <div class="mb-2">《房屋守則》</div>
+                    <div class="mb-2">入住時間：下午2:00</div>
+                    <div class="mb-2">退房時間：上午11:00</div>
+                    <div class="mb-3">最多 2 位房客</div>
+                    <div>
+                        <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#rulesModal">顯示更多內容
+                            <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                        </a>
+                    </div>
+                    <!-- 房屋守則彈跳窗 -->
+                    <div class="modal fade" id="rulesModal">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-body m-2">
+                                    <button type="button" class="btn-close mb-5" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="fs-3 mb-2">《房屋守則》</div>
+                                    <div class="fs-6 mb-5">你會入住別人的家，因此請愛護房東的房源。</div>
+                                    <div class="fs-5 mb-4">入住與退房</div>
+                                    <div>
+                                        <img src="./svgs/clock.svg" class="icon-service-group me-2" alt="clock-icon">
+                                        <span class="align-middle">入住時間：下午2:00</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/clock.svg" class="icon-service-group me-2" alt="clock-icon">
+                                        <span class="align-middle">退房時間：上午11:00</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/passwordkey.svg" class="icon-service-group me-2" alt="passwordkey-icon">
+                                        <span class="align-middle">自助入住方式：鍵盤鎖</span>
+                                    </div>
+                                    <hr>
+                                    <h4 class="fs-5 mt-5 mb-4">住宿期間</h4>
+                                    <div>
+                                        <img src="./svgs/crowd.svg" class="icon-service-group me-2" alt="crowd-icon">
+                                        <span class="align-middle">最多 2 位房客</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-block d-md-none">
+                <div class="mb-4">
+                    <div class="mb-2">安全與房源</div>
+                    <div class="mb-2">未安裝煙霧警報器</div>
+                    <div class="mb-2">未回報是否有安裝一氧化碳警報器</div>
+                    <div class="mb-3">監視攝影機／攝錄裝置</div>
+                    <div>
+                        <a href="#" class="text-dark" data-bs-toggle="modal" data-bs-target="#noticeModal">顯示更多內容
+                            <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                        </a>
+                    </div>
+                    <!-- 安全與房源彈跳窗 -->
+                    <div class="modal fade" id="noticeModal">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-body m-2">
+                                    <button type="button" class="btn-close mb-5" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="fs-4 mb-2">安全與房源</div>
+                                    <h4 class="fs-6 mb-5">詳閱房源的重要細節，避免遇到意料之外的情況。</h4>
+                                    <h4 class="fs-5 mb-4">安全注意事項</h4>
+                                    <div>
+                                        <img src="./svgs/stroller.svg" class="icon-service-group me-2" alt="stroller-icon">
+                                        <span class="align-middle">不適合兒童和嬰幼兒</span>
+                                    </div>
+                                    <h4 class="fs-5 mt-5 mb-4">安全裝置</h4>
+                                    <div>
+                                        <img src="./svgs/monitor.svg" class="icon-service-group me-2" alt="monitor-icon">
+                                        <span class="align-middle">監視攝影機／攝錄裝置</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/siren-circle.svg" class="icon-service-group me-2" alt="sirencircle-icon">
+                                        <span class="align-middle">未安裝煙霧警報器</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/siren-square.svg" class="icon-service-group me-2" alt="sirensquare-icon">
+                                        <span class="align-middle">未回報是否有安裝一氧化碳警報器</span>
+                                    </div>
+                                    <h4 class="fs-5 mt-5 mb-4">房源資訊</h4>
+                                    <div>
+                                        <img src="./svgs/noise.svg" class="icon-service-group me-2" alt="noise-icon">
+                                        <span class="align-middle">可能會有噪音</span>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <img src="./svgs/noparking.svg" class="icon-service-group me-2" alt="noparking-icon">
+                                        <span class="align-middle">房源沒有停車位</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="d-block d-md-none">
+                <div class="mb-4">
+                    <div class="mb-2">《退訂政策》</div>
+                    <div class="mb-3">新增旅程日期，即可查看此住宿的退訂詳情。</div>
+                    <div>
+                        <a href="#" class="text-dark">新增日期
+                            <img src="./svgs/right-b-arrow.svg" class="icon-rightarrow" alt="rightarrow-icon">
+                        </a>
+                    </div>
+                </div>
+                <hr class="d-block d-md-none">
+            </div>
+        </section>
+
+
+
+
+    </main>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".swiper", {
+            scrollbar: {
+                el: ".swiper-scrollbar",
+                hide: true,
+            },
+        });
+    </script>
+
+
+</body>
+
+</html>
