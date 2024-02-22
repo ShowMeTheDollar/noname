@@ -32,6 +32,10 @@
             height: 24px;
         }
 
+        .btn-roomimg img:hover, .roomimg-modal img:hover {
+            -webkit-filter: brightness(.8);
+        }
+
         .mapintroduce-ellipsis, .trafficintroduce-ellipsis, .locationintroduce-ellipsis {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -232,63 +236,63 @@
             <div class="swiper mb-4 d-md-none" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <img src="https://picsum.photos/600/400/?random=1" class="img-fluid" alt="...">
+                        <img src="https://picsum.photos/900/600/?random=1" class="img-fluid" alt="...">
                     </div>
                     <div class="swiper-slide">
-                        <img src="https://picsum.photos/600/400/?random=2" class="img-fluid" alt="...">
+                        <img src="https://picsum.photos/900/600/?random=2" class="img-fluid" alt="...">
                     </div>
                     <div class="swiper-slide">
-                        <img src="https://picsum.photos/600/400/?random=3" class="img-fluid" alt="...">
+                        <img src="https://picsum.photos/900/600/?random=3" class="img-fluid" alt="...">
                     </div>
                     <div class="swiper-slide">
-                        <img src="https://picsum.photos/600/400/?random=4" class="img-fluid" alt="...">
+                        <img src="https://picsum.photos/900/600/?random=4" class="img-fluid" alt="...">
                     </div>
                     <div class="swiper-slide">
-                        <img src="https://picsum.photos/600/400/?random=5" class="img-fluid" alt="...">
+                        <img src="https://picsum.photos/900/600/?random=5" class="img-fluid" alt="...">
                     </div>
                 </div>
             </div>
         </section>
 
         <section class="row g-2 mt-4 d-none d-md-flex">
-            <div type="button" class="col-md-6" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
-                <img src="https://picsum.photos/600/400/?random=1" class="img-fluid rounded-start-4" alt="...">
+            <div type="button" class="btn-roomimg col-md-6" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                <img src="https://picsum.photos/900/600/?random=1" class="img-fluid rounded-start-4" alt="...">
             </div>
             <div class="col-md-3 d-flex flex-column justify-content-between">
-                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
-                    <img src="https://picsum.photos/600/400/?random=2" class="img-fluid" alt="...">
+                <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/900/600/?random=2" class="img-fluid" alt="...">
                 </div>
-                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
-                    <img src="https://picsum.photos/600/400/?random=3" class="img-fluid" alt="...">
+                <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/900/600/?random=3" class="img-fluid" alt="...">
                 </div>
             </div>
             <div class="col-md-3 d-flex flex-column justify-content-between">
-                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
-                    <img src="https://picsum.photos/600/400/?random=4" class="img-fluid rounded-end-4 rounded-bottom-0" alt="...">
+                <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/900/600/?random=4" class="img-fluid rounded-end-4 rounded-bottom-0" alt="...">
                 </div>
-                <div type="button" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
-                    <img src="https://picsum.photos/600/400/?random=5" class="img-fluid rounded-bottom-4 rounded-start-0" alt="...">
+                <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                    <img src="https://picsum.photos/900/600/?random=5" class="img-fluid rounded-bottom-4 rounded-start-0" alt="...">
                 </div>
             </div>
         </section>
         <!-- 房間照片彈跳窗 -->
-        <div class="modal fade" id="roomphotosModal">
+        <div class="roomimg-modal modal fade" id="roomphotosModal">
             <div class="modal-dialog modal-fullscreen ">
                 <div class="modal-content">
                     <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="modal-body p-0 p-md-3 row g-0 justify-content-center">
                         <div class="col-12 col-md-7 row row-cols-2 g-0">
-                            <img src="https://picsum.photos/600/400/?random=1" class="img-fluid pe-2 pb-2" alt="...">
+                            <img src="https://picsum.photos/600/900/?random=1" class="img-fluid pe-2 pb-2" alt="...">
                             <div class="row row-cols-1 g-0 pb-2">
-                                <img src="https://picsum.photos/600/400/?random=2" class="img-fluid pb-1" alt="...">
-                                <img src="https://picsum.photos/600/400/?random=3" class="img-fluid pt-1" alt="...">
+                                <img src="https://picsum.photos/900/600/?random=2" class="img-fluid pb-1" alt="...">
+                                <img src="https://picsum.photos/900/600/?random=3" class="img-fluid pt-1" alt="...">
                             </div>
                             <div class="row row-cols-1 g-0 pe-2 pb-2">
-                                <img src="https://picsum.photos/600/400/?random=4" class="img-fluid pb-1" alt="...">
-                                <img src="https://picsum.photos/600/400/?random=5" class="img-fluid pt-1" alt="...">
+                                <img src="https://picsum.photos/900/600/?random=4" class="img-fluid pb-1" alt="...">
+                                <img src="https://picsum.photos/900/600/?random=5" class="img-fluid pt-1" alt="...">
                             </div>
-                            <img src="https://picsum.photos/600/400/?random=6" class="img-fluid pb-2" alt="...">
-                            <img src="https://picsum.photos/600/400/?random=7" class="img-fluid col-12" alt="...">
+                            <img src="https://picsum.photos/600/900/?random=6" class="img-fluid pb-2" alt="...">
+                            <img src="https://picsum.photos/900/600/?random=7" class="img-fluid col-12" alt="...">
                         </div>
                     </div>
                 </div>
@@ -299,14 +303,14 @@
             <div class="col-12 col-md-7">
                 <div class="pb-4 border-bottom">
                     <h2 class="fs-4 mb-0">位於臺灣台中市Central District的房間</h2>
-                    <p class="mb-2">2 間臥室1 張床共用衛浴</p>
+                    <p class="mb-2">2 間臥室 · 1 張床 · 共用衛浴</p>
                     <div>
                         <span class="icon-comment align-baseline">
                             <img src="./svgs/star.svg" alt="star-icon">
                         </span>
                         <span class="align-middle">4.87</span>
                         <span class="align-middle">·</span>
-                        <a href="./UsersProfiles.html" class="align-middle text-decoration-underline text-dark">124 則評價</a>
+                        <a href="#" class="align-middle text-decoration-underline text-dark" data-bs-toggle="modal" data-bs-target="#allReviewsModal">124 則評價</a>
                     </div>
                 </div>
 
@@ -369,7 +373,7 @@
                     <h3 class="fs-5 mb-4" id="landlord-profile">房東簡介</h3>
                     <div class="py-4 rounded-4" style="background-color: #f0efe9;">
                         <div class="w-75 mx-auto">
-                            <a href="./UsersProfiles.html" class="card py-3 rounded-5 shadow">                                
+                            <a href="./UsersProfiles.html" class="card py-3 rounded-5 shadow text-decoration-none">                                
                                 <div class="row g-0 justify-content-evenly">
                                     <div class="col-4 text-center align-self-center">
                                         <div class="w-75">
@@ -910,8 +914,9 @@
             <div class="reviews-area-content row row-cols-md-2 py-4 flex-nowrap flex-md-wrap gap-2 gap-md-0">
                 <article class="user-card col-9">
                     <div class="user-profile">
-                        <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                            class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        <a href="#" target="_blank" class="text-decoration-none">
+                            <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        </a>
                         <p class="d-inline-block user-name">志明<br>
                             <span class="user-country">台北, 臺灣</span>
                         </p>
@@ -927,8 +932,9 @@
                 </article>
                 <article class="user-card col-9">
                     <div class="user-profile">
-                        <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                            class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        <a href="#" target="_blank" class="text-decoration-none">
+                            <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        </a>
                         <p class="d-inline-block user-name">春嬌<br>
                             <span class="user-country">台北, 臺灣</span>
                         </p>
@@ -944,8 +950,9 @@
                 </article>
                 <article class="user-card col-9 mt-md-3">
                     <div class="user-profile">
-                        <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                            class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        <a href="#" target="_blank" class="text-decoration-none">
+                            <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        </a>
                         <p class="d-inline-block user-name">志明<br>
                             <span class="user-country">台北, 臺灣</span>
                         </p>
@@ -961,8 +968,9 @@
                 </article>
                 <article class="user-card col-9 mt-md-3">
                     <div class="user-profile">
-                        <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                            class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        <a href="#" target="_blank" class="text-decoration-none">
+                            <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        </a>
                         <p class="d-inline-block user-name">春嬌<br>
                             <span class="user-country">台北, 臺灣</span>
                         </p>
@@ -978,8 +986,9 @@
                 </article>
                 <article class="user-card col-9 mt-md-3">
                     <div class="user-profile">
-                        <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                            class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        <a href="#" target="_blank" class="text-decoration-none">
+                            <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        </a>
                         <p class="d-inline-block user-name">志明<br>
                             <span class="user-country">台北, 臺灣</span>
                         </p>
@@ -995,8 +1004,9 @@
                 </article>
                 <article class="user-card col-9 mt-md-3">
                     <div class="user-profile">
-                        <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                            class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        <a href="#" target="_blank" class="text-decoration-none">
+                            <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                        </a>
                         <p class="d-inline-block user-name">春嬌<br>
                             <span class="user-country">台北, 臺灣</span>
                         </p>
@@ -1179,8 +1189,9 @@
                                     <div class="reviews-area-content">
                                         <article class="pt-3">
                                             <div class="user-profile">
-                                                <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                                                    class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                <a href="#" target="_blank" class="text-decoration-none">
+                                                    <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                </a>
                                                 <p class="d-inline-block user-name">志明<br>
                                                     <span class="user-country">台北, 臺灣</span>
                                                 </p>
@@ -1196,8 +1207,9 @@
                                         </article>
                                         <article class="pt-3">
                                             <div class="user-profile">
-                                                <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                                                    class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                <a href="#" target="_blank" class="text-decoration-none">
+                                                    <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                </a>
                                                 <p class="d-inline-block user-name">春嬌<br>
                                                     <span class="user-country">台北, 臺灣</span>
                                                 </p>
@@ -1213,8 +1225,9 @@
                                         </article>
                                         <article class="pt-3">
                                             <div class="user-profile">
-                                                <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                                                    class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                <a href="#" target="_blank" class="text-decoration-none">
+                                                    <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                </a>
                                                 <p class="d-inline-block user-name">志明<br>
                                                     <span class="user-country">台北, 臺灣</span>
                                                 </p>
@@ -1230,8 +1243,9 @@
                                         </article>
                                         <article class="pt-3">
                                             <div class="user-profile">
-                                                <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                                                    class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                <a href="#" target="_blank" class="text-decoration-none">
+                                                    <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                </a>
                                                 <p class="d-inline-block user-name">春嬌<br>
                                                     <span class="user-country">台北, 臺灣</span>
                                                 </p>
@@ -1247,8 +1261,9 @@
                                         </article>
                                         <article class="pt-3">
                                             <div class="user-profile">
-                                                <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                                                    class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                <a href="#" target="_blank" class="text-decoration-none">
+                                                    <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                </a>
                                                 <p class="d-inline-block user-name">志明<br>
                                                     <span class="user-country">台北, 臺灣</span>
                                                 </p>
@@ -1264,8 +1279,9 @@
                                         </article>
                                         <article class="pt-3">
                                             <div class="user-profile">
-                                                <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼"
-                                                    class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                <a href="#" target="_blank" class="text-decoration-none">
+                                                    <img src="https://picsum.photos/50/50/?random=10" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+                                                </a>
                                                 <p class="d-inline-block user-name">春嬌<br>
                                                     <span class="user-country">台北, 臺灣</span>
                                                 </p>
