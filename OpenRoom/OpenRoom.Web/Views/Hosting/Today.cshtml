@@ -1,0 +1,263 @@
+﻿
+@model ReservationViewModel
+@{
+    ViewData["Title"] = "Today";
+    Layout = "_LayoutHosting02";
+}
+@section topCSS {
+
+    <!-- CSS  -->
+    <link href="~/css/hostingCSS/today.css" rel="stylesheet" />
+
+}
+
+<div class="container mt-3">
+
+    <div class="text-left mb-4 p-2">
+        <div class="title-body">
+            <h1>@Model.MemberName，歡迎！</h1>
+            <h2>你的預定</h2>
+        </div>
+
+        <div class="d-flex flex-row justify-content-end mb-3">
+            <button type="button" class="next btn btn-outline-secondary fw-bold border">完成房源發布</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <h2>您的預定</h2>
+    <div id="tab" class="orders d-flex flex-row">
+        <!-- Tabs with card integration -->
+        <div class="card">
+            <div class="tabs">
+                <div role="tablist" class="nav nav-tabs card-header-tabs">                   
+                    <div role="tab" class="nav-item">
+                        <a role="tab" data-target="#upcomingCheckIns" aria-selected="true" aria-setsize="3"
+                           aria-posinset="1" href="#" target="_self"
+                           class="nav-link active tab-head" style="color: black;">@Html.DisplayNameFor(model => model.UpcomingCheckIns)</a>
+                    </div>
+                    <div role="tab" class="nav-item">
+                        <a role="tab" data-target="#currentStays" aria-selected="false" aria-setsize="3" aria-posinset="2" href="#"
+                           target="_self" class="nav-link tab-head" tabindex="-1" style="color: black;">@Html.DisplayNameFor(model => model.CurrentStays)</a>
+                    </div>
+                    <div role="tab" class="nav-item">
+                        <a role="tab" data-target="#upcomingCheckOuts"aria-selected="false" aria-setsize="3" aria-posinset="3" href="#"
+                           target="_self" class="nav-link tab-head" tabindex="-1" style="color: black;">@Html.DisplayNameFor(model => model.UpcomingCheckOuts)</a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div>
+                <div role="tabpanel" id="upcomingCheckIns" aria-hidden="false" class="tab-pane active">
+                    <table class="coming w-100">
+                        <caption>即將入住</caption>
+                        <thead>
+                            <tr class="d-flex justify-content-between">
+
+                                <th>訂單編號</th>
+                                <th>房源名稱</th>
+                                <th class="hosting-info">住客姓名</th>
+                                <th class="hosting-info">入住日期</th>
+                                <th class="hosting-info">退房日期</th>
+                                <th class="hosting-info">總價格</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var order in Model.UpcomingCheckIns){
+                                <tr class="d-flex justify-content-between">
+                                    <td style="width: 10%;">@order.OrderId</td>
+                                    <td style="width: 30%;">@order.RoomName</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.GuestName</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.CheckInDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.CheckOutDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="hosting-info">@order.Price.ToString("#,#")</td>
+                                </tr>                          
+                           }
+                        </tbody>
+                    </table>
+                </div>
+                <div role="tabpanel" id="currentStays" aria-hidden="true" class="tab-pane">
+                    <table class="checkIn w-100">
+                        <caption>目前接待中</caption>
+                        <thead>
+                            <tr class="d-flex justify-content-between">
+
+                                <th>訂單編號</th>
+                                <th>房源名稱</th>
+                                <th class="hosting-info">住客姓名</th>
+                                <th class="hosting-info">入住日期</th>
+                                <th class="hosting-info">退房日期</th>
+                                <th class="hosting-info">總價格</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.CurrentStays)
+                            {
+                                <tr class="d-flex justify-content-between">
+                                    <td style="width: 10%;">@order.OrderId</td>
+                                    <td style="width: 30%;">@order.RoomName</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.GuestName</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.CheckInDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.CheckOutDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="hosting-info">@order.Price.ToString("#,#")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    
+                </div>
+                <div role="tabpanel" id="upcomingCheckOuts" aria-hidden="true" class="tab-pane">
+                    <table class="checkOut w-100">
+                        <caption>即將退房</caption>
+                        <thead>
+                            <tr class="d-flex justify-content-between">
+
+                                <th>訂單編號</th>
+                                <th>房源名稱</th>
+                                <th class="hosting-info">住客姓名</th>
+                                <th class="hosting-info">入住日期</th>
+                                <th class="hosting-info">退房日期</th>
+                                <th class="hosting-info">總價格</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model.UpcomingCheckOuts)
+                            {
+                                <tr class="d-flex justify-content-between">
+                                    <td style="width: 10%;">@order.OrderId</td>
+                                    <td style="width: 30%;">@order.RoomName</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.GuestName</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.CheckInDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="hosting-info" style="width: 20%;">@order.CheckOutDate.ToString("yyyy-MM-dd")</td>
+                                    <td class="hosting-info">@order.Price.ToString("#,#")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+               
+            </div>
+
+        </div>
+    </div>
+           
+</div>
+
+<div class="container mt-5">
+    <div class="text-left mb-5 p-2">
+        <div class="content-body">
+            <h2>我們很樂意提供協助</h2>
+        </div>
+        <!-- 使用Bootstrap的flex -->
+        <div class="d-flex flex-column flex-sm-row justify-content-start mb-3">
+            <div class="d-flex flex-row mb-3 mb-sm-0">
+                <button type="button" class="btn custom-btn">
+                    <div class="d-flex align-items-start">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"
+                             role="presentation" focusable="false"
+                             style="display: block; height: 35px; width: 35px;">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                  d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3a2.5 2.5 0 1 1 2-4.5M19.5 17h.5c.6 0 1-.4 1-1a3 3 0 0 0-3-3h-1m0-3a2.5 2.5 0 1 0-2-4.5m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3c0 .6-.4 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
+                        </svg>
+                        <div>
+                            <h5>加入當地的房東暨體驗達人社團</h5>
+                            <h6>與其他房東和社區成員交流、合作與分享實用資訊。</h6>
+                        </div>
+                    </div>
+                </button>
+            </div>
+            <div class="d-flex flex-row">
+                <button type="button" class="btn custom-btn">
+                    <div class="d-flex align-items-start">
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"
+                             role="presentation" focusable="false"
+                             style="display: block; height: 35px; width: 35px;">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M14 6.8a3 3 0 0 0-4.2.1M13 20h1a4 4 0 0 0 4-4V9A6 6 0 1 0 6 9v7m7 4v-1c0-.6-.4-1-1-1h-1a1 1 0 0 0-1 1v1c0 .6.4 1 1 1h1c.6 0 1-.4 1-1Zm-7-4v-6H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1Zm12-6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1v-6Z" />
+                        </svg>
+                        <div>
+                            <h5>聯絡專門的用戶支援團隊</h5>
+                            <h6>新手房東只要輕點一下，即可聯絡經過專門的用戶支援團隊。</h6>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <h2>資源及建議</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 m-3">
+        <!-- 卡片1 -->
+        <div class="col">
+            <a href="link-to-page-1.html" class="card-link">
+                <div class="card card-hover img">
+                    <img src="~/images/hosting/27eb59d7-3791-48a0-b4f8-ee0ecafc9ce1.webp" class="card-img-top"
+                         alt="如何讓房源脫穎而出">
+                    <div class="card-body">
+                        <h5 class="card-title">如何讓房源脫穎而出</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 卡片2 -->
+        <div class="col">
+            <a href="link-to-page-2.html" class="card-link">
+                <div class="card card-hover img">
+                    <img src="~/images/hosting/922a6f5f-71f2-4e17-b3fe-4331149a2f26.webp" class="card-img-top"
+                         alt="如何用手機拍出優質的照片">
+                    <div class="card-body">
+                        <h5 class="card-title">如何用手機拍出優質的照片</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 卡片3 -->
+        <div class="col">
+            <a href="link-to-page-3.html" class="card-link">
+                <div class="card card-hover img">
+                    <img src="~/images/hosting/617aaec5-059f-4599-81e6-c761fd85fb36.webp" class="card-img-top"
+                         alt="準備好房源，迎接房客到來">
+                    <div class="card-body">
+                        <h5 class="card-title">準備好房源，迎接房客到來</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 卡片4 -->
+        <div class="col">
+            <a href="link-to-page-4.html" class="card-link">
+                <div class="card card-hover img">
+                    <img src="~/images/hosting/27eb59d7-3791-48a0-b4f8-ee0ecafc9ce1.webp" class="card-img-top"
+                         alt="如何撰寫合適的房源描述">
+                    <div class="card-body">
+                        <h5 class="card-title">如何撰寫合適的房源描述</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<partial name="_FooterPartial" />
+
+
+@section endJS {
+    <script type="text/javascript">
+        var nextUrl = '@Url.Action("CreateRoom", "Hosting")'; // Razor syntax to generate URL; k@Url.Action("ActionName", "ControllerName")
+        
+    </script>
+    <script src="~/js/hostingJS/next.js" asp-append-version="true"></script>
+    <script src="~/js/hostingJS/tab.js" asp-append-version="true"></script>
+    <script src="~/js/hostingJS/dropdownToggleEL.js"></script>
+}

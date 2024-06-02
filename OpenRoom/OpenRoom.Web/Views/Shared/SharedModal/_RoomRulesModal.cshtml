@@ -1,0 +1,33 @@
+﻿<!-- 房屋守則彈跳窗  (使用 Yen 的原始碼) -->
+    <div class="modal fade" id="rulesModal">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body m-1">
+                    <button type="button" class="btn-close mb-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="fs-3 fw-bold mb-2">《房屋守則》</div>
+                    <div class="fs-6 mb-5">你會入住別人的家，因此請愛護房東的房源。</div>
+                    <div class="fs-5 fw-semibold mb-4">入住與退房</div>
+                    <div class="icon-service-group">
+                        <span class="material-symbols-outlined">schedule</span>
+                        <span class="align-middle">入住時間：下午@(Model.CheckInTime?.ToString("HH:mm") ?? "14:00")</span>
+                    </div>
+                    <hr>
+                    <div class="icon-service-group">
+                        <span class="material-symbols-outlined">schedule</span>
+                        <span class="align-middle">退房時間：上午@(Model.CheckOutTime?.ToString("HH:mm") ?? "12:00")</span>
+                    </div>
+                    <hr>
+                    <div class="icon-service-group">
+                        <span class="material-symbols-outlined">mfg_nest_yale_lock</span>
+                        <span class="align-middle">自助入住方式：鍵盤鎖</span>
+                    </div>
+                    <hr>
+                    <h4 class="fs-5 fw-semibold mt-5 mb-4">住宿期間</h4>
+                    <div class="icon-service-group">
+                        <span class="material-symbols-outlined">person_add</span>
+                        <span class="align-middle">最多 @Model.GuestCount 位房客</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

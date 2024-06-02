@@ -1,0 +1,29 @@
+﻿@page
+@model __NameSpace__.Pages.LoginModel
+@{
+}
+
+@section Scripts {
+    <script>
+        function Login() {
+            var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
+            URL += 'response_type=code';
+            URL += '&client_id=@Model.Channel_ID.Value';   //TODO:這邊要換成你的client_id
+            URL += '&redirect_uri=@Model.CallbackURL.Value';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
+            URL += '&scope=openid%20profile%20email';
+            URL += '&state=abcde';
+            window.location.href = URL;
+        }
+        $(function () {
+            $('#Login').click(function (e) {
+                Login();
+            });
+        });
+    </script>
+}
+
+<h3>使用 LINE Login</h3>
+<p>
+    請點選下方按鈕使用 LINE 帳號登入...
+</p>
+<button id='Login' class="btn btn-success">LINE 登入</button>

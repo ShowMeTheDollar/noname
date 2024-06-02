@@ -1,0 +1,85 @@
+﻿/*取消 footer*/
+.footer-set, .phone-nav-set {
+    display: none;
+}
+.modify-container {
+    padding: 10px 10px;
+}
+
+.main-title {
+    display: flex;
+    align-items: end;
+    text-shadow: 2px 2px 3px#9da1a0;
+}
+
+.main-title-img {
+    width: 100%;
+    vertical-align: bottom;
+}
+
+.modify-row {
+    display: grid;
+    gap: 30px;
+}
+
+.modify-div,
+.cancel-div {
+    position: relative;
+    border: 1px solid #4f9292;
+    border-radius: 15px;
+    padding: 15px 14px;
+    box-shadow: 7px 10px 10px 3px #6f9595;
+}
+
+    .modify-div:hover,
+    .cancel-div:hover {
+        border: 2px solid #4f9292;
+        transform: scale(0.98);
+        transition: transform 0.3s;
+    }
+
+.ribbon {
+    position: absolute;
+    top: -10px;
+    left: 50px;
+}
+
+.modify-subtitle,
+.cancel-subtitle {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.modify-subtitle-describe,
+.cancel-subtitle-describe {
+    margin-bottom: 30px;
+}
+
+.modify-start-div,
+.cancel-start-div {
+    width: 120px;
+}
+
+    .modify-start-div:active,
+    .cancel-start-div:active {
+        transform: scale(0.9);
+        transition: transform 0.5s;
+    }
+
+.modify-subtitle,
+.cancel-subtitle {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+
+@media screen and (min-width:768px) {
+    .modify-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}

@@ -1,0 +1,107 @@
+﻿@*
+    搜尋結果與房源明細上方的mini-search-bar按鈕
+*@
+@{  
+}
+
+<div class="mini-search-area col">
+	<div class="mini-search-bar" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+		<div class="location ">
+			<div class="location-content">
+				<div>任何地點</div>
+			</div>
+		</div>
+		<div class="check-in-time ">
+			<div class="check-in-time-content">
+				<div>任何時間</div>
+			</div>
+		</div>
+		<div class="guests ">
+			<div class="guests-content">
+				<div>新增人數</div>
+			</div>
+			<span class="search-btn">
+				<div class="search-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true"
+						 role="presentation" focusable="false"
+						 style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
+						<path fill="none" d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"></path>
+					</svg>
+				</div>
+			</span>
+		</div>
+	</div>
+</div>
+
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+	<div class="offcanvas-header">
+		<h5 id="offcanvasTopLabel">在OpenRoom上搜尋</h5>
+		<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body">
+		<div class="header-search">
+			<div class="search-area">
+				<div class="search-bar">
+					<div class="location col-4">
+						<div class="location-content">
+							<div class="ps-5">
+								<div>地點</div>
+								<input type="text" placeholder="搜尋目的地">
+							</div>
+						</div>
+					</div>
+					<div class="check-in col-2">
+						<div class="check-in-content">
+							<div>入住</div>
+							<input class="form-control" type="datetime-local" id="startDatePicker" style="border:none" placeholder="開始日期 ">
+						</div>
+					</div>
+					<div class="check-out col-2">
+						<div class="check-out-content">
+							<div>退房</div>
+							<input class="form-control" type="datetime-local" id="endDatePicker" style="border:none" placeholder="結束日期 ">
+						</div>
+					</div>
+					<div class="guests col-4" id="numberofguests">
+						<div class="guests-content dropdown-toggle" id="guests-button" data-bs-toggle="dropdown"
+							 data-bs-auto-close="outside" aria-expanded="false">
+							<div>旅客</div>
+							<input type="text" placeholder="新增人數" readonly v-model="guestCount">
+						</div>
+						<a class="search-btn" asp-controller="Search" asp-action="Index">
+							<div class="search-icon">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true"
+									 role="presentation" focusable="false"
+									 style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 4; overflow: visible;">
+									<path fill="none" d="M13 24a11 11 0 1 0 0-22 11 11 0 0 0 0 22zm8-3 9 9"></path>
+								</svg>
+							</div>
+						</a>
+						<!-- 旅客人數下拉選單 -->
+						<div class="dropdown-menu" aria-labelledby="guests-button">
+							<div class="row row-cols-2 gy-3 gx-0 py-3 px-2 justify-content-between">
+								<div>
+									<div class="fw-bold">旅客</div>
+									<div style="font-size: 0.75rem;">年滿 13 歲</div>
+								</div>
+								<div class="text-end">
+									<button type="button" class="btn rounded-circle me-1 px-2 py-1 btn-count" @@click="decreaseGuestCount">
+										<img src="~/images/wish/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+									</button>
+									<span class="align-middle">{{ guestCount }}</span>
+									<button type="button" class="btn rounded-circle ms-1 px-2 py-1 btn-count" @@click="increaseGuestCount">
+										<img src="~/images/wish/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+									</button>
+								</div>
+								<div class="col-12" style="font-size: 0.75rem;">
+									房源最多可供 10 人入住（不包括嬰幼兒）。不接受寵物入住。
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

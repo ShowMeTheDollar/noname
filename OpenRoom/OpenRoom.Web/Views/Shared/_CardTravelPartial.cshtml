@@ -1,0 +1,44 @@
+﻿@model OpenRoom.Web.ViewModels.TravelCard
+
+@{
+    var cardModel = Model;
+}
+
+<div class="col-12 col-sm-12 col-md-12">
+    <div class="room-item">
+        <a href="@cardModel.Link" class="room-link">
+
+            <div class="trip-pic-col col-12 col-sm-12 col-md-6">
+                <div class="trip-pic">
+                    <img src="@cardModel.ImgUrl" class="room-img" onload="imageLoaded(this)">
+                    <div class="loader-container">
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="room-introduce-col col-12 col-sm-12 col-md-6">
+                <div class="room-introduce">
+                    <h3 class="room-item-main-title">
+                        @cardModel.Title
+                    </h3>
+                    <p class="room-item-main-title-p">
+                        @cardModel.CategoryName
+                    </p>
+                    <div class="room-item-footer">
+                        <span class="room-item-date">
+                            @cardModel.CheckIn.ToString("MM月dd日") - @cardModel.CheckOut.ToString("dd日")
+                            <p class="room-item-year">@cardModel.CheckIn.ToString("yyyy年")</p>
+                        </span>
+                        <div class="line col-5"></div>
+                        <div class="subtitle">
+                            Taiwan
+                            <p class="subtitle-chinese">臺灣</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </a>
+    </div>
+</div>

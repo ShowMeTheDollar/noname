@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewData["Title"] = "Calendar";
+    Layout = "_LayoutHosting02";
+    var calendarModel = Model;
+    var beSelectedRoomId = ViewBag.SelectedRoomId;
+}
+@section topCSS {
+
+    <!-- CSS  -->
+    <link href="~/css/hostingCSS/calendar.css" rel="stylesheet" />
+
+}
+<script>
+    const calendarModelJson = @Html.Raw(Json.Serialize(calendarModel));
+    const beSelectedRoomId = @Html.Raw(Json.Serialize(beSelectedRoomId));
+    console.log(calendarModelJson)
+</script>
+
+<!--body-->
+<section>
+    <div class="container">
+        <div class="row">
+            <main class="col-lg-8 calendar mt-5 pt-5">
+                <h1 class="text-danger no-room">請先建立房源</h1>
+                <input class="form-control" type="datetime-local" id="startDatePicker" style="display:none">
+            </main>
+            <!-- Control Column -->
+            <aside class="col-lg-4 control-col col-12">
+                <!-- Control Column Content -->
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs mt-5 pt-5" id="myTab" role="tablist">
+                    <li class="nav-item price" role="presentation">
+                        <button class="nav-link active mt-3" id="pricing-tab" data-bs-toggle="tab"
+                                data-bs-target="#pricing" type="button" role="tab" aria-controls="pricing"
+                                aria-selected="true">
+                            定價
+                        </button>
+                    </li>
+                    <li class="nav-item oder" role="presentation">
+                        <button class="nav-link mt-3" id="availability-tab" data-bs-toggle="tab"
+                                data-bs-target="#availability" type="button" role="tab" aria-controls="availability"
+                                aria-selected="false">
+                            可定狀態
+                        </button>
+                    </li>
+                </ul>
+                <div class="input-group mb-3 justify-content-center">
+                    <select class="form-select my-3" id="roomSelect" name="RoomId">
+                        @foreach (var room in calendarModel.Rooms)
+                        {
+                            if (room.RoomId == beSelectedRoomId)
+                            {
+                                <option value="@room.RoomId" selected>@room.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@room.RoomId">@room.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <!-- Tab panes -->
+                <div class="tab-content" style="height: calc(100%); overflow-y: auto;">
+                    <div class="tab-pane fade show active" id="pricing" role="tabpanel" aria-labelledby="pricing-tab">
+                        <div class="card mb-3" style="border: 1px solid #e3e3e3;">
+                            <form method="post" class="card-body" action="/api/HostingApi/UpdateCalendarPrice">
+                                <!-- Title and Toggle -->
+                                <div>
+                                    <div class="showTWD">
+                                        <h5 class="card-title d-flex justify-content-between fw-bolder">定價策略</h5>
+                                    </div>
+                                </div>
+                                <!-- Price Section -->
+                                <h6 class="text-grey fw-bold mb-2">調整定價以吸引更多房客。</h6>
+                                <div>
+                                    <h5 class="card-title pt-3 fw-bolder">基本價格</h5>
+                                    <div class="input-group mb-3 justify-content-center">
+                                        <input type="number" class="form-control price-input fixedPrice" id="priceInput" placeholder="$100~99,999" name="FixedPrice"
+                                               aria-label="Amount (to the nearest dollar)" min="100" max="99999" >
+                                    </div>
+                                    <div class="save mx-auto my-4">
+                                        <button type="submit" class="save fixedPriceSave">儲存</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="card-title pt-3 fw-bolder">個別定價</h5>                   
+                                    <div class="input-group mb-3 justify-content-center">
+                                        <input type="number" class="form-control price-input separatePrice" id="priceInput" 
+                                        placeholder="$100~99,999" name="SeparatePrice" aria-label="Amount (to the nearest dollar)" 
+                                        min="100" max="99999" >
+                                    </div>
+                                    <div class="save mx-auto my-4">
+                                        <button type="submit" class="save separatePriceSave">儲存</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="card-title pt-3 fw-bolder">周末定價</h5>
+                                    <div class="input-group mb-3 justify-content-center">
+                                        <input type="number" class="form-control price-input weekendPrice" id="priceInput" 
+                                        placeholder="$100~99,999" name="WeekendPrice" aria-label="Amount (to the nearest dollar)"
+                                               min="100" max="99999" >
+                                    </div>
+                                    <div class="save mx-auto my-4">
+                                        <button type="submit" class="save weekendPriceSave">儲存</button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h5 class="card-title pt-3 fw-bolder">優惠</h5>
+                                    <h6 class="text-grey fw-bold">設定短租折扣，提高獲得新預訂的機率。</h6>
+                                    <div class=" btn-fa-right btn btn-outline-secondary w-100 mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="button-text fw-bold">
+                                                <span>房源優惠</span>
+                                                <a href="~/Hosting/StepThreeOne"><span class="text-grey">向前 3 位房客提供 20% 折扣</span></a>
+                                            </div>                                         
+                                            <input type="checkbox" id="check" class="sale-checkbox me-2">
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="RoomId" name="RoomId">
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="availability" role="tabpanel" aria-labelledby="availability-tab">
+                        <div class="card mb-3" style="border: 1px solid #e3e3e3;">
+                            <div class="card-body">
+                                <!-- Title and Toggle -->
+                                <div>
+                                    <h5 class="card-title pt-3 fw-bolder">可訂狀態</h5>                                   
+                                    <div class="input-group mb-5 justify-content-center">
+                                        <button class="available btn border-0" type="button">
+                                            <i class="fa-regular fa-circle-check"></i>
+                                        </button>
+                                        
+                                        <button class="not-available btn border-0" type="button">
+                                            <i class="fa-regular fa-circle-xmark"></i>
+                                        </button>
+
+                                    </div>
+                                    <div class="save m-3">
+                                        <button class="save">儲存</button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <h5 class="card-title fw-bolder">連結日曆</h5>
+                                    <h6 class="text-grey fw-bold">同步所有出租日曆，這樣日曆就會自動更新。</h6>
+                                    <button class=" btn-fa-right btn btn-outline-secondary w-100 mb-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <i class="fa-solid fa-link"></i>
+                                            <div class="button-text fw-bold">
+                                                <span>連結至其他網站</span>                                               
+                                            </div>                                       
+                                            <i class="fa-solid fa-angle-right"></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<!-- View Option Modal -->
+<div class="modal fade" id="viewOptionsModal" tabindex="-1" aria-labelledby="viewOptionsModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewOptionsModalLabel">檢視畫面</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="viewOptions" id="viewMonthly" checked>
+                    <label class="form-check-label" for="viewMonthly">月份</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="viewOptions" id="viewYearly">
+                    <label class="form-check-label" for="viewYearly">年份</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-primary">儲存變更</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+@section endJS{
+    <script src="~/lib/js-cookie/js.cookie.js"></script>
+    <script src="~/js/hostingJS/dropdownToggleEL.js"></script>
+    <script src="~/js/RoomsJS/calendar.js"></script>
+}

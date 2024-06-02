@@ -1,0 +1,185 @@
+﻿@model OpenRoom.Web.ViewModels.OrderConfirmationViewModel
+
+@{
+    Layout = "_LayoutCustomer";
+    ViewData["Title"] = "Confirmation";
+    var order = Model;
+}
+ 
+@section topCSS {
+    <link rel="stylesheet" href="~/css/BookCSS/confirmation.css">
+}
+
+@section endJS {
+    <script>
+        // 發送訂單成立通知信
+        fetch("/api/Mail", {
+            method: "POST",
+            body: JSON.stringify({
+                "to": "@order.GuestEmail",
+                "subject": "OpenRoom 訂單成立通知信",
+                "body": "<strong>@order.RoomName</strong><p>您已付款成功，訂單已成立。查看或修改訂單，請至會員中心 : https://openroomtest.azurewebsites.net/order/travel</p><br><p>Have a nice stay!<br>OpenRoom 團隊</p>"
+            }), 
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+            .then(response => response.json())
+            .then(data => console.log(data.status))
+            .catch(error => console.error(error));
+
+        // 分享旅程計畫
+        window.onload = () =>{
+            const btnShareTheTrip = document.querySelector('.btn-share-trip')
+            const emailElement = document.querySelector('#friend-email')
+
+            btnShareTheTrip.addEventListener('click', () => {
+
+                fetch("/api/Mail", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "to": emailElement.value, //待處理:驗證 email 輸入值
+                        "subject": "嗨 ! 您的朋友已在 OpenRoom 預定好房間",
+                        "body": "<strong>@order.RoomName</strong><p>您的朋友已付款成功，訂單已成立。<br><p>入住日期:@order.CheckIn</p><p>退房日期:@order.CheckOut<p>Have a nice stay!<br>OpenRoom 團隊</p>"
+                    }),
+                    headers: {
+                        "Content-type": "application/json"
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => console.log(data.status))
+                    .catch(error => console.error(error));
+
+                emailElement.value = '';
+            })
+        }
+    </script>
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_MiniFooterPartial" />
+}
+
+
+<h2 class="container text-start pt-5 d-md-block">
+     <a asp-controller="Order" asp-action="Travel" class="text-decoration-none">
+            <span class="material-symbols-outlined align-center p-3 rounded-circle border-0">chevron_right</span>
+    </a>
+        查看旅程
+</h2>
+<div
+        class="order-content container-md d-md-flex flex-md-row-reverse justify-content-md-between align-items-start">
+        <section class="room-area container py-4 col-md-5">
+            <div class="room-details gap-3 py-4">
+            <div class="room-photo mb-4">
+                <img src=@order.RoomImg alt="房源照片" class="rounded w-100 object-fit-cover" style="max-height:300px">
+                </div>
+                <div class="room-description">
+                    <p class="room-name fw-semibold fs-5">@order.RoomName</p>
+                    <div class="d-flex">
+                        <p class="order-dates">
+                            @* 2024年5月30日至31日 *@
+                        @order.CheckIn.ToString("yyyy-MM-dd")&nbsp;至&nbsp;@order.CheckOut.ToString("yyyy-MM-dd")
+                        </p>
+                        &nbsp;
+                        <p class="order-headcount">
+                            @* •1位房客 *@
+                            •&nbsp;@order.OrderGuestCount&nbsp;位房客
+                        </p>
+                    </div>
+                    <p class="room-address">@order.RoomAddress</p>
+                </div>
+            </div>
+            <div class="price-details">
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <p class="d-inline-block">總計</p>
+                        <p class="d-inline-block price-total">@order.TotalPrice.ToString("C0")</p>
+                    </div>
+                </div>
+            </div>
+            <div class="order-details">
+                <div>
+                    <div class="d-flex justify-content-between">
+                        <p class="d-inline-block">預定編號</p>
+                        <p class="d-inline-block order-number">@order.OrderNo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="mobile-divider d-md-none"></div>
+        <section class="order-area col-md-6">
+            <div class="order-comfired container pt-4">
+                <h2 class="py-3">你的預定已確認！</h2>
+                <p>我們已將詳情以電子郵件傳送至&nbsp;<span class="order-email">@order.GuestEmail</span>。</p>
+            </div>
+            <div class="contact-landlord container py-4">
+                <h3 class="py-3">房東/體驗達人簡介</h3>
+                <div>
+                    <img src=@order.HostImg alt="房東大頭貼"
+                        class="photo-landloard d-inline-block rounded-circle me-2" style="max-width:50px">
+                    <p class="d-inline-block">如果有任何問題，<span class="name-landloard">@order.HostName</span>&nbsp;能為你提供協助。</p>
+                </div>
+                <div class="my-4">
+                    <!-- <label for="exampleFormControlTextarea1" class="form-label"></label> -->
+                    <textarea class="form-control" id="msg-for-landlord" rows="3"
+                        placeholder="嗨 @order.HostName ！我將造訪 @order.RoomName.."></textarea>
+                </div>
+                <button type="button" class="btn-send-msg btn btn-outline-dark px-3 py-2">傳送訊息</button>
+            </div>
+            <div class="mobile-divider d-md-none"></div>
+            <div class="share-your-trip container py-4">
+                <h3 class="py-3">最後一步：分享旅程計畫</h3>
+                <p>你也能與其他想知道的人分享行程表。</p>
+                <div class="my-4">
+                    <!-- <label for="exampleFormControlInput1" class="form-label">Email address</label> -->
+                    <input type="email" class="form-control py-3" id="friend-email" placeholder="新增電子郵件地址">
+                </div>
+                <div>
+                    @* <button type="button" class="btn-send btn btn-dark d-inline-block">送出</button> *@
+                    @* <button type="button" class="btn-skip btn btn-outline-dark d-inline-block">跳過</button> *@
+                <button type="button" class="btn-share-trip btn btn-outline-dark d-inline-block">送出</button>
+                </div>
+            </div>
+            <div class="mobile-divider d-md-none"></div>
+            <div class="notince container py-4">
+                <h3 class="py-3">注意事項</h3>
+                <div class="d-flex">
+                    <div class="rules me-5">
+                        <h4 class="py-2">《房屋守則》</h4>
+                        <p>入住時間：
+                            <span class="check-in">@order.CheckInTime</span>
+                        </p>
+                        <p>退房時間：
+                            <span class="check-out">@order.CheckOutTime</span>
+                        </p>
+                        <p>最多
+                            <span class="headcount-limit">@order.GuestCount</span>
+                            位房客
+                        </p>
+                        <p class="rules-more-info" data-bs-toggle="modal" data-bs-target="#rulesModal">
+                            <u>顯示詳情</u>
+                            <span class="material-symbols-outlined align-top">chevron_right</span>
+                        </p>
+                        <!-- 房屋守則顯示詳情 MODAL -->
+                         @await Html.PartialAsync("~/Views/Shared/SharedModal/_RoomRulesModal.cshtml")
+                    </div>
+                    <div class="safety">
+                        <h4 class="py-2">安全與房源</h4>
+                        <p>監視攝影機</p>
+                        <p>攝錄裝置</p>
+                        <p class="safety-more-info" data-bs-toggle="modal" data-bs-target="#noticeModal">
+                            <u>顯示更多</u>
+                            <span class="material-symbols-outlined align-top">chevron_right</span>
+                        </p>
+                        <!-- 安全與房源顯示更多 MODAL -->
+                        @await Html.PartialAsync("~/Views/Shared/SharedModal/_SafetyAndPropertyModal.cshtml")
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>

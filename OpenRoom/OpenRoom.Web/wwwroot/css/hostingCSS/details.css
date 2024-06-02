@@ -1,0 +1,82 @@
+﻿
+.weight600 {
+    font-weight: 600;
+}
+
+.details-change-box {
+    width: 100%;
+}
+
+.details-title-h1 {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.details-change-item {
+    border-bottom: solid 1px #DDDDDD;
+}
+
+.details-item-data p {
+    font-size: 14px;
+}
+
+.edit-or-add-button {
+    border: 0;
+    width: 40px;
+    background-color: white;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.cancel-button {
+    display: none;
+}
+
+.input-box-w100 {
+    padding: 0px 4px;
+    width: 100%;
+}
+
+.save-btn {
+    padding: 14px 24px;
+    margin-bottom: 24px;
+}
+
+html body details-change-item-pic h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+
+html body .room-images img {
+    width: 100px;
+    height: 100px;
+}
+
+html body .room-images .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 控制圖片之間的間隔 */
+}
+
+html body .room-images .img-container {
+    position: relative;
+    display: inline-block;
+}
+
+    html body .room-images .img-container img {
+        width: 100px; /* 或其他尺寸 */
+        height: auto;
+    }
+
+    html body .room-images .img-container button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+html body .room-images .img-preview {
+    width: 100px; /* 根據需要調整寬度 */
+    height: auto;
+    margin: 5px; /* 添加一些外邊距 */
+}

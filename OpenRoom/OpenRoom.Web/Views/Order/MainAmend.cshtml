@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "MainAmend";
+    Layout = "_LayoutCustomer";
+}
+
+@section topCSS {
+    <!-- Semantic UI  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <!-- CSS  -->
+    <link href="~/css/ordercss/mainamend.css" rel="stylesheet" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+
+<div class="modify-container container">
+
+    <h1 class="main-title ui header">
+        <img src="~/images/wish/plugin.png" class="main-title-img">
+        <div class="content">
+            在Central District的1晚住宿
+            <div class="main-title-describe sub header fw-bold">5月30日至5月31日入住「全新」您所看到的一切都是新的！台中一中街乾淨明亮陽台雙人房</div>
+        </div>
+    </h1>
+
+    <div class="modify-row">
+
+        <div class="modify-div">
+            <div class="ui orange ribbon label">Modify Reservation</div>
+            <div class="modify-icon">
+                <i class="fa-solid fa-pencil fa-xl"></i>
+            </div>
+            <h2 class="modify-subtitle">變更預訂</h2>
+            <div class="modify-subtitle-describe fw-bold">申請更改日期或房客人數</div>
+            <div class="modify-start-div">
+                <a class="modify-start-a ui black button" href="/Order/Modify" target="_blank">
+                    開始吧
+                    <i class="fa-solid fa-angle-right fa-sm"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="cancel-div">
+            <div class="ui orange ribbon label">Cancel Reservation</div>
+            <div class="cancel-icon">
+                <i class="fa-solid fa-house fa-xl"></i>
+            </div>
+            <h2 class="cancel-subtitle">取消預訂</h2>
+            <div class="cancel-subtitle-describe fw-bold">在預訂取消之前，您會先看到所有詳情</div>
+            <div class="cancel-start-div">
+                <a class="cancel-start-a ui black button" href="/Order/Cancel" target="_blank">
+                    開始吧
+                    <i class="fa-solid fa-angle-right fa-sm"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

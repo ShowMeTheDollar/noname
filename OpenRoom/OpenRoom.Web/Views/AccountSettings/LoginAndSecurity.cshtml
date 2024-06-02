@@ -1,0 +1,161 @@
+﻿@model PersonalViewModel
+@{
+    Layout = "_LayoutCustomer";
+    ViewData["Title"] = "LoginAndSecurity";
+    var passwordChangeResult = TempData["passwordChangeResult"];
+    var personalData = Model;
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+@section phoneNav {
+    <partial name="_PhoneNavLoginPartial" />
+}
+
+<link rel="stylesheet" href="~/css/AccountSettingsCSS/LoginAndSecurity.css" />
+<script>var passwordChangeResult = '@passwordChangeResult';</script>
+
+
+<div class="back-arrow px-4 py-3 bg-white sticky-top container">
+    <a href="/AccountSettings/Account">
+        <i class="fa-solid fa-angle-left fa-lg href px-1"></i>
+    </a>
+</div>
+<!--上面是手機專有的回上一頁-->
+<section class="login-and-security-box mb-5 container">
+    <div class="login-and-security-title">
+        <nav class="d-flex">
+            <a href="/AccountSettings/Account" class="href href-hover weight600">帳號</a>
+            <i class="fa-solid fa-angle-right "></i>
+            <span class="weight600">登入與安全性</span>
+        </nav>
+        <h1 class="mt-2">登入與安全性</h1>
+    </div>
+    <!--上面是網頁title下面是手機title-->
+    <div class="phone-login-and-security-title my-4">
+        <h1 class="mt-5">登入與安全性</h1>
+    </div>
+    <!--以下是內容-->
+    <div class="security-navigation-bar">
+        <button class="py-3 me-4 bg-white weight600">登入</button>
+        <button class="py-3 me-4 bg-white weight600">登入要求</button>
+        <button class="py-3 me-4 bg-white weight600">共用存取權限</button>
+    </div>
+    <div class="login-status-and-security-advise">
+        <div class="login-status">
+            <div class="login-status-item mb-3">
+                <div class="login-status-title">
+                    <h2>登入</h2>
+                </div>
+                <div class="account-status">
+                    <div class="account-status-box">
+                        <div class="d-flex  justify-content-between mt-4">
+                            <div class="account-status-content">
+                                <div class="weight600">密碼</div>
+                                <div class="mt-2 mb-4 last-time-update">
+                                    <div>上次更新：1 小時前</div>
+                                </div>
+                            </div>
+                            <div class="update-and-connect-button">
+                                <button class="weight600" data-bs-toggle="collapse" data-bs-target="#password-change-collapse">更新</button>
+                                <button class="weight600 cancel-button" data-bs-toggle="collapse" data-bs-target="password-change-collapse">取消</button>
+                            </div>
+                        </div>
+                        <form asp-action="LoginAndSecurity" method="post" class="mt-2 mb-4 collapse" id="password-change-collapse">
+                            <label asp-for="OldPassword" class="mb-2">舊密碼</label>
+                            <input type="password" asp-for="OldPassword" class="password-input mb-2" placeholder="輸入舊密碼" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="至少一個大寫字母、一個小寫字母和一個數字，最少8個字符">
+                            <span asp-validation-for="OldPassword" class="text-danger"></span>
+                            <label asp-for="Password" class="mb-2">新密碼</label>
+                            <input type="password" asp-for="Password" class="password-input mb-2" placeholder="輸入新密碼" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="至少一個大寫字母、一個小寫字母和一個數字，最少8個字符">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <label asp-for="ConfirmPassword" class="mb-2">確認密碼</label>
+                            <input type="password" asp-for="ConfirmPassword" class="password-input mb-2" placeholder="確認新密碼" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="至少一個大寫字母、一個小寫字母和一個數字，最少8個字符">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            <input type="hidden" asp-for="Id" value="@personalData.Id">
+                            <button type="submit" class="improve-and-update-button">更新密碼</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="login-status-item">
+                <div class="login-status-title">
+                    <h2>社群帳號</h2>
+                </div>
+                <div class="account-status">
+                   @*<div class="account-status-box d-flex justify-content-between mt-4">
+                        <div class="account-status-content">
+                            <div class="weight600">Facebook</div>
+                            <div class="mt-2 mb-4">未連結</div>
+                        </div>
+                        <div class="update-and-connect-button">
+                            <button class="weight600">連結</button>
+                        </div>
+                    </div> *@
+                    <div class="account-status-box d-flex justify-content-between mt-4">
+                        <div class="account-status-content">
+                            <div class="weight600">Google</div>
+                            <div class="mt-2 mb-4">取消連結</div>
+                        </div>
+                        <div class="update-and-connect-button">
+                            <button class="weight600">已連結</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="security-advise px-2">
+            <div class="security-advise-border p-4 my-2">
+                <div class="security-advise-icon">
+                    <i class="fa-solid fa-shield-dog fa-3x"></i>
+                </div>
+                <div class="security-advise-title my-3">讓你的帳號更加安全</div>
+
+                <div class="security-advise-text">我們不斷致力提升Openroom用戶的安全性。 正因如此，我們會檢查每個帳號，盡可能確保所有人的資料都安全無虞。</div>
+                <hr class="security-advise-hr">
+                <button class="improve-and-update-button">改進</button>
+            </div>
+        </div>
+    </div>
+    <div class="login-status-title">
+        <h2>帳號</h2>
+    </div>
+    <div class="account-stop-content d-flex justify-content-between py-4">
+        <span>停用你的帳號</span>
+        <a href="#">停用</a>
+    </div>
+</section>
+
+<script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (passwordChangeResult == 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: '密碼改變成功',
+                confirmButtonText: '確定'
+            });
+        } else if (passwordChangeResult == 'oldPasswordDismatch') {
+            Swal.fire({
+                icon: 'error',
+                title: '密碼改變失敗',
+                text: '舊密碼輸入錯誤',
+                confirmButtonText: '確定'
+            });
+        } else if (passwordChangeResult == 'confirmPasswordFailure') {
+            Swal.fire({
+                icon: 'error',
+                title: '密碼改變失敗',
+                text: '兩次輸入的密碼不一致',
+                confirmButtonText: '確定'
+            });
+        }
+    });
+</script>

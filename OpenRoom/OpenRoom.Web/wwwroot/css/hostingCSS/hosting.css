@@ -1,0 +1,126 @@
+﻿
+/* 自定義樣式 */
+.navbar {
+    padding: auto;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.nav-item {
+    font-family: Microsoft JhengHei, Arial, sans-serif;
+    font-weight: 800;
+    /*padding: 10px 16px;*/
+}
+
+    /* nav-item dropdown點擊的样式 */
+    .nav-item.dropdown.show .nav-link.dropdown-toggle {
+        border: 1px solid #000;
+    }
+
+/* dropdown-item中新增功能標籤样式 */
+.dropdown-item.new-feature::after {
+    content: '新功能';
+    padding: 2px 4px;
+    background-color: #E00B41;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+.nav-link:hover,
+.member-link:hover {
+    border-radius: 10px;
+    border-color: #000;
+}
+
+.nav-link:hover,
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    /* 添加hover時的背景色 */
+}
+
+.dropdown-item {
+    transition: background-color .3s ease;
+    /* 平滑背景色變化 */
+}
+
+/* 當下拉選單顯示時，改變toggle按鈕樣式 */
+.show > .dropdown-toggle.nav-link {
+    text-decoration: underline;
+    text-decoration-color: #000;
+    text-underline-offset: 4px;
+}
+
+/* 下拉選單樣式 */
+.dropdown-menu {
+    border-radius: 8px;
+    border-color: #f8f9fa;
+}
+
+/* 修改下拉選單分隔線樣式 */
+.dropdown-divider {
+    border-top-color: #e9ecef;
+}
+
+.d-flex {
+    padding: 20px;
+}
+.userIcon,
+.bellIcon {
+    border: 1px solid #f8f9fa;
+}
+
+/* 圖示按鈕樣式 */
+.icon-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+   
+    background-color: transparent;
+    margin: 0 8px;
+}
+
+    /*圖示懸停和點擊樣式*/
+    .icon-button:hover,
+    .icon-button:focus {
+        background-color: #f8f9fa;
+    }
+
+    .icon-button .dropdown-toggle {
+        color: #000;
+    }
+
+    /* SVG圖標樣式 */
+    .icon-button svg {
+        fill: currentColor;
+    }
+
+
+
+
+
+
+/* 小螢幕樣式 */
+@media (max-width: 768px) {
+    /*nav header*/
+    .nav-item {
+        text-align: center;
+        /*width: 100%;*/
+        padding: 10px 0;
+    }
+    .d-flex.align-items-center {
+        justify-content: center;
+        width: 100%;
+        padding-top: 10px;
+        /* 添加一些空間 */
+    }
+
+    .icon-button {
+        margin: 0 auto;
+        display: block;
+    }
+
+}

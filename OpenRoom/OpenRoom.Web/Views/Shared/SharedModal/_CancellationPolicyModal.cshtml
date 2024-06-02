@@ -1,0 +1,28 @@
+﻿<!-- 退訂政策彈跳視窗 (使用 Alena 的原始碼) -->
+<div class="modal fade" id="cancellationModal" tabindex="-1" aria-labelledby="退訂政策詳情"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close mb-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="fs-4 fw-bold mb-5" id="exampleModalLabel">《退訂政策》</h5>
+                <p class="fs-5 fw-semibold mb-2">取消截止時間</p>
+                <div class="d-flex border-bottom border-light border-2 pt-3">
+                    <p class="date-full-refund fw-semibold">
+                        @ViewBag.CancellationDeadline
+                        <span class="time-full-refund d-block fw-normal">23:59 前</span>
+                    </p>
+                    <p class="ms-5">全額退款：你將拿回已支付的全部款項。</p>
+                </div>
+                <div class="d-flex border-bottom border-light border-2 pt-3">
+                    <p class="date-no-refund fw-semibold">
+                        @ViewBag.NoRefund
+                        <span class="time-no-refund d-block fw-normal">00:00 起</span>
+                    </p>
+                    <p class="ms-5">無法退款</p>
+                </div>
+                <p class="fw-semibold my-4"><u>了解更多有關《退訂政策》的事宜</u></p>
+            </div>
+        </div>
+    </div>
+</div>

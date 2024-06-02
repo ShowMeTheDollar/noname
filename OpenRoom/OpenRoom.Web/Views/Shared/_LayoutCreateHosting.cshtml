@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - OpenRoom.Web</title>
+
+    <!-- bootstrap -->
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<!-- swiper -->
+	<link rel="stylesheet" href="~/lib/swiper/swiper-bundle.min.css" />
+	<!-- font-awesome -->
+	<link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+	<!-- flatpickr -->
+	<link rel="stylesheet" href="~/lib/flatpickr/dist/flatpickr.min.css" />
+	<!-- leaflet -->
+	<link rel="stylesheet" href="~/lib/leaflet/dist/leaflet.css" />
+    <!--googleapis-->
+    <link rel="stylesheet" href="~/css/googleapis/googleapis.css" />
+    <!--googleapis02-->
+    <link rel="stylesheet" href="~/css/googleapis/googleapis02.css" />
+	<!-- _LayouCreateHosting.css -->
+    <link href="~/css/hostingCSS/createHosting.css" rel="stylesheet" />
+
+    
+    @await RenderSectionAsync("topCSS", required: false)
+    @await RenderSectionAsync("topJS", required: false)
+</head>
+<body>
+    <header>
+        <nav class="container navbar navbar-expand-lg navbar-light bg-white fixed-top">
+            <div class="container-fluid">
+                <a asp-controller="Home" asp-action="Index">
+                    <img height="auto" width="80px" src="~/images/_Layout/icon/_logo.jpg" alt="header-icon" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <div class="d-flex align-items-center fw-bold">
+                        <button class="btn btn-light border border-light border-radius20 question fw-bold" type="button">
+                            有疑問嗎?
+                        </button>
+                        <button class="backToSource btn btn-light border border-light border-radius20 save-back fw-bold" type="button">
+                            退出
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </nav>
+    </header>
+
+    <!--body-->
+    @RenderBody()
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/swiper/swiper-bundle.min.js"></script>
+    <script src="~/lib/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="~/lib/leaflet/dist/leaflet.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    
+
+    
+    
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("endJS", required: false)
+</body>
+
+
+
+</html>

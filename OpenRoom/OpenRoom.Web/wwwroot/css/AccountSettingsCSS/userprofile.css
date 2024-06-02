@@ -1,0 +1,16 @@
+html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+}
+
+.swiper1, .swiper2 {
+    width: 100%;
+}
+
+.swiper-slide {
+    justify-content: unset;
+    align-items: unset;
+}
+
+.header-set {
+    position: relative;
+}

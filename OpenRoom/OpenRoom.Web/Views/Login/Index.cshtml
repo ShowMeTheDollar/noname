@@ -1,0 +1,80 @@
+﻿@model StandardLoginViewModel
+
+@{
+	Layout = "_LayoutCustomer";
+	ViewData["Title"] = "Login Page";
+	var registerResult = TempData["RegisterResult"];
+}
+
+<script>
+	let registerResult = '@registerResult';
+</script>
+
+@section topCSS {
+    <link rel="stylesheet" href="~/css/LoginCSS/Index.css" />
+}
+@section endJS {
+	<script src="~/js/loginjs/register.js"></script>
+}
+@section headSpace {
+    <partial name="_MenuPartial" />
+}
+@section footer {
+    <partial name="_FooterPartial" />
+}
+@section phoneNav {
+	@if (User.Identity.IsAuthenticated)
+	{
+		<partial name="_PhoneNavLoginPartial" />
+	}
+	else
+	{
+		<partial name="_PhoneNavLogoutPartial" />
+	}
+}
+
+<div class="container">
+	<div class="login-register">
+		<form asp-action="Index" asp-controller="Login" method="post">
+			<div class="register-signin-div">
+				<label for="register-signin-recipient-name" class="welcome col-form-label fs-2">歡迎您</label>				
+			</div>
+			<div class="form-group my-3">
+				<label asp-for="Email">電子郵件</label>
+				<input type="email" asp-for="Email" class="form-control" id="Email" placeholder="請輸入電子郵件">
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="form-group my-3">
+				<label asp-for="Password">密碼</label>
+				<input type="password" asp-for="Password" class="form-control" placeholder="輸入密碼">
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<a asp-action="ForgotPassword" asp-controller="Login" class="forgot-password">忘記密碼?</a>
+			<button type="submit" class="continue-btn signin-btn w-100 mt-3 lh-lg fw-bold fs-5 mb-4 justify-content-center">
+				登入
+			</button>
+
+			<div class="row d-flex align-items-center justify-content-center">
+				<div class="bline col-5"></div>
+				<span class="col-1 text-center or">或</span>
+				<div class="bline col-5"></div>
+			</div>
+		</form>
+		@* <a asp-controller="Login" asp-action="FacebookLogin" class="facebook-signin-btn signin-btn w-100 mt-3 px-5 lh-lg fw-bold d-flex">
+			<img src="~/images/_Layout/icon/facebook.png" alt="" class="facebook-img signin-icon">
+			<p class="col-10 signin-p">使用Facebook登入</p>
+		</a> *@
+		<a asp-controller="Login" asp-action="GoogleLogin" class="google-signin-btn signin-btn w-100 mt-3 px-5 lh-lg fw-bold d-flex">
+			<img src="~/images/_Layout/icon/google.png" alt="" class="google-img signin-icon">
+			<p class="col-10 signin-p">使用Google登入</p>
+		</a>
+		<a asp-controller="Login" asp-action="LineLogin" class="line-signin-btn signin-btn w-100 mt-3 px-5 lh-lg fw-bold d-flex" id='Login'>
+			<img src="~/images/_Layout/icon/line.png" alt="" class="line-img signin-icon">
+			<p class="col-9 signin-p">使用Line登入</p>
+		</a>
+		<a asp-controller="Login" asp-action="Register" class="mail-signin-btn signin-btn w-100 mt-3 px-5 lh-lg fw-bold d-flex">
+			<img src="~/images/_Layout/icon/mail.png" alt="" class="mail-img signin-icon">
+			<p class="col-9 signin-p">註冊</p>
+		</a>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_LayoutCustomer";
+}
+
+@section topCSS {
+    <link rel="stylesheet" href="~/css/LoginCSS/register.css" />
+}
+@section headSpace {
+    <partial name="_MenuPartial" />
+}
+@section footer {
+    <partial name="_FooterPartial" />
+}
+@section phoneNav {
+    @if (User.Identity.IsAuthenticated)
+    {
+        <partial name="_PhoneNavLoginPartial" />
+    }
+    else
+    {
+        <partial name="_PhoneNavLogoutPartial" />
+    }
+}
+<div class="container">
+    <div class="register">
+        <div class="col-md-12 text-center">
+            <h1>註冊</h1>
+        </div>
+        <form asp-action="Register" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group my-3">
+                <label asp-for="Email">電子郵件</label>
+                <input type="email" asp-for="Email" class="form-control" id="Email" placeholder="請輸入電子郵件" pattern="[a-z0-9._%+-]+@@[a-z0-9.-]+\.[a-z]{2,}$">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Password">密碼</label>
+                <input type="password" asp-for="Password" class="form-control" placeholder="輸入密碼(至少一個大寫字母、一個小寫字母和一個數字，最少8個字符)" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="至少一個大寫字母、一個小寫字母和一個數字，最少8個字符">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="ConfirmPassword">確認密碼</label>
+                <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="再次輸入密碼">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="FirstName">姓氏</label>
+                <input type="text" asp-for="FirstName" class="form-control" placeholder="輸入姓氏" minlength="1" maxlength="20">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="LastName">名字</label>
+                <input type="text" asp-for="LastName" class="form-control" placeholder="輸入名字" minlength="1" maxlength="20">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="PhoneNumber">室內電話</label>
+                <input type="text" asp-for="PhoneNumber" class="form-control" placeholder="輸入市內電話(ex:0234567891)">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group my-3">
+                <label asp-for="Mobile">手機號碼</label>
+                <input type="tel" asp-for="Mobile" class="form-control" placeholder="輸入手機號碼(ex:0987654321)" pattern="[0-9]{10}" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success my-3">送出</button>
+            </div>
+        </form>
+    </div>
+</div>

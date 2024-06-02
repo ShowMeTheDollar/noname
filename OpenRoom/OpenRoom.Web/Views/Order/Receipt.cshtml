@@ -1,0 +1,172 @@
+﻿@model ReceiptViewModel
+@using System.Globalization
+@{
+    ViewData["Title"] = "Receipt";
+    Layout = "_LayoutCustomer";
+    var receipt = Model;
+    var checkInDateDayOfWeek = receipt.CheckIn.DayOfWeek.GetDisplayValue();
+    var checkOutDateDayOfWeek = receipt.CheckOut.DayOfWeek.GetDisplayValue();
+    CultureInfo culture = new CultureInfo("zh-TW");
+}
+@section endJS {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" 
+    integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" 
+    integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script src="~/js/orderjs/receipt.js" asp-append-version="true"></script>
+}
+@section topCSS {
+    <link href="~/css/ordercss/receipt.css" rel="stylesheet" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+<main class="receipt-details-container container">
+    <section class="property-listing-section py-5">
+        <div class="d-flex justify-content-between mb-3">
+            <h1 class="open-room-main-title fs-4 fw-bold">你在 Open-room 的收據 </h1>
+            @* <button id="btnPdf" class=" btn btn-primary">下載PDF檔</button> *@
+            @* <button onclick="Convert_HTML_To_PDF();">Convert HTML to PDF</button> *@
+            <button onclick="window.print();" class=" btn btn-primary">列印本頁 / 另存PDF檔</button>
+        </div>
+        <div class="open-room-content mb-4">
+            訂單編號：@receipt.OrderNo · <span class="open-room-content-date">@receipt.CreatedAt.ToString("yyyy年MM月dd日")</span>
+        </div>
+        <div class="row g-0 gx-5 pb-4">
+            <div class="col-6">
+                <div class="border p-4">
+                    <div class="property-listing-main-title fs-5 mb-3 fw-semibold">@receipt.RoomName</div>
+                    <div class="property-listing-content fw-bold">在 @receipt.RoomName 的住宿</div>
+                    <hr>
+                    <div class="row g-0">
+                        <div class="col-10 lh-base">
+                            <div class="property-listing-start-date-time"> 起始日：@receipt.CheckIn.ToString("yyyy年MM月dd日")（@checkInDateDayOfWeek）</div>
+                            <div class="property-listing-end-date-time"> 結束日：@receipt.CheckOut.ToString("yyyy年MM月dd日")（@checkOutDateDayOfWeek）</div>
+                            <div class="address">@receipt.Address</div>
+                            <div class="property-listing-room-detail">@receipt.RoomCategory1 · @receipt.BedCount 張床 · @receipt.CustomerCount 人</div>
+                            <div class="property-listing-landlord lh-lg text-muted fw-bold" style="font-size: small;">房東：@receipt.LandlordName</div>
+                            <div class="property-listing-code text-muted" style="font-size: small;">收據編號：@receipt.ReceiptNo</div>
+                            <div class="lh-sm">
+                                @* <span class="property-listing-itinerary text-decoration-underline text-success" style="font-size: 0.9rem;">前往行程表</span>
+                                <span> · </span>
+                                <span class="property-listing-property text-decoration-underline text-success" style="font-size: 0.9rem;">前往房源</span> *@
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <img src="@receipt.ImageUrl" class="property-listing-img img-fluid">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="property-listing-traveler text-muted mb-3 fw-bold" style="font-size: small;">
+                        旅客：@receipt.CustomerName
+                    </div>
+                    <div class="cancellation-policy mb-2 fw-semibold">《退訂政策》</div>
+                    <div class="cancellation-policy-date-time lh-lg" style="font-size: small;">
+                        23:59
+                        <span c;ass="cancellation-policy-text">
+                            前可以免費取消在這之後，該筆預訂則無法退款。
+                            <br>
+                            截止時間以房源當地時間為準
+                        </span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="question-title fw-bold">有疑問嗎?</div>
+                    <div class="question-content">你可以在付款找到付款與退款資訊,或者你也可以前往說明中心。</div>
+                </div>
+            </div>
+
+            <div class="col-6 row row-cols-1 g-0 gap-4 h-75">
+                <div class="border p-3">
+                    <div class="price-details">
+                        <h3 class="price-detail-main-title fs-5 py-3 fw-semibold">價格</h3>
+                        <div class="bill-statement border-bottom border-1 border-dark">
+                            @* <div class="room-price-before-tax d-flex justify-content-between">
+                                <p class="price-detail-night d-inline-block">$850.00 TWD x 1 晚</p>
+                                <p class="price-detail-content d-inline-block">$850.00 TWD</p>
+                            </div> *@
+                            <!-- <div class="discount d-flex justify-content-between">
+                                <p class="d-inline-block">早鳥優惠：2%</p>
+                                <p class="d-inline-block">-$17.00 TWD</p>
+                            </div> -->
+                            <div class="tax d-flex justify-content-between">
+                                <p class="price-detail-taxes-title d-inline-block">稅費和其他費用</p>
+                                <p class="price-detail-taxes-content d-inline-block">$0</p>
+                            </div>
+                        </div>
+                        <div class="bill-total pt-3">
+                            <div class="price-total d-flex justify-content-between">
+                                <p class="price-detail-total-title d-inline-block">
+                                    總價
+                                    <span class="currency">(TWD)</span>
+                                </p>
+                                <p class="price-detail-total-content d-inline-block"> @receipt.TotalPrice.ToString("C", culture)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border p-3">
+                    <div class="payment-details">
+                        <h3 class="payment-details-main-title fs-5 py-3 fw-semibold">付款</h3>
+                        <div class="bill-statement d-flex justify-content-between border-bottom border-1 border-dark">
+                            <div>
+                                <p class="cedit-card-issuer mb-0">@receipt.PaymentType</p>
+                                @* <p class="order-date" style="font-size: small;">2024年2月6日 <span class="order-time">下午12:22:53 [GMT+1]</span></p> *@
+                            </div>
+                            <p class="cedit-card-total d-inline-block">@receipt.TotalPrice.ToString("C", culture)</p>
+                        </div>
+                        <div class="bill-total pt-3">
+                            <div class="price-total d-flex justify-content-between">
+                                <p class="bill-total-title d-inline-block fw-bold">
+                                    已支付的金額
+                                    <span class="currency">(TWD)</span>
+                                </p>
+                                <p class="bill-total-content price-total d-inline-block fw-bold">@receipt.TotalPrice.ToString("C", culture)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="text-muted" style="font-size: small;">
+            <div class="fw-semibold">Open-room服務費</div>
+            <div class="mb-3">含適用增值稅。查看增值稅發票。</div>
+            <div class="fw-semibold">住宿稅</div>
+            <div class="mb-3">住宿稅包括針對住宿徵收的增值稅 (Taiwan)。</div>
+        </div>
+        <hr>
+        <div class="row row-cols-2 text-muted" style="font-size: small;">
+            <div>
+                <div class="fw-semibold">處理付款方：</div>
+                <div>Open-room Payments UK Ltd.</div>
+                <div>40 Compton St.</div>
+                <div>London</div>
+                <div>EC1V 0AP</div>
+                <div>United Kingdom</div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <div>Open-room Ireland UC</div>
+                    <div>The Watermarque Building</div>
+                    <div>South Lotts Road, Ringsend, Dublin 4</div>
+                    <div>Ireland</div>
+                    <div>VAT Number: IE 9827384L</div>
+                    <a href="">www.open-room.com.tw</a>
+                </div>
+                <!-- <img src="./OpenRoom/svgs/airbnb.svg" class="img-fluid" style="width: 102px; height: 34.06px;" alt=""> -->
+            </div>
+        </div>
+    </section>
+</main>

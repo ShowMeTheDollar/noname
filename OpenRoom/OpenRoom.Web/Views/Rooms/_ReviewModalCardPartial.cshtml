@@ -1,0 +1,20 @@
+﻿@model ReviewCardViewModel
+<article class="pt-3">
+    <div class="user-profile">
+        <a asp-controller="Users" asp-action="Show" asp-route-id="@Model.Id" target="_blank" class="text-decoration-none">
+            <img src="@Model.ImgUrl" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+        </a>
+        <p class="d-inline-block user-name fw-semibold">
+            @Model.Name<br>
+            <span class="user-country fw-normal" style="font-size: 0.875rem;">@Model.City, 臺灣</span>
+        </p>
+    </div>
+    <div class="user-rating d-flex">
+        <p class="stars">&starf;&starf;&starf;&starf;&starf;</p>
+        <span>·</span>
+        <p class="rating-date">@Model.CreateAt.ToString("yyyy年MM月")</p>
+    </div>
+    <div class="user-comment">
+        <p>@Model.Description</p>
+    </div>
+</article>

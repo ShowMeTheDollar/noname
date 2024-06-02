@@ -1,0 +1,40 @@
+﻿@model OpenRoom.Web.ViewModels.RoomCard
+
+@{
+    var cardModel = Model;
+
+}
+
+<div class="col item-container">
+    <a href="@cardModel.Link" class="room-link" id="@cardModel.RoomId">
+        <div class="img-box">
+            <div class="like-btn" data-room-id="@cardModel.RoomId" data-wishlist-detail-id="@cardModel.WishlistDetailId">
+                <i class="fa-solid fa-heart"></i>
+            </div>           
+            <div class="swiper swiper-card-item">
+                <div class="swiper-wrapper">
+                    @foreach (var img in cardModel.ImgUrls)
+                    {
+                        <div class="swiper-slide">
+                            <img src="@img" loading="lazy">
+                            <p>@cardModel.RoomId</p>
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-openroom"></div>
+                        </div>
+                    }                   
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>           
+        </div>
+        <div class="info-box">
+            <p class="info-group">
+                <span class="info-name">@cardModel.RoomName</span>
+                <span class="info-description" data-lat="@cardModel.Latitude" data-lng="@cardModel.Longitude" >@cardModel.CategoryName</span>
+                <span class="info-price">$@cardModel.Price.ToString("0") TWD</span>
+                <span class="info-rate">
+                    @cardModel.Review
+                    <i class="fa-solid fa-star"></i>
+                </span>
+            </p>
+        </div>
+    </a>
+</div>

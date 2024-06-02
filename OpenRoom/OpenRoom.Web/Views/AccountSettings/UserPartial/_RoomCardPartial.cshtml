@@ -1,0 +1,16 @@
+﻿@model RoomCardViewModel
+<a href="~/Rooms/@Model.RoomId" class="card swiper-slide border-0 d-block text-decoration-none">
+    <div class="ratio ratio-1x1">
+        <img src="@Model.ImgUrl" class="card-img-top img-fluid rounded-4">
+    </div>
+    <div class="card-body p-0 mt-2">
+        <p class="card-text m-0 fw-semibold" style="font-size: 0.875rem;">
+            @Model.CategoryName
+            <span class="float-end d-inline-block">
+                <img src="~/svgs/star.svg" class="img-fluid" style="width: 12px; height: 12px;" alt="">
+                <span style="font-size: 0.875rem;">@Model.Rating</span>
+            </span>
+        </p>
+        <p class="m-0 text-truncate text-secondary" style="font-size: 0.875rem;">@Model.Title</p>
+    </div>
+</a>

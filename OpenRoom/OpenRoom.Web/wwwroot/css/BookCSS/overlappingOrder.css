@@ -1,0 +1,30 @@
+﻿.message {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1, p {
+    color: #2E9C6A;
+    font-weight:600;
+}
+
+.order-icon {
+    color: #2E9C6A;
+    margin-bottom:30px;
+}
+
+.btn {
+    color: #2E9C6A;
+    border: 1px solid #2E9C6A;
+    padding: 10px 20px;
+    margin-top: 12px;
+}
+.btn:hover {
+    color: white;
+    background-color: #2E9C6A;
+ }
+
+

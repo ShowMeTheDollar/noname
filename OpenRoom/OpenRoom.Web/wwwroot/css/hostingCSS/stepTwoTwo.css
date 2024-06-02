@@ -1,0 +1,34 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 控制圖片之間的間隔 */
+}
+
+.img-container {
+    position: relative;
+    display: inline-block;
+}
+
+    .img-container img {
+        width: 100px; /* 或其他尺寸 */
+        height: auto;
+    }
+
+    .img-container button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+

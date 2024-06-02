@@ -1,0 +1,138 @@
+﻿/*取消 footer*/
+.footer-set, .phone-nav-set {
+    display: none;
+}
+
+.reservation-change-container {
+    padding: 10px;
+}
+
+.main-title {
+    font-weight: bold;
+    text-shadow: 5px 5px 3px #b0aeae;
+}
+
+.room-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 20px 20px;
+    box-shadow: 20px 15px 3px #939393;
+}
+
+.room-item-pic img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 5px #e8f7f6;
+}
+
+.room-item-title {
+    font-weight: bold;
+    font-size: large;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.subtitle {
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+/* 預訂詳情---------- */
+.reservation-date-gp,
+.reservation-traveler-gp {
+    margin: 10px 0;
+}
+
+.reservation-date-title,
+.reservation-traveler-title,
+.change-btn {
+    font-weight: bold;
+}
+
+/* 傳送申請---------- */
+.send-request-div {
+    position: fixed;
+    z-index: 3;
+    bottom: 0px;
+    right: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    height: 70px;
+    border-top: 1px solid #8f8d8d;
+    border-bottom: 1px solid #8f8d8d;
+}
+
+.send-request-a {
+    background-color:#000000;
+    margin-left: auto;
+    text-decoration: none;
+    font-weight: bold;
+    color: #fff;
+    padding: 10px 8px;
+    border-radius: 10px;
+}
+
+    .send-request-a:hover {
+        color: #fff;
+        transform: scale(0.96);
+        transition: transform 0.3s;
+    }
+
+section {
+    padding-bottom: 30px;
+}
+
+/* 退訂政策---------- */
+.cancellation-policy-section {
+    margin-bottom: 70px;
+}
+
+@media screen and (max-width:767px) {
+    .desktop-gp {
+        display: none;
+    }
+
+    .phone-gp .reservation-date-gp,
+    .phone-gp .reservation-traveler-gp {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .change-btn {
+        text-decoration: underline;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .phone-gp {
+        display: none;
+    }
+
+    /* 日期--- */
+    .reservation-date-btn-gp,
+    .reservation-traveler-btn-gp {
+        width: 100%;
+    }
+
+    .reservation-date-btn-gp {
+        display: flex;
+        gap: 1px;
+    }
+
+    .reservation-date-title,
+    .reservation-traveler-title {
+        margin-top: 30px;
+    }
+
+    /* 幾人----- */
+    .reservation-traveler-btn-gp {
+        border-radius: 8px;
+    }
+}

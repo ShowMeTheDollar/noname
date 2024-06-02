@@ -1,0 +1,549 @@
+﻿
+@model SourceViewModel
+@{
+    ViewData["Title"] = "Source";
+    Layout = "_LayoutHosting02";
+    var sourceModel = Model;
+}
+
+@section topCSS {
+
+    <!-- CSS  -->
+    <link href="~/css/hostingCSS/source.css" rel="stylesheet" />
+
+}
+
+<!--body-->
+<!-- 搜索區域和按鈕 -->
+<main class="container-lg">
+    <div>
+        <div class="text-left mb-2">
+            <div class="hosting-header">
+                <h2>@Html.DisplayFor(sourceModel => sourceModel.SourceCount)</h2>
+            </div>
+
+            <div class="create-bar d-flex flex-row justify-content-end mb-2 ">
+                <button type="button" class="next btn btn-outline-secondary fw-bold border"> + 建立房源</button>
+            </div>
+        </div>
+        <div class="hosting-navbar search-area">
+            
+            <div class="filter-bar">
+                <button type="button" class="btn btn-outline-secondary room fw-bold border" data-bs-toggle="modal"
+                        data-bs-target="#roomBedModal">
+                    房間與床鋪
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <button type="button" class="btn btn-outline-secondary service fw-bold border"
+                        data-bs-toggle="modal" data-bs-target="#facilityServicesModal">
+                    設備服務
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+
+
+                <button type="button" class="btn btn-outline-secondary state fw-bold border" data-bs-toggle="modal"
+                        data-bs-target="#propertyStatusModal">
+                    房源狀態
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+
+
+                <button type="button" class="btn btn-outline-secondary filter fw-bold border" data-bs-toggle="modal"
+                        data-bs-target="#moreSelectionModal">
+                    更多篩選條件
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <!-- 新增篩選條件按鈕，只在小螢幕顯示 -->
+                <button type="button" class="btn btn-outline-secondary combined-filter-btn fw-bold border"
+                        data-bs-toggle="modal" data-bs-target="#combinedFiltersModal">
+                    篩選條件
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <table class="display hosting" id="sourceDataTable" style="width:100%">
+        @* <caption>上架房源明細</caption> *@
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" class="p-2">
+                    <span>房源</span>
+                </th>
+                <th>
+                    <span>房名</span>
+
+                </th>
+               @*  <th class="hosting-info">
+                    <span>房源描述</span>
+                </th>  *@
+                <th>
+                    <span>狀態</span>
+
+                </th>
+                <th class="hosting-info">
+                    <span>人數</span>
+
+                </th>
+                <th class="hosting-info">
+                    <span>臥室</span>
+
+                </th>
+                <th class="hosting-info">
+                    <span>床位</span>
+
+                </th>
+                <th class="hosting-info">
+                    <span>衛浴</span>
+
+                </th>
+                <th>
+                    <span>設備服務</span>
+
+                </th>
+                <th>
+                    <span>位置</span>
+
+                </th>
+                <th>
+                  @*  <span>最後修改時間</span> *@
+
+                </th> 
+                <th>
+                    <i class="fa-solid fa-gear"></i>
+                    <span>設定</span>
+                </th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @foreach (var item in Model.Sources)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                        <img src=@item.ImgUrl alt="Room" style="width:30px; height:30px;" />
+                        <span>@item.Category</span>
+                    </td>
+                    <td>
+                        <span>@item.Name</span>
+                    </td>
+                    @* <td class="hosting-info">
+                        <span>@item.Description</span>
+                    </td> *@
+                    <td>
+                        <button class="btn btn-light">@item.State</button>
+                    </td>
+                    <td class="hosting-info">
+                        <span>@item.CustomerCount</span>
+                    </td>
+                    <td class="hosting-info">
+                        <span>@item.BathroomCount</span>
+                    </td>
+                    <td class="hosting-info">
+                        <span>@item.BedCount</span>
+                    </td>
+                    <td class="hosting-info">
+                        <span>@item.BathroomCount</span>
+                    </td>
+                    <td class="hosting-info">
+                        <div>
+                            @foreach (var service in item.Services)
+                            {
+                                <span>@service</span>
+                            }
+                            <div />
+                    </td>
+                    <td>
+                        <span>@item.District</span>
+                        <span>@item.City</span>
+                    </td>
+                    <td>
+                        @* <span>@item.ModifiedTime.ToString("yyyy-MM-dd")</span> *@
+                    </td>
+                    <td>
+                        <a class="btn btn-dark edit" asp-controller="Hosting" asp-action="Details" asp-route-roomId="@item.Id">編輯</a><!--用CRUD的ancor--> <!--asp-route-{parameter} 用於向 ASP.NET Core MVC 控制器動作方法傳遞路由參數。-->
+                        @* <a class="btn btn-dark edit" asp-controller="Hosting" asp-action="Calender" asp-route-roomId="">價錢設定</a> *@
+                        <form method="post" action="@Url.Action("Delete", "Hosting")">
+                            <input type="hidden" name="roomId" value="@item.Id" />
+                        @* <button class="btn btn-light delete" data-id="@item.Id">刪除</button> *@
+                        <button class="btn btn-light delete">刪除</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+
+
+
+    @* <footer class="fixed-bottom">
+        <div class="container text-left">
+            <button type="button" class="btn btn-link feedback-button fw-bold">提供回饋</button>
+        </div>
+    </footer> *@
+
+
+    <!-- Room and Bed Modal -->
+    <div class="modal fade" id="roomBedModal" tabindex="-1" aria-labelledby="roomBedModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center">
+                                <label for="bedrooms" class="form-label flex-shrink-0">臥室</label>
+                                <button class="minus btn" type="button">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                </button>
+                                <input type="text" class="form-control border" id="priceInput"
+                                       placeholder="0" aria-label="Amount (to the nearest dollar)">
+                                <button class="plus btn" type="button">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                </button>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <label for="bedrooms" class="form-label flex-shrink-0">床鋪</label>
+                                <button class="minus btn" type="button">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                </button>
+                                <input type="text" class="form-control border" id="priceInput"
+                                       placeholder="0" aria-label="Amount (to the nearest dollar)">
+                                <button class="plus btn" type="button">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                </button>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <label for="bedrooms" class="form-label flex-shrink-0">浴室</label>
+                                <button class="minus btn" type="button">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                </button>
+                                <input type="text" class="form-control border" id="priceInput"
+                                       placeholder="0" aria-label="Amount (to the nearest dollar)">
+                                <button class="plus btn" type="button">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary border me-auto">清除</button>
+                    <button type="button" class="btn btn-dark ms-auto">套用</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Facility Services Modal -->
+    <div class="modal fade" id="facilityServicesModal" tabindex="-1"
+         aria-labelledby="facilityServicesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- Checkbox list start -->
+                    <div class="row">
+                        <!-- First column -->
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kitchen">
+                                <label class="form-check-label" for="kitchen">廚房</label>
+                            </div>
+                            <!-- other items in the first column -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kitchen">
+                                <label class="form-check-label" for="kitchen">空調設備</label>
+                            </div>                         
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kitchen">
+                                <label class="form-check-label" for="kitchen">洗衣機</label>
+                            </div>                          
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kitchen">
+                                <label class="form-check-label" for="kitchen">
+                                    WiFi
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kitchen">
+                                <label class="form-check-label" for="kitchen">
+                                    室內停車
+                                </label>
+                            </div>
+                            
+
+
+                        </div>
+                        <!-- Second column -->
+                        <div class="col-md-6">                            
+                            <!-- other items in the second column -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="wifi">
+                                <label class="form-check-label" for="wifi">游泳池</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="wifi">
+                                <label class="form-check-label" for="wifi">
+                                    按摩浴缸
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="wifi">
+                                <label class="form-check-label" for="wifi">烤肉區</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="wifi">
+                                <label class="form-check-label" for="wifi">庭院</label>
+                            </div>                                                
+                                                                                                           
+                        </div>
+                    </div>
+                    <!-- Checkbox list end -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary border me-auto">清除</button>
+                    <button type="button" class="btn btn-dark ms-auto">套用</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Property Status Modal -->
+    <div class="modal fade" id="propertyStatusModal" tabindex="-1"
+         aria-labelledby="propertyStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="available">
+                        <label class="form-check-label" for="available">已發布</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="notAvailable">
+                        <label class="form-check-label" for="notAvailable">取消發布</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="notAvailable">
+                        <label class="form-check-label" for="notAvailable">建立中</label>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary border me-auto">清除</button>
+                    <button type="button" class="btn btn-dark ms-auto">套用</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- More Selection Modal -->
+    <div class="modal fade" id="moreSelectionModal" tabindex="-1" aria-labelledby="moreSelectionModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="available">
+                        <label class="form-check-label" for="available">即時預訂功能已關閉</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="notAvailable">
+                        <label class="form-check-label" for="notAvailable">必須更新房源</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary border me-auto">清除</button>
+                    <button type="button" class="btn btn-dark ms-auto fw-bold">套用</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Combined Filters Modal -->
+    <div class="modal fade" id="combinedFiltersModal" tabindex="-1"
+         aria-labelledby="combinedFiltersModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="combinedFiltersModalLabel">所有篩選條件</h5>
+                </div>
+                <div class="modal-body">
+                    <!-- Room and Bed Filters -->
+                    <h6 class="fw-bold">房間與床鋪</h6>
+                    <!-- Room and Bed Modal -->
+                    <!-- Single column for room and bed options start -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="d-flex align-items-center">
+                                <label for="bedrooms" class="form-label flex-shrink-0">臥室</label>
+                                <button class="minus btn" type="button">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                </button>
+                                <input type="text" class="form-control border" id="priceInput"
+                                       placeholder="0" aria-label="Amount (to the nearest dollar)">
+                                <button class="plus btn" type="button">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                </button>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <label for="bedrooms" class="form-label flex-shrink-0">床鋪</label>
+                                <button class="minus btn" type="button">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                </button>
+                                <input type="text" class="form-control border" id="priceInput"
+                                       placeholder="0" aria-label="Amount (to the nearest dollar)">
+                                <button class="plus btn" type="button">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                </button>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <label for="bedrooms" class="form-label flex-shrink-0">浴室</label>
+                                <button class="minus btn" type="button">
+                                    <i class="fa-solid fa-circle-minus"></i>
+                                </button>
+                                <input type="text" class="form-control border" id="priceInput"
+                                       placeholder="0" aria-label="Amount (to the nearest dollar)">
+                                <button class="plus btn" type="button">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single column for room and bed options end -->
+                    <!-- Facility Services Filters -->
+                    <div class="facility mb-3">
+                        <h6 class="fw-bold">設備服務</h6>
+                        <!-- Facility Services Modal -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="kitchen">
+                                    <label class="form-check-label" for="kitchen">廚房</label>
+                                </div>
+                                <!-- other items in the first column -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="kitchen">
+                                    <label class="form-check-label" for="kitchen">空調設備</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="kitchen">
+                                    <label class="form-check-label" for="kitchen">洗衣機</label>
+                                </div>
+                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="kitchen">
+                                    <label class="form-check-label" for="kitchen">
+                                        WiFi
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="kitchen">
+                                    <label class="form-check-label" for="kitchen">
+                                        室內停車
+                                    </label>
+                                </div>                                                               
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="wifi">
+                                    <label class="form-check-label" for="wifi">游泳池</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="wifi">
+                                    <label class="form-check-label" for="wifi">
+                                        按摩浴缸
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="wifi">
+                                    <label class="form-check-label" for="wifi">烤肉區</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="wifi">
+                                    <label class="form-check-label" for="wifi">庭院</label>
+                                </div>                                                                                                                             
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Property Status Filters -->
+                    <div class="property-status mb-3">
+                        <h6 class="fw-bold">房源狀態</h6>
+                        <!-- Property Status Modal -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="available">
+                            <label class="form-check-label" for="available">已發布</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notAvailable">
+                            <label class="form-check-label" for="notAvailable">取消發布</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notAvailable">
+                            <label class="form-check-label" for="notAvailable">建立中</label>
+                        </div>
+
+                    </div>
+
+                    <div class="more-selection mb-3">
+                        <!-- More Selection Filters -->
+                        <h6 class="fw-bold">更多篩選條件</h6>
+                        <!-- More Selection Modal -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="available">
+                            <label class="form-check-label" for="available">即時預訂功能已關閉</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="notAvailable">
+                            <label class="form-check-label" for="notAvailable">必須更新房源</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary border me-auto">清除</button>
+                    <button type="button" class="btn btn-dark ms-auto">套用</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+@section endJS {
+
+    <script type="text/javascript">
+        var nextUrl = '@Url.Action("CreateRoom", "Hosting")'; // Razor syntax to generate URL; k@Url.Action("ActionName", "ControllerName")
+        new DataTable('#sourceDataTable');
+    </script>
+    <script src="~/js/hostingJS/next.js" asp-append-version="true"></script>
+    <script src="~/js/hostingJS/sourceDataTable.js" asp-append-version="true"></script>
+    <script src="~/js/hostingJS/dropdownToggleEL.js"></script>
+    
+
+}

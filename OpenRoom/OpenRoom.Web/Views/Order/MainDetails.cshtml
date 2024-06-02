@@ -1,0 +1,511 @@
+﻿@using ApplicationCore.Enums
+@using System.Globalization
+@model OpenRoom.Web.ViewModels.OrderDetailsViewModel
+@{
+    ViewData["Title"] = "MainDetails";
+    Layout = "_LayoutCustomer";
+    var room = Model;
+    var imgUrls = Model.ImgUrls;
+    var checkInDate = room.CheckIn.ToString("MM月dd日");
+    var checkOutDate = room.CheckOut.ToString("MM月dd日");
+    var checkInDayOfWeek = room.CheckIn.DayOfWeek.GetDisplayValue();
+    var checkOutDayOfWeek = room.CheckOut.DayOfWeek.GetDisplayValue();
+    // var checkInDayOfWeek = DayOfWeekEnumHelper.GetDisplayValue(room.CheckInDate.DayOfWeek);
+    // var checkOutDayOfWeek = DayOfWeekEnumHelper.GetDisplayValue(room.CheckOutDate.DayOfWeek);
+    var checkInTime = room.CheckIn.ToString("tt H");
+    var checkOutTime = room.CheckIn.ToString("tt H");
+    CultureInfo culture = new CultureInfo("zh-TW");
+    var cardId = Model.OrderId;
+}
+
+@section topCSS {
+    <link href="~/css/ordercss/maindetails.css" rel="stylesheet" />
+}
+
+@section endJS {
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/js/orderjs/maindetails.js" asp-append-version="true"></script>
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+@section phoneNav {
+    <partial name="_PhoneNavLoginPartial" />
+}
+
+<div class="order-info-container container">
+
+    <div class="order-info-row row">
+        <!-- 房源區 -->
+        <div class="order-room-container col-12 col-sm-12 col-md-5">
+            <span id="receiptId" class="d-none">@cardId</span>
+            <!-- 最上方小圖示 -->
+            <div class="room-icon">
+                <div class="room-icon-left">
+                    <a href="javascript:history.back()" class="up-page-link text-black">
+                        <i class="up-page fa-solid fa-angle-left fa-sm"></i>
+                    </a>
+                </div>
+            </div>
+
+            <h1 class="main-wish-title fw-bold p-2">@room.Title</h1>
+            <!-- 卡片 -->
+            <div class="my-wish-card-section">
+                <div class="have-room-row row">
+                    <!-- 卡片1 -->
+                    <div class="room-item col-12">
+                        <a href="@room.RoomLink" class="room-link" id="@room.RoomId">
+                            <!-- 照片 -->
+                            <div class="room-pic">
+                                <div class="swiper swiper-card-item">
+                                    <div class="swiper-wrapper">
+                                        @if (room != null && imgUrls != null)
+                                        {
+                                            @foreach (var img in imgUrls)
+                                            {
+                                                <div class="swiper-slide">
+                                                    <img src="@img" class="room-img" loading="lazy">
+                                                    <div class="swiper-lazy-preloader swiper-lazy-preloader-openroom"></div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="check-datetime">
+                            <div class="check-in-gp">
+                                <p class="check-in-p fs-4" data-lat="@room.Latitude" data-lng="@room.Longitude">入住</p>
+                                <div class="check-in-date text-secondary fs-5">
+                                    @checkInDate @checkInDayOfWeek
+                                </div>
+                                <div class="check-in-time text-secondary fs-5">
+                                    @($"{checkInTime}點")
+                                </div>
+                            </div>
+                            <div class="line"></div>
+                            <div class="check-out-gp">
+                                <p class="check-out-p fs-4">退房</p>
+                                <div class="check-out-date text-secondary fs-5">
+                                    @checkOutDate @checkOutDayOfWeek
+                                </div>
+                                <div class="check-out-time text-secondary fs-5">
+                                    @($"{checkOutTime}點")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- section 前往房源 按鈕區 -->
+            <section class="trip-lodging-section">
+                <!-- 前往房源 -->
+                @* <button class="go-to-lodging-btn btn" type="button" data-bs-toggle="modal"
+                data-bs-target="#to-view-listing">
+                <div class="btn-left-icon">
+                <i class="fa-solid fa-location-dot"></i>
+                <span class="your-lodging-btn-span">前往房源</span>
+                </div>
+                <div class="btn-right-icon">
+                <i class="fa-solid fa-chevron-right fa-sm"></i>
+                </div>
+                </button> *@
+                <!-- 注意事項 -->
+                <button class="notice-btn btn" type="button" data-bs-toggle="modal" data-bs-target="#rulesModal">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-book-open fa-sm"></i>
+                        <span class="notice-btn-span">注意事項</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+                <!-- 傳送訊息給房東 -->
+                <button class="message-btn btn" type="button" data-bs-toggle="modal" data-bs-target="">
+                    <div class="btn-left-icon">
+                        <i class="fa-regular fa-comment fa-sm"></i>
+                        <span class="message-btn-span">傳送訊息給房東</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+                <!-- 你的房源 -->
+                <a class="your-lodging-btn btn">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-house-chimney fa-sm"></i>
+                        <span class="your-lodging-btn-span">你的房源</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+            </section>
+            <!-- 獨自旅行者的安全建議 按鈕區 -->
+            <section class="safety-advice-section">
+                <h2>給獨自旅行者的安全建議</h2>
+                <!-- 試試這些專家建議 -->
+                <a class="advice-btn btn" type="button" data-bs-toggle="modal" data-bs-target="#to-lodging">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-book"></i>
+                        <span class="advice-btn-span">試試這些專家建議</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+                <!-- 分享住宿地點 -->
+                <button class="share-housing-btn btn" type="button" data-bs-toggle="modal"
+                        data-bs-target="#to-share-housing">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-arrow-up-from-bracket fa-sm"></i>
+                        <span class="share-housing-btn-span">分享住宿地點</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+                <!-- 該向房東提出的問題 -->
+                <button class="ask-q-btn btn" type="button" data-bs-toggle="modal" data-bs-target="#to-lodging">
+                    <div class="btn-left-icon">
+                        <i class="fa-regular fa-comment-dots fa-sm"></i>
+                        <span class="ask-q-btn-span">該向房東提出的問題</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+            </section>
+
+            <!-- 預訂詳情 baabbb -->
+            <section class="booking-details-section">
+
+                <h2>預訂詳情</h2>
+                <div class="fellow-traveler-div">
+                    <span class="fellow-traveler-title fw-bold" >
+                        旅客人數
+                        <p class="fellow-traveler">@($"{room.CustomerCount}人")</p>
+                    </span>
+                    <i class="headshot fa-solid fa-circle-user fa-2xl"></i>
+                </div>
+                <div class="confirmation-code-div">
+                    <span class="confirmation-code-title fw-bold">訂單編號</span>
+                    <p class="confirmation-code">@room.OrderNo</p>
+                </div>
+                <div class="cancellation-policy-div">
+                    <div class="cancellation-policy fw-bold">《退訂政策》</div>
+                    <div class="cancellation-policy-content">指定時間前可以免費取消，在這之後該筆預訂則無法退款。</div>
+                    <div class="read-details fw-bold" data-bs-toggle="modal" data-bs-target="#cancellationModal">
+                        閱讀詳情
+                    </div>
+                </div>
+
+                <button class="travelers-btn btn" type="button" data-bs-toggle="modal" data-bs-target="#to-lodging">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-user-group fa-sm"></i>
+                        <span class="travelers-btn-span">管理旅客</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+
+                <a class="change-booking-btn btn" href="/Order/MainAmend"
+                   target="_blank">
+                    <div class="btn-left-icon">
+                        <i class="fa-regular fa-pen-to-square fa-sm"></i>
+                        <span class="change-booking-btn-span">變更預訂</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+
+                <a class="cancel-booking-btn btn" href="/Order/MainAmend"
+                   target="_blank">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-ban fa-sm"></i>
+                        <span class="cancel-booking-btn-span">取消預訂</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+
+                <button class="pdf-btn btn" type="button" data-bs-toggle="modal" data-bs-target="#to-lodging">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-plane-circle-check fa-sm"></i>
+                        <span class="pdf-btn-span">取得簽證用的PDF檔案</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+
+                <button class="print-btn btn" type="button" data-bs-toggle="modal" data-bs-target="#to-lodging">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-print fa-sm"></i>
+                        <span class="print-btn-pan">列印詳情</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+
+                <a class="receipt-btn btn" href="/Order/Receipt" target="_blank">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-file-invoice-dollar fa-sm"></i>
+                        <span class="receipt-btn-pan">取得收據</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+            </section>
+
+            <!-- 如何前往 -->
+            <section class="address-section">
+                <h2>如何前往</h2>
+
+                <div class="address-div">
+                    <div class="address-title fw-bold">地址</div>
+                    <div class="address-content">
+                        @room.Address
+                    </div>
+                </div>
+
+                <button class="copy-address-btn btn" type="button" data-bs-toggle="modal"
+                        data-bs-target="#to-lodging">
+                    <div class="btn-left-icon">
+                        <i class="fa-regular fa-copy fa-sm"></i>
+                        <span class="copy-address-btn-span">複製地址</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+
+                <a class="directions-btn btn">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-route fa-sm"></i>
+                        <span class="directions-btn-span">路線指引</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+            </section>
+
+            <!-- 房東 section -->
+            @* <section class="landlord-section">
+            <div class="landlord-title">
+            <h2>房東：@room.LandlordName</h2>
+            <i class="fa-solid fa-user fa-xl"></i>
+            </div>
+            <p class="landlord-info">瀏覽更多內容</p>
+            <button class="landlord-btn btn" type="button" data-bs-toggle="modal" data-bs-target="#to-lodging">
+            <div class="btn-left-icon">
+            <i class="fa-solid fa-phone-volume fa-sm"></i>
+            <span class="copy-address-btn-span">打給房東/體驗達人</span>
+            </div>
+            <div class="btn-right-icon">
+            <i class="fa-solid fa-chevron-right fa-sm"></i>
+            </div>
+            </button>
+            </section> *@
+
+            <!-- 付款資訊 section -->
+            <section class="payment-info-section">
+                <h2>付款資訊</h2>
+                <div class="total-cost-title">總費用</div>
+                <div class="total-cost-content">NT$ @room.PriceTotal.ToString("0", culture)</div>
+
+                <button class="add-details-btn btn" type="button" data-bs-toggle="modal"
+                        data-bs-target="#to-lodging">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-pen-to-square fa-sm"></i>
+                        <span class="notice-btn-span">新增詳情，以便替旅程報帳</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </button>
+
+                <a class="receipt-btn btn" href="/Order/Receipt" target="_blank">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-file-invoice-dollar fa-sm"></i>
+                        <span class="receipt-btn-pan">取得收據</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+            </section>
+
+            <!-- 隨時取得用戶支援 section -->
+            <section class="customer-support-section">
+                <h2>隨時取得用戶支援</h2>
+                <div>無論你在哪裡，我們的用戶支援能全天候提供協助。</div>
+
+                <a class="airbnb-support-btn btn">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-headset fa-sm"></i>
+                        <span class="receipt-btn-pan">聯絡 Airbnb 用戶支援</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+
+                <a class="help-center-btn btn">
+                    <div class="btn-left-icon">
+                        <i class="fa-solid fa-question fa-sm"></i>
+                        <span class="receipt-btn-pan">前往說明中心</span>
+                    </div>
+                    <div class="btn-right-icon">
+                        <i class="fa-solid fa-chevron-right fa-sm"></i>
+                    </div>
+                </a>
+            </section>
+        </div>
+
+        <!-- 地圖 ------------------>
+        <div class="order-info-map-container col-12 col-sm-12 col-md-7">
+            <div id="map"></div>
+        </div>
+
+        <!-- 注意事項 彈跳視窗 -->
+        @* @await Html.PartialAsync("~/Views/Shared/SharedModal/_RoomRulesModal.cshtml") *@
+        <div class="modal fade" id="rulesModal">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-body m-1">
+                        <button type="button" class="btn-close mb-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="fs-3 fw-bold mb-2">《房屋守則》</div>
+                        <div class="fs-6 mb-5">你會入住別人的家，因此請愛護房東的房源。</div>
+                        <div class="fs-5 fw-semibold mb-4">入住與退房</div>
+                        <div class="icon-service-group">
+                            <span class="material-symbols-outlined">schedule</span>
+                            <span class="align-middle">入住時間：下午2:00</span>
+                        </div>
+                        <hr>
+                        <div class="icon-service-group">
+                            <span class="material-symbols-outlined">schedule</span>
+                            <span class="align-middle">退房時間：上午11:00</span>
+                        </div>
+                        <hr>
+                        <h4 class="fs-5 fw-semibold mt-5 mb-4">住宿期間</h4>
+                        <div class="icon-service-group">
+                            <span class="material-symbols-outlined">person_add</span>
+                            <span class="align-middle">最多 @($"{room.GuestCount}位")房客</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分享住宿地點 彈跳視窗 -->
+        <div class="modal fade" id="to-share-housing">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="to-share-housing-header d-flex">
+                            <button type="button" class="btn-close me-1" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="to-share-housing-title">
+                                <label for="to-share-housing-recipient-name"
+                                       class="col-form-label fs-3 fw-bold">分享住宿地點</label>
+                                <p class="to-share-housing-p">為防緊急情況發生，請與可信任的好友分享住宿地點。</p>
+                            </div>
+
+                            <div class="share-check-div fs-4">
+                                <div class="share-check-in-div mb-3">
+                                    <div class="share-check-in-title">入住</div>
+                                    <span class="check-in-content fw-bold">
+                                        @checkInDate @checkInDayOfWeek@($"{checkInTime}點")
+                                    </span>
+                                </div>
+                                <div class="share-check-out-div mb-3">
+                                    <div class="share-check-out-title">退房</div>
+                                    <span class="check-out-content fw-bold">
+                                        @checkOutDate @checkOutDayOfWeek@($"{checkOutTime}點")
+                                    </span>
+                                </div>
+                                <div class="share-pin-div mb-3">
+                                    <div class="share-pin-title">訂單編號</div>
+                                    <span class="share-pin-content fw-bold">@room.OrderNo</span>
+                                </div>
+                            </div>
+
+                            <div class="share-address-div mb-3">
+                                <div class="share-address-title">地址</div>
+                                <span class="share-address-content fw-bold">
+                                    @room.Address
+                                </span>
+                                <div class="share-address-content-div fw-bold">臺灣</div>
+
+                                <div class="share-map-container col-12">
+                                    <div class="share-row row">
+                                        <div class="share-map">
+                                            @* <img src="~/images/wish/address-map.jpg" alt="" class="taiwan-map w-100 mb-3"> *@
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="share-btn btn btn-success w-100 mb-2 mt-2 fs-5">分享</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 退訂政策 閱讀詳情 彈跳視窗 -->
+        @await Html.PartialAsync("~/Views/Shared/SharedModal/_CancellationPolicyModal.cshtml")
+        @* <div class="modal fade" id="to-cancellation cancellationModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+        <div class="to-cancellation-header header d-flex">
+        <button type="button" class="btn-close me-1" data-bs-dismiss="modal"
+        aria-label="Close"></button>
+        <h1 class="fs-4 fw-bold" id="to-cancellation-ModalLabel">《退訂政策》</h1>
+        </div>
+        </div>
+        <div class="modal-body">
+
+        <div class="cancel-deadline fs-5 mb-3 fw-bold">取消截止時間</div>
+
+        <div class="full-refund-div">
+        <div class="full-refund-date-title fw-bold">
+        10月27日
+        </div>
+        <div class="full-refund-date-content">全額退款：你將拿回已支付的全部款項。</div>
+        </div>
+        <div class="full-refund-time">下午3:00</div>
+        <hr>
+        <div class="non-refundable-div">
+        <div class="non-refundable-date-title fw-bold">10月29日</div>
+        <div class="non-refundable-date-content">無法退款。</div>
+        </div>
+        <div class="non-refundable-time">下午3:00</div>
+        <div class="non-refundable-check-out">( 退房 )</div>
+        <hr>
+        <p class="non-refundable-p fw-bold"><u>了解更多有關《退訂政策》的事宜</u></p>
+        </div>
+        </div>
+        </div>
+        </div> *@
+
+    </div>
+</div>

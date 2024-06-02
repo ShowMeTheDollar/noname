@@ -1,0 +1,60 @@
+﻿<div class="row row-cols-2 gy-3 gx-0 py-2 px-2 justify-content-between">
+    <div>
+        <div class="fw-bold fs-5">旅客</div>
+        @* <div style="font-size: 0.75rem;">年滿 13 歲</div> *@
+    </div>
+    <div class="text-end">
+        <button v-on:click="minusGuset" :disabled="isDisabled.minusBtn" type="button" class="circle-button btn rounded-circle me-1 px-2 py-1 btn-count align-baseline">
+            <span class="material-symbols-outlined fs-6 align-middle">remove</span>
+        </button>
+        <span class="align-middle">{{　guestCount　}}</span>
+        <button v-on:click="plusGuset" :disabled="isDisabled.plusBtn" type="button" class="circle-button btn rounded-circle ms-1 px-2 py-1 btn-count align-baseline">
+            <span class="material-symbols-outlined fs-6 align-middle">add</span>
+        </button>
+    </div>
+   @*  <div>
+        <div class="fw-bold">兒童</div>
+        <div style="font-size: 0.75rem;">2 - 12 歲</div>
+    </div>
+    <div class="text-end">
+        <button type="button" class="circle-button btn rounded-circle me-1 px-2 py-1 btn-count">
+            <img src="~/images/wish/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+        </button>
+        <span class="align-middle">0</span>
+        <button type="button" class="btn rounded-circle ms-1 px-2 py-1 btn-count">
+            <img src="~/images/wish/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+        </button>
+    </div>
+    <div>
+        <div class="fw-bold">嬰幼兒</div>
+        <div style="font-size: 0.75rem;">2 歲以下</div>
+    </div>
+    <div class="text-end">
+        <button type="button" class="circle-button btn rounded-circle me-1 px-2 py-1 btn-count">
+            <img src="~/images/wish/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+        </button>
+        <span class="align-middle">0</span>
+        <button type="button" class="circle-button btn rounded-circle ms-1 px-2 py-1 btn-count">
+            <img src="~/images/wish/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+        </button>
+    </div>
+    <div>
+        <div class="fw-bold">寵物</div>
+        <div class="with-pets text-decoration-underline" style="font-size: 0.75rem;">
+            會攜帶服務性動物嗎？
+        </div>
+    </div>
+    <div class="text-end">
+        <button type="button" class="circle-button btn rounded-circle me-1 px-2 py-1 btn-count">
+            <img src="~/images/wish/reduce.svg" class="w-75 h-75 align-baseline" alt="reduce-icon">
+        </button>
+        <span class="align-middle">0</span>
+        <button type="button" class="circle-button btn rounded-circle ms-1 px-2 py-1 btn-count">
+            <img src="~/images/wish/add.svg" class="w-75 h-75 align-baseline" alt="add-icon">
+        </button>
+    </div> *@
+    <button v-on:click="closeDropdown" type="button" class="col-auto fw-semibold btn btn-outline-light text-dark text-decoration-underline d-block ms-auto"
+            data-bs-dismiss="dropdown" aria-label="Close">
+        關閉
+    </button>
+</div>

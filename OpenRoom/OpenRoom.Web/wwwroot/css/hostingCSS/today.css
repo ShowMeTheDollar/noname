@@ -1,0 +1,141 @@
+﻿
+
+
+.container .title-body {
+    background-color: rgba(102, 16, 242, 1);
+    background-image: linear-gradient(90deg, rgba(102, 16, 242, 1) 0%, rgba(192, 30, 252, 1) 100%);
+    color: #fff;
+    padding: 20px;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.card {
+    width: 100%;
+    align-items: left;
+    border: 0;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 5%);
+}
+
+
+
+.card-img-top {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+
+/* 卡片懸停效果 */
+.card-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
+    cursor: pointer;
+}
+
+.card-link {
+    text-decoration: none;
+}
+
+    .card-link:hover {
+        text-decoration: none;
+    }
+
+.tab-content {
+    height: 200px;
+    overflow-y: auto;
+}
+
+
+.custom-btn {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-right: 20px;
+    text-align: left;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e1e1e1;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+    .custom-btn:hover {
+        border: 1px solid #000;
+    }
+
+    .custom-btn:last-child {
+        margin-right: 0;
+    }
+
+.icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 0.5rem;
+}
+
+/*footer*/
+.footer-set {
+    border-top: 1px solid #DDDDDD;
+    background-color: #F7F7F7;
+    padding: 20px 60px;
+    font-size: 14px;
+}
+
+    .footer-set a {
+        color: black;
+        text-decoration: none;
+    }
+
+        .footer-set a:hover {
+            text-decoration: underline;
+        }
+
+.footer-box1 {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+    .footer-box1 ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+.footer-item li {
+    margin-bottom: 12px;
+}
+
+.footer-item p {
+    margin: 12px 0px;
+}
+
+.footer-item-title {
+    font-weight: 800;
+}
+
+.footer-box2 {
+    display: flex;
+    justify-content: space-between;
+}
+/* 小螢幕樣式 */
+@media (max-width: 992px) {
+    /*body*/
+    .hosting-info {
+        display: none;
+    }
+    /*footer*/
+    .footer-box1,
+    .footer-box2 {
+        flex-direction: column;
+    }
+
+    footer .footer-item {
+        border-bottom: 1px solid #DDDDDD;
+    }
+}
+

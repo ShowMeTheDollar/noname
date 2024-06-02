@@ -1,0 +1,258 @@
+﻿@import url("../../lib/flatpickr/dist/themes/material_green.css");
+html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6 {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif !important;
+}
+
+hr {
+    color: #dddddd;
+    opacity: 1;
+}
+
+.header-set {
+    position: relative;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.calendar-picker-show .flatpickr-calendar,
+.calendar-picker-show .flatpickr-days,
+.calendar-picker-show .dayContainer {
+    width: 100% !important;
+    max-width: none;
+}
+
+.calendar-picker-show .flatpickr-day {
+    max-width: none
+}
+
+.icon-comment img {
+    width: 16px;
+    height: 16px;
+}
+
+.icon-service-group .material-symbols-outlined {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.btn-roomimg img:hover, .roomimg-modal img:hover {
+    -webkit-filter: brightness(.8);
+}
+
+.mapintroduce-ellipsis, .trafficintroduce-ellipsis, .locationintroduce-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.roomintroduce-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+
+.order-card {
+    top: 10%;
+}
+
+.order-card-body .order-button {
+    background-color: #2E9C6A;
+    border-color: #2E9C6A;
+}
+
+.order-card-body .order-button:hover {
+    background-color: #157347;
+    border-color: #157347;
+}
+
+.btn-orderchoice {
+    outline: 1px solid;
+}
+
+.btn-orderchoice:focus {
+    border: 2px solid black;
+    border-radius: 0.375rem !important;
+}
+
+.circle-button {
+    border: 1px solid #91918f;
+}
+
+.circle-button:hover {
+    border: 1px solid #000;
+    transform: scale(1.05);
+    transition: transform 0.1s;
+}
+
+/*.close-btn,
+.close-btn:hover {
+    width: fit-content;
+    border: 1px solid #c3c2c2;
+    box-shadow: 0px 3px 5px #91918f;
+}
+
+.close-btn:hover {
+    transform: scale(0.96);
+    transition: transform 0.3s;
+}*/
+
+/* 搜尋評價 Search Bar 樣式 */
+.search-form {
+    border-radius: 0px 30px 30px 0px;
+    border: 2px solid darkgray;
+    border-left: none;
+}
+
+.search-btn {
+    border-radius: 30px 0px 0px 30px;
+    border: 2px solid darkgray;
+    border-right: none;
+    cursor: pointer;
+}
+
+/* 整體評分與各別指標區域樣式 */
+.rating-details, .reviews-area-content {
+    overflow: auto;
+}
+
+.rating-item {
+    min-width: 100px;
+}
+/* Score Bar 相關樣式 */
+.rating-overall {
+    min-width: 150px;
+}
+
+.bar-container {
+    width: 95%;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+}
+/* 設定「整體評分表」之中 5 分 ~ 1 分每個 Score Bar 的外觀 */
+.bar-5,
+.bar-4,
+.bar-3,
+.bar-2,
+.bar-1 {
+    height: 4px;
+    background-color: black;
+    border-radius: 5px;
+}
+/* 設定 5 分 ~ 1 分每個 Score Bar 長度 (以寬度比例來設定) */
+.bar-5 {
+    width: 60%;
+}
+
+.bar-4 {
+    width: 30%;
+}
+
+.bar-3 {
+    width: 10%;
+}
+
+.bar-2 {
+    width: 4%;
+}
+
+.bar-1 {
+    width: 15%;
+}
+/*真真的------------------------------*/
+.add-img,
+.new-add-img {
+    height: 64px;
+    width: 64px;
+    border-radius: 10px;
+    
+}
+
+.add-img {
+    height: 64px;
+    width: 64px;
+}
+.new-add-img {
+    height: 34px;
+    width: 34px;
+    margin-left: 15px;
+}
+.add-img-box {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.wishitem-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.new-add-name{
+    margin-left:18px;
+}
+
+
+@media screen and (max-width: 767px) {
+    .footer-set {
+        padding-bottom: 100px;
+    }
+
+    .order-card .flatpickr-calendar {
+        top: -302px !important;
+        left: auto !important;
+        right: 0px !important;
+    }
+
+    .order-card .flatpickr-calendar,
+    .order-card .flatpickr-days {
+        width: 308px !important;
+    }
+
+    .order-card-area {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        margin-top: 200px;
+    }
+
+    .order-card-body {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .order-card-body .order-button {
+        width: 25% !important;
+    }
+
+    .rating-area {
+        background-color: #F8F8F8;
+    }
+
+    .user-card {
+        background-color: white;
+        border: 1px solid transparent;
+        border-radius: 0.375rem
+    }
+}
+
+@media screen and (min-width:768px) {
+    .visible-scrollbar {
+        overflow: auto;
+        height: 75vh;
+    }
+
+    .order-card .flatpickr-calendar {
+        top: 120px !important;
+        left: auto !important;
+        right: 16px !important;
+    }
+}

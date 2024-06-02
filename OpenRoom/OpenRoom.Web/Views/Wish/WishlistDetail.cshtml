@@ -1,0 +1,317 @@
+﻿@model WishlistDetailViewModel
+
+@{
+    ViewData["Title"] = "WishMap";
+    Layout = "_LayoutCustomer";
+    var roomCards = Model.Rooms;
+    var mainTitle = Model.WishlistName;
+    var cardId = Model.Id;
+}
+
+@section topCSS {
+    <!-- flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- wishmap -->
+    <link href="~/css/wishcss/wishmap.css" rel="stylesheet" />
+    <!-- CardPartial -->
+    <link href="~/css/partialviewcss/cardpartial.css" rel="stylesheet" />
+    <!-- _TravelerModelPartial -->
+    <link href="~/css/partialviewcss/_travelermodelpartial.css" rel="stylesheet" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+@section phoneNav {
+    <partial name="_PhoneNavLoginPartial" />
+}
+
+<div id="app" class="my-wish-detail-container container">
+    <div class="my-wish-detail-row row">
+        <!-- 房源區 -->
+        <div class="wish-listings-container col-12 col-sm-12 col-md-7">
+
+            <!-- 最上方小圖示 -->
+            <div class="room-icon">
+                <div class="room-icon-left">
+                    <a href="/Wish/Wishlist">
+                        <i class="up-page fa-solid fa-angle-left fa-sm"></i>
+                    </a>
+                </div>
+                <div class="room-icon-right">
+                    <span class="share-detail" type="button" data-bs-toggle="modal"
+                          data-bs-target="#to-share-detail">
+                        <i class="fa-solid fa-arrow-up-from-bracket fa-sm"></i>
+                    </span>
+                    <span class="rename-settings" type="button" data-bs-toggle="modal"
+                          data-bs-target="#to-rename-settings">
+                        <i class="fa-solid fa-ellipsis fa-sm"></i>
+                    </span>
+                </div>
+            </div>
+
+            <h1 class="main-wish-title">@mainTitle</h1>
+            <span id="wishId" class="d-none">@cardId</span>
+            <!-- 新增日期 人數 -->
+            <div class="date-peoples">
+                @*<button class="create-date" type="datetime-local" id="startDatePicker" onclick="toggleDatePicker()">新增日期</button>*@                
+                <button id="peoples" data-bs-toggle="modal" data-bs-target="#to-peoples">{{ guestCount }}人</button>
+            </div>
+            <!-- 卡片 -->
+            <div class="my-wish-card-container container mb-3">
+                <section class="section-items">
+                    <div class="have-room-row row row-cols-1 row-cols-md-2">
+                        <!-- 卡片1 -->
+                        @foreach (var card in roomCards)
+                        {
+                            @await Html.PartialAsync("_CardPartial", card)
+                        }
+
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+        <!-- 地圖 ------------------------------>
+        <div class="wish-map-container col-12 col-sm-12 col-md-5">
+            <div id="map"></div>
+        </div>
+    </div>
+    <!-- 價格明細 彈跳視窗 ----------------------------------------->
+    <div class="modal fade" id="to-room-item-total">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-lodging-header header d-flex">
+                        <button type="button" class="btn-close me-1" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        <h1 class="fs-4" id="detail-title">價格明細</h1>
+                    </div>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <div class="sub1-set">
+                            <span>$1,667 TWD x 5晚</span>
+                            <span>$8,334 TWD</span>
+                        </div>
+                        <div class="bline"></div>
+                        <div class="sub2-set">
+                            <span>稅前總價</span>
+                            <span>$1,667 TWD</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 設定 彈跳視窗 ----------------------------------------->
+    <div class="modal fade" id="to-rename-settings">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-lodging-header header d-flex">
+                        <button type="button" class="btn-close me-1" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        <h1 class="fs-4" id="detail-title">設定</h1>
+                    </div>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <div class="sub1-set pb-4" data-bs-toggle="modal" data-bs-target="#to-rename-sub">
+                            <i class="sub-set-icon fa-solid fa-pen fa-sm"> 重新命名</i>
+                            <i class="fa-solid fa-angle-right fa-sm"></i>
+                        </div>
+                        <div class="bline"></div>
+                        @*                         <div class="sub2-set pt-4" data-bs-toggle="modal" data-bs-target="#to-delete-sub">
+                        <i class="sub-set-icon fa-solid fa-trash-can fa-sm"> 刪除</i>
+                        <i class="fa-solid fa-angle-right fa-sm"></i>
+                        </div> *@
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 心願單 刪除 彈跳視窗 ---------------------- -->
+    <div class="modal fade" id="to-delete-sub">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-delete-sub-header d-flex">
+                        <button type="button" class="btn-close me-1" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <div class="to-delete-sub-title fw-bold">要刪除此心願單？</div>
+                        <div class="to-delete-sub-content border-bottom pb-4">系統也會從所有共享者的帳號中永久刪除。</div>
+                        <div class="to-delete-sub-btn-gp d-flex justify-content-between mt-3">
+                            <button type="button" class="btn cancel-btn">取消</button>
+                            <button type="button" class="btn btn-dark">刪除</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 心願單 重新命名 彈跳視窗 ------------------------>
+    <div class="modal fade" id="to-rename-sub">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-rename-sub-header header d-flex">
+                        <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="fs-4" id="detail-title">重新命名心願單</h1>
+                    </div>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <textarea class="to-rename-sub-input form-control" id="exampleFormControlTextarea1" rows="3" maxlength="20"></textarea>
+                        <p class="to-rename-sub-input-p mt-2 pb-2 border-bottom">已輸入<span id="charCount">0</span>個字( 最多輸入20個字 )</p>
+                        <div class="to-rename-sub-btn-gp d-flex justify-content-between">
+                            <button type="button" class="btn cancel-btn" data-bs-dismiss="modal" aria-label="Close">取消</button>
+                            <button type="submit" class="btn btn-dark save-btn">儲存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享彈跳視窗 -------------------------------->
+    <div class="modal fade" id="to-share-detail">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-lodging-header header d-flex">
+                        <button type="button" class="btn-close me-1" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        <h1 class="fs-4" id="detail-title">你想要怎麼分享呢?</h1>
+                    </div>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <a href="#" class="send-link-btn">
+                            <i class="fa-solid fa-link fa-xl"></i>
+                            <div class="send-link-gp">
+                                <div class="send-link-title fw-bold">傳送連結</div>
+                                <div class="send-link-content">有此連結的人都可查看</div>
+                            </div>
+                        </a>
+                        <a href="#" class="cooperation-btn">
+                            <i class="fa-solid fa-user-plus fa-xl"></i>
+                            <div class="cooperation-gp">
+                                <div class="cooperation-title fw-bold">合作</div>
+                                <div class="cooperation-content">
+                                    邀請其他人使用此心願單
+                                </div>
+                            </div>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 幾人彈跳視窗---------------------------- -->
+    <div class="modal fade" id="to-peoples">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+
+
+                    <!--內容區------->
+                    <form>
+                        <div class="row row-cols-2 gy-3 gx-0  px-2 justify-content-between">
+                            <div>
+                                <div class="fw-bold fs-5">旅客</div>
+                                @* <div style="font-size: 0.75rem;">年滿 13 歲</div> *@
+
+                            </div>
+                            <div class="text-end">
+                                <button v-on:click="minusGuset" :disabled="isDisabled.minusBtn" type="button" class="circle-button btn rounded-circle me-1 px-2 py-1 btn-count align-baseline">
+                                    <span class="material-symbols-outlined fs-6 align-middle">remove</span>
+                                </button>
+                                <span id="myCount" class="align-middle">{{　guestCount　}}</span>
+                                <button v-on:click="plusGuset" :disabled="isDisabled.plusBtn" type="button" class="circle-button btn rounded-circle ms-1 px-2 py-1 btn-count align-baseline">
+                                    <span class="material-symbols-outlined fs-6 align-middle">add</span>
+                                </button>
+                            </div>
+
+                            <button type="button" id="my-close-btn" class="close-btn btn btn-outline-light text-dark text-decoration-underline d-block ms-auto"
+                                    data-bs-dismiss="modal" aria-label="Close" >
+                                關閉
+                            </button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section endJS {
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    guestCount:1,    // 更新頁面時顯示客人當前選擇的人數
+                    lastGuestCount: 1 // 頁面載入時顯示上一次保存的人數
+                }
+            },
+            methods: {
+                plusGuset() {
+                    this.lastGuestCount = this.guestCount; // 頁面載入時 顯示頁面上一次載入時最後的數字
+                    this.guestCount++;
+                    this.updatePeopleCount();
+                    this.saveToLocalStorage();
+                },
+                minusGuset() {
+                    this.lastGuestCount = this.guestCount;
+                    this.guestCount--;
+                    this.updatePeopleCount();
+                    this.saveToLocalStorage();
+                },
+                updatePeopleCount() {
+                    document.getElementById('peoples').innerText = this.guestCount;
+                },
+                saveToLocalStorage() {
+                    localStorage.setItem('guestCount', this.guestCount);
+                    localStorage.setItem('lastGuestCount', this.lastGuestCount);
+                }
+            },
+            computed: {
+                isDisabled() {
+                    return {
+                        minusBtn: this.guestCount === 1,
+                        plusBtn: this.guestCount === 10
+                    };
+                }
+            },
+            mounted() {
+                const savedGuestCount = localStorage.getItem('guestCount');
+                const savedLastGuestCount = localStorage.getItem('lastGuestCount');
+                if (savedGuestCount !== null) {
+                    this.guestCount = parseInt(savedGuestCount);
+                }
+                if (savedLastGuestCount !== null) {
+                    this.lastGuestCount = parseInt(savedLastGuestCount);
+                }
+                this.updatePeopleCount();
+            }
+        }).mount('#app')
+    </script>
+    <script src="~/js/wishjs/wishlistdetail.js" asp-append-version="true"></script>
+}

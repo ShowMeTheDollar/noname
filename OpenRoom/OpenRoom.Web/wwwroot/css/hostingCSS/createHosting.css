@@ -1,0 +1,103 @@
+﻿
+/*body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}*/
+h1, h2, h3, h4, h5, h6, p, span,
+a, button, label {
+    font-family: "Noto Serif TC",'Arial', serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html body
+.question,
+.save-back,
+.next,
+.back {
+    margin-left: 20px;
+}
+
+html body
+.at-the-end {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0px 20px 0px;
+    z-index:11;
+}
+
+html body
+.progress-wrapper {
+    flex-grow: 1;
+    width: 100%;
+    /* Adjust margin as needed */
+}
+
+html body
+.progress {
+    height: 5px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+
+}
+
+html body
+.progress-bar {
+    height: 100%;
+}
+
+html body
+.back-button-container,
+.next-button-container {
+    flex-grow: 0;
+    /* Prevent buttons from stretching */
+}
+
+/* Style for the back button container */
+html body .back-button-container {
+    /* position: fixed; */
+    left: 3rem;
+    bottom: 1rem;
+    z-index: 10;
+    /* Make sure it's above the progress bar */
+}
+
+/* Style for the back button */
+html body .back.btn {
+    background: transparent;
+    text-decoration: underline;
+    color: #222222;
+    transition: background-color 0.3s;
+    /* Smooth transition for hover effect */
+}
+
+    /* Hover effect for the back button */
+html body .back.btn:hover {
+        background-color: #e0e0e0;
+        /* Light grey background */
+        border: #000;
+    }
+
+html body .next-button-container {
+    /* position: fixed; */
+    right: 5rem;
+    bottom: 1rem;
+}
+
+html body .next.btn.btn-dark {
+    float: right;
+    /* 按鈕向右浮動 */
+}
+
+
+
+
+

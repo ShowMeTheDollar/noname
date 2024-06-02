@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "EasyTable";
+}
+
+<div class="container-fluid px-4">
+    <div id="app">
+        <h1 class="mt-4">房源管理Charts</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="~/Home/Dashboard">Dashboard</a></li>
+            <li class="breadcrumb-item active">房源管理Charts</li>
+        </ol>
+        <div id="circle" style="height: 700px"></div>
+
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <!-- 引入 ECharts 的 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+
+
+    <script>
+        const App = Vue.createApp({
+            data() {
+                return {
+                    items: [],
+                    loading: false
+                }
+            },
+            mounted() {
+                this.getAll();
+            },
+            methods: {
+                async getAll() {
+                    this.loading = true;
+                    const url = new URL('/api/RoomCategory', window.location.origin).href;
+
+                    try {
+                        const res = await axios.get(url);
+                        if (res.status === 200) {
+                            toastr.success("Data loaded successfully!");
+                            console.log("Loaded data:", res.data);
+                            this.items = res.data;
+                            this.initChart();
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        toastr.error("Failed to load data.");
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                initChart() {
+                    const circle = echarts.init(document.getElementById('circle'));
+                    // 組出pie裡面的陣列
+                    const names = ['公寓', '獨棟', '家庭式', '精品', '莊園', '民宿', '小木屋', '帳篷', '露營車'];
+
+                    const numberData = this.items.map((item, index) => ({ name: names[index], value: item.RoomCount }));
+                    console.log(numberData)
+                    circle.setOption({
+                        title: {
+                            text: '房源種類統計'
+                        },
+                        tooltip: {},
+                        series: [
+                            {
+                                name: '數量',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '50%'],
+                                data: numberData,
+                                animationType: 'scale',
+                                animationEasing: 'elasticOut',
+                                animationDuration: 1000,
+                                emphasis: {
+                                    label: {
+                                        fontSize: 18,
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                label: {
+                                    fontSize: 16
+                                }
+                            }
+                        ]
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+}

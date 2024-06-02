@@ -1,0 +1,25 @@
+﻿@model AccountCardViewModel
+@{
+    var card = Model;
+}
+
+
+<a href="@card.InnerLink" class="card-hyperlink @card.OnlyShowWeb">
+    <div class="account-setting-card ">
+        <div class="web-card-icon ">
+            <i class="@card.WebIconClass"></i>
+        </div>
+        <div class="phone-card-icon">
+            <i class="@card.PhoneIconClass"></i>
+        </div>
+        <div class="card-text-box">
+            <div class="card-text-title">
+                <span>@card.AccountTitle</span>
+            </div>
+            <div class="card-text-content">
+                <span>@card.AccountContent</span>
+            </div>
+        </div>
+        <div class="phone-icon-arrow"></div>
+    </div>
+</a>

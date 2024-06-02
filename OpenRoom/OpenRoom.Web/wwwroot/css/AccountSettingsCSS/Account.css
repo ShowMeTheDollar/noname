@@ -1,0 +1,223 @@
+﻿.hyperlink {
+    color: black;
+    text-decoration: none;
+}
+
+.hyperlink-hover:hover {
+    text-decoration: underline;
+}
+
+.content-box {
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+.personal-name {
+    font-weight: 600;
+}
+
+.web-title-box {
+    padding: 0px 20px;
+    margin: 64px 0px 56px;
+}
+
+.web-title-box a,
+.web-title-box h1 {
+    color: black;
+    font-weight: 600;
+}
+
+.card-box a {
+    color: black;
+}
+
+.card-text-box {
+    margin-top: auto;
+}
+
+.account-setting-card {
+    display: flex;
+}
+
+.card-text-content {
+    color: #959184;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.card-hyperlink {
+    text-decoration: none;
+    width: 31.222221%;
+}
+
+.stop-account {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.stop-account-hyperlink a {
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+/*上面桌機設定下面手機設定*/
+
+.phone-title {
+    margin: 48px 24px 32px 0px;
+    font-weight: bolder;
+}
+
+.phone-user-box {
+    display: flex;
+    align-items: center;
+}
+
+.user-img img {
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    margin-right: 16px;
+}
+
+.personal-information p,
+.phone-personal-name {
+    margin: 0;
+}
+
+.personal-information {
+    color: #717171;
+    align-self: center;
+}
+
+.phone-icon-arrow {
+    margin-left: auto;
+}
+
+.phone-icon-arrow::before {
+    content: ">";
+    color: black;
+    font-size: 16px;
+}
+
+.share-your-houses {
+    margin: 30px 0px;
+    padding: 24px;
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    display: flex;
+}
+
+.share-your-houses h2 {
+    margin-top: 18px;
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.share-houses-img {
+    margin: auto 0px auto auto;
+}
+
+.phone-item-box {
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.phone-item {
+    padding: 16px 0px;
+    display: flex;
+}
+
+.phone-card-icon {
+    margin-right: 16px;
+    min-width: 30px;
+}
+
+.phone-item-title {
+    margin: 24px 0px;
+    padding-top: 16px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.phone-footer {
+    margin-top: 16px;
+    padding: 24px 0px;
+}
+
+.logout-Btn button {
+    margin-top: 16px;
+    border: black 1px solid;
+    background-color: white;
+    padding: 13px 23px;
+    width: 100%;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.Terms {
+    margin: 24px;
+    text-align: center;
+}
+
+.Terms a {
+    font-size: 12px;
+    color: black;
+}
+
+.phone-footer-copyright-point {
+    padding: 0px 3px;
+}
+
+.phone-copyright {
+    font-size: 12px;
+    text-align: center;
+}
+/*media設定*/
+@media screen and (max-width:768px) {
+    .content-box {
+        padding: 16px 24px;
+    }
+
+    .card-text-content,
+    .web-title-box,
+    .stop-account,
+    .web-card-icon,
+    .web-card-hyperlink,
+    .footer-set {
+        display: none;
+    }
+
+    .account-setting-card {
+        padding: 16px 0px;
+    }
+}
+
+@media screen and (min-width:769px) {
+    .phone-title-box,
+    .phone-card-icon,
+    .phone-icon-arrow,
+    .phone-content {
+        display: none;
+    }
+
+    .card-box {
+        margin-top: 30px;
+        padding: 0px 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .account-setting-card {
+        height: 170px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        padding: 16px;
+    }
+
+    .card-text-title {
+        vertical-align: baseline;
+        font-weight: 600;
+    }
+}

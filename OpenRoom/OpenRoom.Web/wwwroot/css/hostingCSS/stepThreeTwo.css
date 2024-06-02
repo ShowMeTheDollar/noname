@@ -1,0 +1,26 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+.text {
+    font-size: 18px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+p {
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.fa-regular, a {
+    color: #000;
+}
+
+

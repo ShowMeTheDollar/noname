@@ -1,0 +1,97 @@
+﻿@model OpenRoom.Web.ViewModels.TravelViewModel
+@{
+    ViewData["Title"] = "Travel";
+    Layout = "_LayoutCustomer";
+    var roomCard = Model.UpcomingBookings;
+    var pendingCard = Model.PendingBookings;
+    var noRoomCard = Model.CancelledBookings;
+}
+
+@section topJS {
+    <script src="~/js/orderjs/travel.js" asp-append-version="true"></script>
+}
+
+@section topCSS {
+    <link href="~/css/ordercss/travel.css" rel="stylesheet" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+@section phoneNav {
+    <partial name="_PhoneNavLoginPartial" />
+}
+
+<div class="travels-list-container container">
+    <!-- 即將開始的預訂 -->
+    <h1 class="main-travel-title fw-bold">旅程</h1>
+
+    @{
+        bool noBookings = (roomCard == null || !roomCard.Any()) && (pendingCard == null || !pendingCard.Any());
+    }
+    @if (noBookings)
+    {
+        <div class="start-before-container mb-3">
+            <h2 class="unbooked-title">還沒預訂任何旅程！</h2>
+            <p>該拿出行李箱，開始規劃下一趟冒險之旅了</p>
+            <a href="/Home/Index" class="start-search btn fw-bold">開始搜尋</a>
+        </div>
+    }
+
+    <div class="booking-container">
+        <section class="upcoming-booking row">
+            @if (roomCard.Any())
+            {
+                <h2 class="begin-title">即將開始的預訂</h2>
+                <!-- 卡片 -->
+                @foreach (var card in roomCard.OrderByDescending(c => c.CheckIn))
+                {
+                    @await Html.PartialAsync("_CardTravelPartial", card)
+                    ;
+                }
+            }
+        </section>
+
+        <!-- 待處理的預訂 -->
+        <section class="pending-booking row">
+            @if (pendingCard.Any())
+            {
+                <h2 class="pending-title">待處理的預訂</h2>
+                <!-- 卡片 -->
+                @foreach (var card in pendingCard.OrderByDescending(c => c.CheckIn))
+                {
+                    @await Html.PartialAsync("_CardTravelPartial", card)
+                    ;
+                }
+            }
+
+        </section>
+
+        <!-- 已取消的旅程---------------------->
+        <section class="cancelled-trip row">
+            @if (noRoomCard.Any())
+            {
+            <h2 class="cancel-title mt-2">已取消的旅程</h2>
+                <!-- 卡片 -->
+                @foreach (var card in noRoomCard.OrderByDescending(c => c.CheckIn))
+                {
+                    @await Html.PartialAsync("_CardCancelledTravelPartial",card)
+                    ;
+                }
+            }
+            
+        </section>
+    </div>
+    <!-- 最底部說明中心 -->
+    <div class="trip-list-footer">
+        <p class="help-center-p">
+            在這裡找不到預訂?
+            <a href="#" class="help-center-span fw-bold">前往說明中心</a>
+        </p>
+    </div>
+</div>

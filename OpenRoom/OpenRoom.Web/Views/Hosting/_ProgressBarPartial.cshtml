@@ -1,0 +1,21 @@
+﻿@using OpenRoom.Web.ViewModels.Hosting
+
+
+@{
+    var progressBarModel = Model;
+}
+
+
+
+<div class="progress-wrapper">
+    <div class="progress">
+        <div class="progress-bar one" role="progressbar" style="width: @progressBarModel.ProgressOnePercentage%" aria-valuenow="0" aria-valuemin="0"
+             aria-valuemax="100"></div>
+        <div class="progress-bar bg-dark two" role="progressbar" style="width: @progressBarModel.ProgressTwoPercentage%" aria-valuenow="0"
+             aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-info three" role="progressbar" style="width: @progressBarModel.ProgressThreePercentage%" aria-valuenow="0"
+             aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+
+

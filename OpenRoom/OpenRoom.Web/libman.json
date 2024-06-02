@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "swiper@11.0.6",
+      "destination": "wwwroot/lib/swiper/"
+    },
+    {
+      "library": "flatpickr@4.6.13",
+      "destination": "wwwroot/lib/flatpickr/"
+    },
+    {
+      "library": "leaflet@1.9.4",
+      "destination": "wwwroot/lib/leaflet/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "font-awesome@6.5.1",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "datatables.net-bs5@2.0.1",
+      "destination": "wwwroot/lib/datatables.net-bs5/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "vue@3.4.21",
+      "destination": "wwwroot/lib/vue/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "js-cookie@3.0.5",
+      "destination": "wwwroot/lib/js-cookie/"
+    },
+    {
+      "library": "sortablejs@1.15.2",
+      "destination": "wwwroot/lib/sortablejs/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "sweetalert2@11.10.7",
+      "destination": "wwwroot/lib/sweetalert2/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "axios@1.6.8",
+      "destination": "wwwroot/lib/axios/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "leaflet.markercluster@1.5.3",
+      "destination": "wwwroot/lib/leaflet.markercluster/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "lodash.js@4.17.21",
+      "destination": "wwwroot/lib/lodash.js/"
+    }
+  ]
+}

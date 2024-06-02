@@ -1,0 +1,161 @@
+﻿.search-results-set {
+    display: flex;
+}
+
+.search-results {
+    width: 60%;
+}
+
+
+/* section-items */
+.card-section-set {
+    width: 100%;
+}
+
+/* .section-items {} */
+
+.section-items .item-container {
+    position: relative;
+}
+
+.section-items .like-btn {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: auto;
+    right: 20px;
+    z-index: 2;
+    font-size: 24px;
+    cursor: pointer;
+    color: #fff;
+}
+
+    .section-items .like-btn:hover {
+        color: #ff385c;
+        transition: color 0.5s;
+    }
+
+.section-items a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+}
+
+.section-items .img-box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.section-items img {
+    width: 100%;
+}
+
+.section-items .info-group {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.section-items .info-group span {
+    display: block;
+    line-height: 19px;
+    font-weight: 600;
+}
+
+.section-items .info-group .info-description {
+    color: #333;
+    font-weight: 300;
+}
+
+.section-items .info-group .info-price {
+    margin-top: 5px;
+}
+
+.section-items .info-group span:last-child {
+    position: absolute;
+    left: auto;
+    right: 0;
+}
+
+
+/* search-results-map */
+.search-results-map {
+    width: 40%;
+}
+
+.search-results-map #map {
+    height: 100%;
+    z-index: 1;
+}
+
+/* pagination-set */
+.pagination-set {
+    padding: 0px 60px;
+    position: relative;
+    z-index: 0;
+}
+
+.pagination {
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    width: 40px;
+    height: 40px;
+    border: 0px;
+    text-align: center;
+    line-height: 30px;
+    box-sizing: border-box;
+}
+
+.pagination-set .pagination .page-link {
+    border-radius: 50%;
+    color: #2E9C6A;
+}
+
+.pagination .active .page-link {
+    background-color: #2E9C6A;
+    color: #ffffff;
+}
+
+/* overwrite sticky hight */
+.category-set {
+    top: 80.67px;
+}
+
+@media (max-width: 768px) {
+
+    .search-results-map {
+        display: none;
+    }
+
+    .search-results-set .search-results {
+        width: 100%;
+    }
+    .category-set {
+        top: 78px;
+    }
+}
+
+.room-link {
+    cursor: pointer;
+}
+
+/*leaflet*/
+.leaflet-container .product-link {
+    color: #000;
+    text-decoration: none;
+}
+
+.leaflet-popup-close-button {
+    display: none;
+}

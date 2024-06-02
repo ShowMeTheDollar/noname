@@ -1,0 +1,87 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "OrderCharts";
+}
+
+<div class="container-fluid px-4">
+    <div id="app">
+        <h1 class="mt-4">訂單Charts</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="~/Home/Index">Dashboard</a></li>
+            <li class="breadcrumb-item active">訂單Charts</li>
+        </ol>
+        <div id="circle" style="height: 700px"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- 引入 ECharts 的 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+    <script>
+        const App = Vue.createApp({
+            data() {
+                return {
+                    items: [],
+                    loading: false
+                }
+            },
+            mounted() {
+                this.getAll();
+            },
+            methods: {
+                async getAll() {
+                    this.loading = true;
+                    const url = new URL('/api/OrderList/GetOrderRoomCategory', window.location.origin).href;
+
+                    try {
+                        const res = await axios.get(url);
+                        if (res.status === 200) {
+                            toastr.success("Data loaded successfully!");
+                            console.log("Loaded data:", res.data);
+                            this.items = res.data.map(item => ({ name: this.extractCategoryName(item.roomCategoryName), value: item.count }));
+                            this.initChart();
+                        }
+                    } catch (error) {
+                        console.error(error);
+                        toastr.error("Failed to load data.");
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                extractCategoryName(category) {
+                    return category.split(' ')[0];
+                },
+                initChart() {
+                    const circle = echarts.init(document.getElementById('circle'));
+                    circle.setOption({
+                        title: {
+                            text: '訂單房源種類統計'
+                        },
+                        tooltip: {},
+                        series: [
+                            {
+                                name: '數量',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '50%'],
+                                data: this.items,
+                                animationType: 'scale', // 動畫縮放
+                                animationEasing: 'elasticOut',
+                                animationDuration: 1000, 
+                                emphasis: { // 強調
+                                    label: {
+                                        fontSize: 18, 
+                                        fontWeight: 'bold'
+                                    }
+                                },
+                                label: { 
+                                    fontSize: 16
+                                }
+                            }
+                        ]
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+}

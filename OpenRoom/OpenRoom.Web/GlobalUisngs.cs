@@ -1,0 +1,16 @@
+﻿global using OpenRoom.Web.Models;
+global using OpenRoom.Web.ViewModels;
+global using OpenRoom.Web.ViewModels.Hosting;
+global using OpenRoom.Web.Interfaces;
+global using OpenRoom.Web.Helpers;
+global using OpenRoom.Web.Services;
+global using Microsoft.AspNetCore.Mvc;
+global using System.IO;
+global using CloudinaryDotNet;
+global using CloudinaryDotNet.Actions;
+global using Microsoft.AspNetCore.Authentication.Cookies;
+global using Microsoft.AspNetCore.Authentication.Google;
+global using Microsoft.AspNetCore.Authentication.Facebook;
+global using Newtonsoft.Json;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;

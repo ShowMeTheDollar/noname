@@ -1,0 +1,15 @@
+﻿@model ReviewCardViewModel
+<article class="swiper-slide border rounded-4 p-3 h-auto d-flex flex-column">
+    <div class="user-comment">
+        <p>@Model.Description</p>
+    </div>
+    <div class="user-profile mt-auto">
+        <a asp-controller="AccountSettings" asp-action="UserProfile" asp-route-id="@Model.Id" target="_blank" class="text-decoration-none">
+            <img src="@Model.ImgUrl" alt="使用者大頭貼" class="user-photo d-inline-block rounded-circle me-2 align-top">
+        </a>
+        <p class="d-inline-block user-name m-0 fw-semibold">
+            @Model.Name<br>
+            <span class="rating-date fw-normal" style="font-size: 0.875rem;">@Model.CreateAt.ToString("yyyy年MM月")</span>
+        </p>
+    </div>
+</article>

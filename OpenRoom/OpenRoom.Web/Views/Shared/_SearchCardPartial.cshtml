@@ -1,0 +1,36 @@
+﻿@model SearchRoomItem
+
+@{
+    var cardModel = Model;
+
+}
+
+<div class="col item-container">
+    <a class="room-link" id="@cardModel.Id">
+        <div class="img-box">
+            <div class="swiper swiper-card-item">
+                <div class="swiper-wrapper">
+                    @foreach (var img in cardModel.ImgUrls)
+                    {
+                        <div class="swiper-slide">
+                            <img src="@img" loading="lazy">
+                            <div class="swiper-lazy-preloader swiper-lazy-preloader-openroom"></div>
+                        </div>
+                    }
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="info-box">
+            <p class="info-group">
+                <span class="info-name">@cardModel.RoomName</span>
+                <span class="info-description" data-lat="@cardModel.Latitude" data-lng="@cardModel.Longitude">@cardModel.RoomCategory</span>
+                <span class="info-price">$@cardModel.FixedPrice.ToString("N0") TWD</span>
+                <span class="info-rate">
+                    <i class="fa-solid fa-star"></i>
+                    @cardModel.Review
+                </span>
+            </p>
+        </div>
+    </a>
+</div>

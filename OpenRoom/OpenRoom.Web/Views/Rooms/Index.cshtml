@@ -1,0 +1,1363 @@
+﻿@model RoomDetailViewModel
+
+@{
+    Layout = "_LayoutCustomer";
+    var viewModel = Model;
+    string jsonCheckIn = JsonConvert.SerializeObject(Model.CheckIn);
+    string jsonCheckOut = JsonConvert.SerializeObject(Model.CheckOut);
+}
+
+
+@section topCSS {
+    <link href="~/css/RoomsCSS/room.css" rel="stylesheet" asp-append-version="true" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+<main id="vuejs" class="container row row-cols-1 g-0 mx-auto">
+    <section class="mt-4 d-flex flex-column flex-md-row justify-content-between">
+        <div class="order-md-0 order-1 mx-2 mx-md-0">
+            <h1 class="fs-3 fw-semibold mx-1 mx-md-0">@viewModel.RoomName</h1>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-md-none">
+                <a v-on:click="pageGoBack" type="button">
+                    <span class="material-symbols-outlined fs-6 align-middle text-black">arrow_back_ios</span>
+                </a>
+            </div>
+            <div class="btn-group order-md-1 order-0">
+                <button type="button" class="btn btn-outline-light text-black d-flex align-items-md-end">
+                    <div class="me-2">
+                        <span class="material-symbols-outlined fs-6 align-middle">ios_share</span>
+                    </div>
+                    <div class="fw-semibold lh-sm text-decoration-underline d-none d-md-block">
+                        分享
+                    </div>
+                </button>
+                <button id="saveButton" v-on:click="addWishlistBtn" type="button" class="btn btn-outline-light text-black d-flex align-items-md-end">
+                    <div class="me-2">
+                        <span class="material-symbols-outlined fs-6 align-middle">favorite</span>
+                    </div>
+                    <div @* data-bs-toggle="modal" data-bs-target="#wishlistModal" *@ class="fw-semibold lh-sm text-decoration-underline d-none d-md-block">
+                        收藏
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="swiper mb-4 d-md-none" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+            <div class="swiper-wrapper">
+                @foreach (var RoomImgUrl in viewModel.RoomImgUrls.OrderByDescending(r => viewModel.RoomImgUrls.IndexOf(r) == 0 || viewModel.RoomImgUrls.IndexOf(r) == 5 ? 0 : 1).Take(5))
+                {
+                    <div class="swiper-slide">
+                        <img src="@RoomImgUrl" class="img-fluid" alt="...">
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="row g-2 mt-4 d-none d-md-flex">
+        <div type="button" class="btn-roomimg col-md-6" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+            <img src="@viewModel.RoomImgUrls[6]" class="img-fluid rounded-start-4" alt="...">
+        </div>
+        <div class="col-md-3 d-flex flex-column justify-content-between">
+            <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                <img src="@viewModel.RoomImgUrls[1]" class="img-fluid" alt="...">
+            </div>
+            <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                <img src="@viewModel.RoomImgUrls[2]" class="img-fluid" alt="...">
+            </div>
+        </div>
+        <div class="col-md-3 d-flex flex-column justify-content-between">
+            <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                <img src="@viewModel.RoomImgUrls[3]" class="img-fluid rounded-end-4 rounded-bottom-0" alt="...">
+            </div>
+            <div type="button" class="btn-roomimg" data-bs-toggle="modal" data-bs-target="#roomphotosModal">
+                <img src="@viewModel.RoomImgUrls[4]" class="img-fluid rounded-bottom-4 rounded-start-0" alt="...">
+            </div>
+        </div>
+    </section>
+
+    <section class="row mt-4">
+        <div class="col-12 col-md-7">
+            <div class="pb-4 border-bottom">
+                <h2 class="fs-4 fw-semibold mb-0">位於@(viewModel.CountryName)@(viewModel.CityName)@(viewModel.DistrictName)的房間</h2>
+                <p class="mb-2">@(viewModel.BedroomCount) 間臥室 · @(viewModel.BedCount) 張床 · @(viewModel.BathroomCount) 間衛浴</p>
+                <div>
+                    <span class="icon-comment align-baseline">
+                        <img src="~/svgs/star.svg" alt="star-icon">
+                    </span>
+                    <span class="fw-semibold align-middle">@viewModel.Rating</span>
+                    <span class="fw-semibold align-middle"> · </span>
+                    <a href="#" class="fw-semibold align-middle text-decoration-underline text-dark" data-bs-toggle="modal" data-bs-target="#allReviewsModal">6 則評價</a>
+                </div>
+            </div>
+
+            <div class="py-4 border-bottom d-flex align-items-center">
+                <a href="#landlord-profile" class="me-4">
+                    <img src="@viewModel.AvatarUrl" class="img-fluid rounded-circle" style="width:40px; height:40px;" alt="...">
+                </a>
+                <div>
+                    <p class="fw-semibold mb-0">房東／體驗達人：@viewModel.LandlordName</p>
+                    <p class="text-secondary mb-0" style="font-size: 0.875rem;">超讚房東 · 3 年待客經驗</p>
+                </div>
+            </div>
+
+            <div class="py-4 border-bottom row row-cols-1 gy-4">
+                <div class="d-flex align-items-center">
+                    <div class="me-4 px-1">
+                        <span class="material-symbols-outlined fs-2 align-middle">scene</span>
+                    </div>
+                    <div>
+                        <p class="fw-semibold mb-0">出租房源裡的房間</p>
+                        <p class="text-secondary mb-0" style="font-size: 0.875rem;">在房源內享有專屬的房間，也能使用共用空間。</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="me-4 px-1">
+                        <span class="material-symbols-outlined fs-2 align-middle">location_away</span>
+                    </div>
+                    <div>
+                        <p class="fw-semibold mb-0">共用的公共空間</p>
+                        <p class="text-secondary mb-0" style="font-size: 0.875rem;">你將共享房源的部分空間。</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="me-4 px-1">
+                        <span class="material-symbols-outlined fs-2 align-middle">bathtub</span>
+                    </div>
+                    <div>
+                        <p class="fw-semibold mb-0">共用衛浴</p>
+                        <p class="text-secondary mb-0" style="font-size: 0.875rem;">你會與他人共用浴室。</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="me-4 px-1">
+                        <span class="material-symbols-outlined fs-2 align-middle">edit_calendar</span>
+                    </div>
+                    <div>
+                        <p class="fw-semibold mb-0">在5月11日下午2:00前可以免費取消</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-4 border-bottom">
+                <div>
+                    系統已自動翻譯部分資訊。
+                    <span type="button" class="fw-semibold text-decoration-underline">顯示原文</span>
+                </div>
+            </div>
+
+            <div class="py-4 border-bottom">
+                <h3 class="fs-4 fw-bold mb-4" id="landlord-profile">房東簡介</h3>
+                <div class="py-4 rounded-4" style="background-color: #f0efe9;">
+                    <div class="w-75 mx-auto">
+                        <a href="/Users/Show/@viewModel.LandlordId?room=@viewModel.RoomId" class="card py-3 rounded-5 shadow text-decoration-none">
+                            <div class="row g-0 justify-content-evenly">
+                                <div class="col-4 text-center align-self-center">
+                                    <div class="w-75">
+                                        <img src="@viewModel.AvatarUrl" class="img-fluid rounded-circle mb-2" style="width: 120px; height: 120px;" alt="...">
+                                        <div class="fs-4 fw-bold">@viewModel.LandlordName</div>
+                                        <div class="fw-semibold">超讚房東</div>
+                                    </div>
+                                </div>
+                                <div class="col-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="fs-5 fw-bold">6</div>
+                                        <div class="fw-semibold" style="font-size: 0.7rem;">評價</div>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <div class="fs-5 fw-bold">4.87</div>
+                                        <div class="fw-semibold" style="font-size: 0.7rem;">評分</div>
+                                    </div>
+                                    <hr>
+                                    <div>
+                                        <div class="fs-5 fw-bold">3</div>
+                                        <div class="fw-semibold" style="font-size: 0.7rem;">年待客經驗</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div v-if="profiles[0]" class="d-flex align-items-center mt-3">
+                            <div class="me-1">
+                                <span class="material-symbols-outlined align-middle">business_center</span>
+                            </div>
+                            <div>
+                                <p class="mb-0">我的工作：@viewModel.Job</p>
+                            </div>
+                        </div>
+                        <div v-if="profiles[1]" class="d-flex align-items-center mt-3">
+                            <div class="me-1">
+                                <span class="material-symbols-outlined align-middle">language</span>
+                            </div>
+                            <div>
+                                <p class="mb-0">我會說@(viewModel.Language)</p>
+                            </div>
+                        </div>
+                        <div v-if="profiles[2]" class="d-flex align-items-center mt-3">
+                            <div class="me-1">
+                                <span class="material-symbols-outlined align-middle">person_pin_circle</span>
+                            </div>
+                            <div>
+                                <p class="mb-0">我住在@(viewModel.Live)</p>
+                            </div>
+                        </div>
+                        <div v-if="profiles[3]" class="d-flex align-items-center mt-3">
+                            <div class="me-1">
+                                <span class="material-symbols-outlined align-middle">favorite</span>
+                            </div>
+                            <div>
+                                <p class="mb-0">我很熱衷於@(viewModel.Obsession)</p>
+                            </div>
+                        </div>
+                        <div v-if="profiles[4]" class="d-flex align-items-center mt-3">
+                            <div class="me-1">
+                                <span class="material-symbols-outlined align-middle">pets</span>
+                            </div>
+                            <div>
+                                <p class="mb-0">寵物：@(viewModel.Pet)</p>
+                            </div>
+                        </div>
+                        <p class="mt-4">
+                            @viewModel.SelfIntroduction
+                        </p>
+                        <div>
+                            <a asp-controller="AccountSettings" asp-action="UserProfile" asp-route-id="@viewModel.LandlordId" asp-route-room="@viewModel.RoomId" class="fw-semibold text-dark">
+                                顯示更多內容
+                                <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                            </a>
+                        </div>
+                        <div class="py-4 border-bottom border-secondary" data-bs-toggle="modal" data-bs-target="#chatModal">
+                            <button type="button" class="btn btn-dark btn-lg fw-semibold">傳訊息給房東</button>
+                        </div>
+                        <p class="my-3" style="font-size: 0.85rem;">
+                            為了確保你的付款安全，請勿透過 Airbnb 網站或應用程式以外的方式來匯款或聯絡。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <h3 class="fs-4 fw-bold mb-4">房源介紹</h3>
+                    <p class="roomintroduce-ellipsis">
+                        @Html.Raw(viewModel.RoomDescription)
+                    </p>
+                    <div>
+                        <a href="#" class="fw-semibold text-dark" data-bs-toggle="modal" data-bs-target="#roomintroduceModal">
+                            顯示更多內容
+                            <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-4 border-bottom">
+                <h3 class="fs-4 fw-bold mb-4">有提供的設備與服務</h3>
+                <div class="row row-cols-1 row-cols-md-2 gy-3 mb-4">
+                    @for (int i = 0; i < viewModel.AmentityName.Count; i++)
+                    {
+                        <div class="icon-service-group">
+                            @Html.Raw(viewModel.AmentityIcon[i])
+                            <span class="align-middle">@viewModel.AmentityName[i]</span>
+                        </div>
+                    }
+                </div>
+                <div class="row-cols-1">
+                    <button type="button" class="btn btn-outline-light border border-dark fw-semibold text-black col-md-auto" data-bs-toggle="modal" data-bs-target="#serviceModal">顯示全部 15 項設備與服務</button>
+                </div>
+            </div>
+
+            <div class="py-4">
+                <h3 class="fs-4 fw-bold">選擇入住日期</h3>
+                <p class="text-secondary" style="font-size: 0.875rem;">新增旅行日期，查看確切價格</p>
+                <!-- 插入日期選擇器 -->
+                <div class="calendar-picker-show"></div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-light rounded-circle d-none d-md-block">
+                        <img src="~/svgs/keyboard.svg" class="w-75 h-100" alt="keyboard-icon">
+                    </button>
+                    <button v-on:click="clearCalendar" type="button" class="btn btn-outline-light fw-semibold text-black text-decoration-underline" style="font-size: 0.875rem;">
+                        清除日期
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-5 pb-md-4 row g-0 align-items-start order-card-area">
+            <div class="card col-12 col-md-9 ms-md-auto rounded-3 shadow sticky-md-top order-card">
+                <div class="card-body order-card-body">
+                    <h5 v-if="averagePrice > 0" class="fw-semibold mb-md-4 mb-0">
+                        ${{ averagePrice.toLocaleString() }} TWD
+                        <span class="fw-normal" style="font-size: 0.875rem;">晚</span>
+                        <div class="fs-6 fw-normal mt-2 d-md-none">
+                            {{ `${selectedCheckIn.split("-")[1]}月${selectedCheckIn.split("-")[2]}日` }}至{{ `${selectedCheckOut.split("-")[1]}月${selectedCheckOut.split("-")[2]}日` }}
+                        </div>
+                    </h5>
+                    <div v-else class="fs-5 mb-4">
+                        新增日期以查看價格
+                    </div>
+
+                    <button type="button" class="calendar-picker-hide position-relative w-100 btn btn-orderchoice rounded-bottom-0 d-none d-md-block">
+                        <div class="row row-cols-2 text-start">
+                            <div class="border-end border-secondary">
+                                <div class="fw-semibold" style="font-size: 0.7rem;">入住</div>
+                                <div class="text-secondary" style="font-size: 0.875rem;">{{ selectedCheckIn }}</div>
+                            </div>
+                            <div>
+                                <div class="fw-semibold" style="font-size: 0.7rem;">退房</div>
+                                <div class="text-secondary" style="font-size: 0.875rem;">{{ selectedCheckOut }}</div>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- 訂房資料填寫下拉選單 -->
+                    <div class="dropdown mb-3 d-none d-md-block">
+                        <button type="button" class="w-100 btn btn-orderchoice rounded-top-0 dropdown-toggle d-flex justify-content-between align-items-center" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" ref="dropdownGuest">
+                            <div>
+                                <div class="fw-semibold" style="font-size: 0.7rem;">旅客</div>
+                                <div style="font-size: 0.875rem;">{{ guestCount }} 人</div>
+                            </div>
+                        </button>
+                        <div class="dropdown-menu w-100">
+                            @await Html.PartialAsync("_TravelerModelPartial")
+                        </div>
+                    </div>
+                    <div v-if="totalPrice > 0" class="mb-2 d-none d-md-block">
+                        <hr />
+                        <div class="d-flex justify-content-between fs-6 fw-semibold">
+                            <span>總價</span>
+                            <div>
+                                ${{ totalPrice.toLocaleString() }} TWD
+                            </div>
+                        </div>            
+                    </div>
+
+                    <button type="button" class="fw-bold w-100 btn btn-success order-button p-0">
+                        <a asp-controller="Book" asp-action="Stays" class="text-decoration-none text-white d-block p-2">
+                            {{ orderBtnText }}
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="rating-area row g-0 py-4 border-top order-2 order-md-0">
+        <div class="pb-3">
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="~/svgs/bay-leaf-left.jpg" alt="bayleaf-left-icon" style="width: 85px; height: 120px;" class="d-inline-block">
+                <p class="d-inline-block fw-semibold m-0 lh-1 align-self-start" style="font-size: 85px;">@viewModel.Rating</p>
+                <img src="~/svgs/bay-leaf-right.jpg" alt="bayleaf-right-icon" style="width: 85px; height: 120px;" class="d-inline-block">
+            </div>
+            <div class="text-center">
+                <p class="fs-4 fw-semibold m-0">旅客精選</p>
+                <p class="fs-5 text-black-50">根據評分、評價與可靠性標準所選出的熱門房源</p>
+            </div>
+        </div>
+        <div class="rating-details d-flex justify-content-between pb-4 border-bottom d-none d-md-flex">
+            <!-- 整體評分 -->
+            <div class="rating-overall">
+                <p class="fw-semibold mb-2">整體評分</p>
+                <!-- 以下製作 5 分 ～ 1 分的 Score Bar -->
+                <div class="row g-0">
+                    <div class="col-1" style="font-size: 12px;">
+                        <div>5</div>
+                    </div>
+                    <div class="m-auto col-11">
+                        <div class="bar-container">
+                            <div class="bar-5"></div>
+                        </div>
+                    </div>
+                    <div class="col-1" style="font-size: 12px;">
+                        <div>4</div>
+                    </div>
+                    <div class="m-auto col-11">
+                        <div class="bar-container">
+                            <div class="bar-4"></div>
+                        </div>
+                    </div>
+                    <div class="col-1" style="font-size: 12px;">
+                        <div>3</div>
+                    </div>
+                    <div class="m-auto col-11">
+                        <div class="bar-container">
+                            <div class="bar-3"></div>
+                        </div>
+                    </div>
+                    <div class="col-1" style="font-size: 12px;">
+                        <div>2</div>
+                    </div>
+                    <div class="m-auto col-11">
+                        <div class="bar-container">
+                            <div class="bar-2"></div>
+                        </div>
+                    </div>
+                    <div class="col-1" style="font-size: 12px;">
+                        <div>1</div>
+                    </div>
+                    <div class="m-auto col-11">
+                        <div class="bar-container">
+                            <div class="bar-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 乾淨度 -->
+            <div class="rating-item ps-4 border-start d-flex flex-column">
+                <p class="fw-semibold p-0 m-0">乾淨度</p>
+                <p class="cleaness p-0 m-0">4.9</p>
+                <div class="material-symbols-outlined mt-auto fs-2">household_supplies</div>
+            </div>
+            <!-- 準確性 -->
+            <div class="rating-item ps-4 border-start d-flex flex-column">
+                <p class="fw-semibold p-0 m-0">準確性</p>
+                <p class="accuracy p-0 m-0">4.7</p>
+                <div class="material-symbols-outlined mt-auto fs-2">check_circle</div>
+            </div>
+            <!-- 入住 -->
+            <div class="rating-item ps-4 border-start d-flex flex-column">
+                <p class="fw-semibold p-0 m-0">入住</p>
+                <p class="check-in p-0 m-0">4.8</p>
+                <div class="material-symbols-outlined mt-auto fs-2">key</div>
+            </div>
+            <!-- 溝通 -->
+            <div class="rating-item ps-4 border-start d-flex flex-column">
+                <p class="fw-semibold p-0 m-0">溝通</p>
+                <p class="communication p-0 m-0">4.9</p>
+                <div class="material-symbols-outlined mt-auto fs-2">chat_bubble</div>
+            </div>
+            <!-- 地點 -->
+            <div class="rating-item ps-4 border-start d-flex flex-column">
+                <p class="fw-semibold p-0 m-0">地點</p>
+                <p class="location p-0 m-0">4.8</p>
+                <div class="material-symbols-outlined mt-auto fs-2">map</div>
+            </div>
+            <!-- 性價比 -->
+            <div class="rating-item ps-4 border-start d-flex flex-column">
+                <p class="fw-semibold p-0 m-0">性價比</p>
+                <p class="cp p-0 m-0">4.9</p>
+                <div class="material-symbols-outlined mt-auto fs-2">sell</div>
+            </div>
+        </div>
+        <div class="reviews-area-content row row-cols-md-2 py-4 pt-md-2 flex-nowrap flex-md-wrap gap-2 gap-md-0">
+            @foreach (var review in viewModel.ReviewCards)
+            {
+                <partial name="_ReviewCardPartial" model="review" />
+            }
+        </div>
+
+        <button type="button" class="col-12 col-md-3 btn btn-light border-black fw-semibold px-4 py-2 mt-3 mt-md-0" data-bs-toggle="modal" data-bs-target="#allReviewsModal">
+            顯示全部&ensp;<span class="rating-count">6</span>&ensp;則評價
+        </button>
+    </section>
+
+    <section class="row row-cols-1 py-4 border-top order-1 order-md-0">
+        <h3 class="fs-4 fw-bold mb-3">住宿地點</h3>
+        <!-- 插入地圖 -->
+        <div id="main-map" class="z-0" data-lat="@viewModel.Latitude" data-lng="@viewModel.Longitude" style="position: relative; width: 100%; padding-top: 45%">
+            @* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22012.483921265182!2d121.56128592274057!3d25.034135304630457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abb6e9d93249%3A0xd508f7b3aa02d931!2z5Y-w5YyXMTAx6KeA5pmv5Y-w!5e0!3m2!1szh-TW!2stw!4v1713070667311!5m2!1szh-TW!2stw"
+                    style="border:0; top: 0; left: 0; position: absolute;width: 100%; height: 100%;"
+                    frameborder="0"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+            </iframe> *@            
+        </div>
+        <div class="mt-3">
+            <h3 class="fs-6 fw-semibold mb-3">@viewModel.DistrictName、@viewModel.CityName、@viewModel.CountryName</h3>
+            <p class="mapintroduce-ellipsis">
+                @Html.Raw(viewModel.NearyByTrasportation)
+            </p>
+            <div>
+                <a href="#" class="fw-semibold text-dark" data-bs-toggle="modal" data-bs-target="#locationModal">
+                    顯示更多內容
+                    <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="row row-cols-1 pt-4 py-md-4 border-top order-last">
+        <h3 class="fs-5 fw-bold mb-3 d-none d-md-block">注意事項</h3>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="mb-4">
+                <div class="fw-semibold mb-2">《房屋守則》</div>
+                <div class="mb-2">入住時間：下午@(viewModel.CheckInTime?.ToString("HH:mm") ?? "14:00")</div>
+                <div class="mb-2">退房時間：上午@(viewModel.CheckOutTime?.ToString("HH:mm") ?? "12:00")</div>
+                <div class="mb-3">最多 @viewModel.GuestCount 位房客</div>
+                <div>
+                    <a href="#" class="fw-semibold text-dark" data-bs-toggle="modal" data-bs-target="#rulesModal">
+                        顯示更多內容
+                        <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+            <hr class="d-block d-md-none">
+            <div class="mb-4">
+                <div class="fw-semibold mb-2">《安全與房源》</div>
+                <div class="mb-2">未安裝煙霧警報器</div>
+                <div class="mb-2">未回報是否有安裝一氧化碳警報器</div>
+                <div class="mb-3">監視攝影機／攝錄裝置</div>
+                <div>
+                    <a href="#" class="fw-semibold text-dark" data-bs-toggle="modal" data-bs-target="#noticeModal">
+                        顯示更多內容
+                        <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+            <hr class="d-block d-md-none">
+            <div class="mb-4">
+                <div class="fw-semibold mb-2">《退訂政策》</div>
+                <div class="mb-3">新增旅程日期，即可查看此住宿的退訂詳情。</div>
+                <div>
+                    <a href="#" class="fw-semibold text-dark" data-bs-toggle="modal" data-bs-target="#cancellationModal">
+                        顯示更多內容
+                        <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 
+
+    彈跳窗 -->
+@*     <div class="modal fade" id="wishlistModal">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="btn-close m-0 w-auto h-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+    <h1 class="fs-6 fw-semibold m-0 mx-auto">建立心願單</h1>
+    </div>
+    <div class="modal-body">
+        <div class="row row-cols-2 gy-0 gx-3">
+            @foreach (var customCategory in viewModel.CustomCategoryRooms)
+            {
+                <div class="mb-3">
+                    <div class="ratio ratio-1x1">
+                        <img src="@customCategory.ImgUrl" class="img-fluid rounded-4">
+                    </div>
+                    <p class="fs-6 mb-0">@customCategory.WishlistName</p>
+                </div>
+            }
+        </div>                    
+    <div class="my-2">
+    <input type="text" class="form-control form-control-lg" placeholder="心願單名稱">
+    </div>
+    </div>
+    <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-outline-light text-dark fw-semibold">
+    清除
+    </button>
+    <button type="button" class="btn btn-dark fw-semibold">
+    建立
+    </button>
+    </div>
+    </div>
+    </div>
+    </div> *@
+    <!--真真的彈跳視窗---------------------------------->
+    <!-- 房間 -->
+    <div class="modal fade" id="wishlistModal" ref="myWish">
+        <div class="modal-dialog  modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-wish-list-header header d-flex">
+                        <button type="button" class="btn-close me-5" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        <h1 class="fs-4" id="detail-title">你的心願單</h1>
+                    </div>
+                </div>
+                <div class="modal-body">
+
+                    <div class="add-new-item">
+                        <div class="new-img-box mb-4" v-on:click="createWishList">
+                            <img src="~/images/wish/add.svg" class="new-add-img me-4">
+                            <span class="new-add-name">建立新的心願單</span>
+                        </div>
+                        <template v-for="wish in myWishList" :key="wish.id">
+                            <div class="add-img-box mb-4" v-on:click="addRoomsWishDetail(wish.id)">
+                                <img :src="wish.imgUrl" class="add-img me-4">
+                                <span class="wishitem-name">{{wish.wishlistName}}</span>
+                            </div>
+                        </template>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 心願單 命名 彈跳視窗 ------------------------>
+    <div class="modal fade" id="to-rename-sub" ref="myRename">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-rename-sub-header header d-flex">
+                        <button type="button" class="btn-close me-1" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        <h1 class="fs-4" id="detail-title">為新的心願單命名</h1>
+                    </div>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <textarea v-model="renameInput" v-on:input="getText" v-on:blur="checkDuplicate" class="to-rename-sub-input form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <p class="to-rename-sub-input-p mt-2 pb-2 border-bottom">
+                            已輸入<span id="charCount" :style="{ color: count >= 20 ? 'red' : 'inherit' }">{{count}}</span>
+                            個字( 最多輸入20個字 )
+                        </p>
+                        <div class="to-rename-sub-btn-gp d-flex justify-content-between">
+                            <button type="button" class="btn cancel-btn" data-bs-dismiss="modal" aria-label="Close">取消</button>
+                            <button v-on:click="inputResult" type="submit" class="btn btn-dark save-btn">儲存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 房間照片彈跳窗 -->
+    <div class="roomimg-modal modal fade" id="roomphotosModal">
+        <div class="modal-dialog modal-fullscreen ">
+            <div class="modal-content">
+                <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body p-0 p-md-3 row g-0 justify-content-center">
+                    <div class="col-12 col-md-7 row row-cols-2 g-0">
+                        <img src="@viewModel.RoomImgUrls[0]" class="img-fluid pe-2 pb-2" alt="...">
+                        <div class="row row-cols-1 g-0 pb-2">
+                            <img src="@viewModel.RoomImgUrls[1]" class="img-fluid pb-1" alt="...">
+                            <img src="@viewModel.RoomImgUrls[2]" class="img-fluid pt-1" alt="...">
+                        </div>
+                        <div class="row row-cols-1 g-0 pe-2 pb-2">
+                            <img src="@viewModel.RoomImgUrls[3]" class="img-fluid pb-1" alt="...">
+                            <img src="@viewModel.RoomImgUrls[4]" class="img-fluid pt-1" alt="...">
+                        </div>
+                        <img src="@viewModel.RoomImgUrls[5]" class="img-fluid pb-2" alt="...">
+                        <img src="@viewModel.RoomImgUrls[6]" class="img-fluid col-12" alt="...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 房源介紹彈跳窗 -->
+    <div class="modal fade" id="roomintroduceModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body m-4">
+                    <button type="button" class="btn-close mb-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="fs-4 fw-bold mt-2 mb-4">房源介紹</h3>
+                    <p>
+                        @Html.Raw(viewModel.RoomDescription)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 設備與服務彈跳窗 -->
+    <div class="modal fade" id="serviceModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body mx-2 my-4">
+                    <button type="button" class="btn-close mb-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3 class="fs-4 fw-bold mt-2 mb-4">有提供的設備與服務</h3>
+                    <h4 v-show="amentityTypeExists(1)" class="fs-5 fw-semibold mb-4">設備</h4>
+                    @for (int i = 0; i < viewModel.AmentityName.Count; i++)
+                    {
+                        if (viewModel.AmentityTypeId[i] == 1)
+                        {
+                            <div class="icon-service-group">
+                                @Html.Raw(viewModel.AmentityIcon[i])
+                                <span class="align-middle">@viewModel.AmentityName[i]</span>
+                            </div>
+                            <hr>
+                        }
+                    }
+                    <h4 v-show="amentityTypeExists(2)" class="fs-5 fw-semibold mt-5 mb-4">服務</h4>
+                    @for (int i = 0; i < viewModel.AmentityName.Count; i++)
+                    {
+                        if (viewModel.AmentityTypeId[i] == 2)
+                        {
+                            <div class="icon-service-group">
+                                @Html.Raw(viewModel.AmentityIcon[i])
+                                <span class="align-middle">@viewModel.AmentityName[i]</span>
+                            </div>
+                            <hr>
+                        }
+                    }
+                    <h4 v-show="amentityTypeExists(3)" class="fs-5 fw-semibold mt-5 mb-4">安全</h4>
+                    @for (int i = 0; i < viewModel.AmentityName.Count; i++)
+                    {
+                        if (viewModel.AmentityTypeId[i] == 3)
+                        {
+                            <div class="icon-service-group">
+                                @Html.Raw(viewModel.AmentityIcon[i])
+                                <span class="align-middle">@viewModel.AmentityName[i]</span>
+                            </div>
+                            <hr>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 評價 MODAL 彈跳窗 -->
+    <div class="modal fade" id="allReviewsModal" tabindex="-1" aria-labelledby="全部評價" aria-hidden="true">
+        <!-- 下一行用意：用 Bootstrap 將 Modal 大小預設為 XL（modal-xl）；且當裝置尺寸降到中型以下時讓 Modal 全屏顯示（modal-fullscreen-md-down）-->
+        <div class="modal-dialog modal-xl modal-fullscreen-md-down">
+            <div class="modal-content">
+                <!-- Modal Header：只有關閉視窗的叉叉，沒有其他文字內容 -->
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="btn-close m-0 w-auto h-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Modal Body：包含所有評價內容 -->
+                <div class="modal-body p-0">
+                    <div class="d-lg-flex justify-content-between">
+                        <!-- 電腦版左側，整體與各指標評價分數 section -->
+                        <section class="rating-area col-lg-5 px-5 visible-scrollbar">
+                            <!-- 桂冠葉平均分數區 -->
+                            <div class="pb-3">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="~/svgs/bay-leaf-left.jpg" alt="" style="width: 70px; height: 90px;" class="d-inline-block">
+                                    <p class="rating-average d-inline-block" style="font-size: 70px;">
+                                        @viewModel.Rating
+                                    </p>
+                                    <img src="~/svgs/bay-leaf-right.jpg" alt="" style="width: 70px; height: 90px;" class="d-inline-block">
+                                </div>
+                                <div class="text-center">
+                                    <p class="fw-semibold m-0">旅客精選</p>
+                                    <p class="text-secondary" style="font-size: 0.875rem;">根據評分、評價與可靠性標準所選出的熱門房源</p>
+                                </div>
+                            </div>
+                            <div class="rating-details d-flex d-md-block">
+                                <!-- 整體評分 -->
+                                <div class="rating-overall mb-3">
+                                    <p class="fw-semibold mb-2">整體評分</p>
+                                    <!-- 以下製作 5 分 ～ 1 分的 Score Bar -->
+                                    <div class="row g-0">
+                                        <div class="col-1" style="font-size: 12px;">
+                                            <div>5</div>
+                                        </div>
+                                        <div class="m-auto col-11">
+                                            <div class="bar-container">
+                                                <div class="bar-5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1" style="font-size: 12px;">
+                                            <div>4</div>
+                                        </div>
+                                        <div class="m-auto col-11">
+                                            <div class="bar-container">
+                                                <div class="bar-4"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1" style="font-size: 12px;">
+                                            <div>3</div>
+                                        </div>
+                                        <div class="m-auto col-11">
+                                            <div class="bar-container">
+                                                <div class="bar-3"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1" style="font-size: 12px;">
+                                            <div>2</div>
+                                        </div>
+                                        <div class="m-auto col-11">
+                                            <div class="bar-container">
+                                                <div class="bar-2"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-1" style="font-size: 12px;">
+                                            <div>1</div>
+                                        </div>
+                                        <div class="m-auto col-11">
+                                            <div class="bar-container">
+                                                <div class="bar-1"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 乾淨度 -->
+                                <div class="rating-item d-flex flex-column flex-md-row align-items-md-center gap-md-3 border-bottom border-2 py-2">
+                                    <p class="fw-semibold flex-md-grow-1 p-0 m-0">乾淨度</p>
+                                    <p class="cleaness p-0 m-0">4.9</p>
+                                    <span class="material-symbols-outlined order-md-first mt-auto">
+                                        household_supplies
+                                    </span>
+                                </div>
+                                <!-- 準確性 -->
+                                <div class="rating-item d-flex flex-column flex-md-row align-items-md-center gap-md-3 border-bottom border-2 py-2">
+                                    <p class="fw-semibold flex-md-grow-1 p-0 m-0">準確性</p>
+                                    <p class="accuracy p-0 m-0">4.7</p>
+                                    <span class="material-symbols-outlined order-md-first mt-auto">
+                                        check_circle
+                                    </span>
+                                </div>
+                                <!-- 入住 -->
+                                <div class="rating-item d-flex flex-column flex-md-row align-items-md-center gap-md-3 border-bottom border-2 py-2">
+                                    <p class="fw-semibold flex-md-grow-1 p-0 m-0">入住</p>
+                                    <p class="check-in p-0 m-0">4.8</p>
+                                    <span class="material-symbols-outlined order-md-first mt-auto">
+                                        key
+                                    </span>
+                                </div>
+                                <!-- 溝通 -->
+                                <div class="rating-item d-flex flex-column flex-md-row align-items-md-center gap-md-3 border-bottom border-2 py-2">
+                                    <p class="fw-semibold flex-md-grow-1 p-0 m-0">溝通</p>
+                                    <p class="communication p-0 m-0">4.9</p>
+                                    <span class="material-symbols-outlined order-md-first mt-auto">
+                                        chat_bubble
+                                    </span>
+                                </div>
+                                <!-- 地點 -->
+                                <div class="rating-item d-flex flex-column flex-md-row align-items-md-center gap-md-3 border-bottom border-2 py-2">
+                                    <p class="fw-semibold flex-md-grow-1 p-0 m-0">地點</p>
+                                    <p class="location p-0 m-0">4.8</p>
+                                    <span class="material-symbols-outlined order-md-first mt-auto">
+                                        map
+                                    </span>
+                                </div>
+                                <!-- 性價比 -->
+                                <div class="rating-item d-flex flex-column flex-md-row align-items-md-center gap-md-3 border-bottom border-2 py-2">
+                                    <p class="fw-semibold flex-md-grow-1 p-0 m-0">性價比</p>
+                                    <p class="cp p-0 m-0">4.9</p>
+                                    <span class="material-symbols-outlined order-md-first mt-auto">
+                                        sell
+                                    </span>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- 電腦版 Modal 右側，使用者實際評價 section -->
+                        <section class="reviews-area col-lg-7 px-5 visible-scrollbar">
+                            <div class="reviews-area-header py-3 sticky-top bg-white">
+                                <div class="d-flex justify-content-between fs-4 fw-semibold">
+                                    <!-- 評價總數標題 -->
+                                    <p><span class="review-count">6</span>&ensp;則評價</p>
+                                    <!-- 搜尋條件按鈕 -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle rounded-pill px-3 fw-semibold"
+                                                type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            最新
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" href="#">最新</a></li>
+                                            <li><a class="dropdown-item" href="#">評分最高</a></li>
+                                            <li><a class="dropdown-item" href="#">評分最低</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- 評價 Search Bar -->
+                                <form id="search-form" class="form-inline" role="form" method="post" action="" target="_blank">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-outline-dark search-btn"
+                                                    data-target="#search-form" name="q">
+                                                <span class="material-symbols-outlined align-top ps-1">search</span>
+                                            </button>
+                                        </span>
+                                        <input type="text" class="form-control search-form" placeholder="搜尋評價">
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- 用戶實際評價（每則評價先放相同內容示意） -->
+                            <div class="reviews-area-content">
+                                @foreach (var review in viewModel.ReviewCards)
+                                {
+                                    @await Html.PartialAsync("_ReviewModalCardPartial", review)
+                                }
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 插入住宿地點彈跳窗 -->
+    <div class="modal fade" id="locationModal" ref="locationModal">
+        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+            <div class="modal-content flex-wrap row container-fluid">
+                <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body mb-4 h-75 col-12 col-md-4">
+                    <div class="fs-2 fw-bold mb-4">住宿地點</div>
+                    <div class="fs-6 fw-semibold mb-2">@viewModel.DistrictName、@viewModel.CityName、@viewModel.CountryName</div>
+                    <div :class="{'locationintroduce-ellipsis': !showLocation}" class="fs-6">
+                        @Html.Raw(viewModel.NearyByTrasportation)
+                    </div>
+                    <div class="fs-6 fw-semibold mb-4">
+                        <span v-on:click="showLocation=true" v-if="!showLocation" type="button" class="text-decoration-underline">
+                            閱讀詳情
+                            <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                        </span>
+                    </div>
+                    <div class="fs-6 fw-semibold mb-2">周邊交通</div>
+                    <div :class="{'trafficintroduce-ellipsis': !showTraffic}" class="fs-6">
+                        @Html.Raw(viewModel.LocationDesription)
+                    </div>
+                    <div class="fs-6 fw-semibold mb-4">
+                        <span v-on:click="showTraffic=true" v-if="!showTraffic" type="button" class="text-decoration-underline">
+                            閱讀詳情
+                            <span class="material-symbols-outlined fs-6 align-middle">chevron_right</span>
+                        </span>
+                    </div>
+                </div>
+                <!-- 插入地圖 -->
+                <div class="h-100 d-none d-md-block col-md-8 ps-0 pt-2 mt-5">
+                    <div id="modal-map" style="width:800px; height:500px;"></div>
+                    @* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22012.483921265182!2d121.56128592274057!3d25.034135304630457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abb6e9d93249%3A0xd508f7b3aa02d931!2z5Y-w5YyXMTAx6KeA5pmv5Y-w!5e0!3m2!1szh-TW!2stw!4v1713070667311!5m2!1szh-TW!2stw"
+                            style="border:0; width: 800px; height: 500px;"
+                            frameborder="0"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 傳訊息給房東彈跳窗 -->
+    <div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <form class="modal-content" id="chatForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chatModalLabel">傳訊息給房東</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="chatResponse" class="mt-3"></div>
+                    <div class="mb-3">
+                        <textarea class="form-control" id="messageInput" placeholder="Type your message here..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Send message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 房屋守則彈跳窗 -->
+    @await Html.PartialAsync("~/Views/Shared/SharedModal/_RoomRulesModal.cshtml")
+
+    <!-- 安全與房源彈跳窗 -->
+    <partial name="~/Views/Shared/SharedModal/_SafetyAndPropertyModal.cshtml" />
+
+    <!-- 退訂政策彈跳窗 -->
+    <partial name="~/Views/Shared/SharedModal/_CancellationPolicyModal.cshtml" />
+
+</main>
+
+
+@section endJS {
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    amentityIds: @Html.Raw(JsonConvert.SerializeObject(viewModel.AmentityTypeId)),
+                    profiles: ["@viewModel.Job", "@viewModel.Language", "@viewModel.Live", "@viewModel.Obsession", "@viewModel.Pet"],
+                    calendar1: null,
+                    calendar2: null,
+                    selectedCheckIn: "選取日期",
+                    selectedCheckOut: "選取日期",
+                    isMobileWidth: window.innerWidth < 768,
+                    memberId: @viewModel.CustomerId,
+                    myWishList: [],
+                    renameInput:'',
+                    count:0,
+                    roomId:@viewModel.RoomId,
+                    pricesData: null,
+                    addDetailDiv:'',
+                    myWishModel:null,
+                    myRenameModel:null,
+                    guestCount: new URL(window.location.href).searchParams.get("numberOfGuests", "numberOfGuests") || 1,
+                    orderBtnText: "查看可訂日期",
+                    dropdownGuest: null,
+                    showLocation: false,
+                    showTraffic: false
+                }
+            },
+            methods: {
+                amentityTypeExists(typeId) {
+                    return this.amentityIds.includes(typeId);
+                },
+                initCalendars() {
+                    this.calendar1 = flatpickr(".calendar-picker-show", {
+                        inline: true,
+                        dateFormat: "Y-m-d",
+                        mode: "range",
+                        minDate: "today",
+                        showMonths: this.isMobileWidth ? 1 : 2,
+                        appendTo: document.querySelector(".calendar-picker-show"),
+                        disable: this.disabledDates,
+                        onChange: (selectedDates, dateStr, instance) => {
+                            if (selectedDates.length === 2) {
+                                if (instance.formatDate(selectedDates[0], "Y-m-d") === instance.formatDate(selectedDates[1], "Y-m-d")) {
+                                    this.calendar2.setDate(selectedDates, true);                         
+                                } else {
+                                    this.calendar2.setDate(selectedDates, true);
+                                    this.pricesRequest(@viewModel.RoomId, selectedDates[0], selectedDates[1]);                                    
+                                }
+                            }
+                        },
+                        onReady: (selectedDates, dateStr, instance) => {
+                            let dateCheckIn = new URL(window.location.href).searchParams.get("checkInDate", "checkInDate");
+                            let dateCheckOut = new URL(window.location.href).searchParams.get("checkOutDate", "checkOutDate");
+                            if (dateCheckIn && dateCheckOut && dateCheckIn !== dateCheckOut) {
+                                selectedDates[0] = instance.parseDate(dateCheckIn, "Y-m-d");
+                                selectedDates[1] = instance.parseDate(dateCheckOut, "Y-m-d");
+                                instance.setDate(selectedDates);
+                                this.selectedCheckIn = instance.formatDate(selectedDates[0], "Y-m-d");
+                                this.selectedCheckOut = instance.formatDate(selectedDates[1], "Y-m-d");
+                                this.orderBtnText = "預定";
+                            }
+                        }
+                    });
+
+                    this.calendar2 = flatpickr(".calendar-picker-hide", {
+                        dateFormat: "Y-m-d",
+                        mode: "range",
+                        minDate: "today",
+                        showMonths: this.isMobileWidth ? 1 : 2,
+                        appendTo: document.querySelector(".order-card"),
+                        disable: this.disabledDates,
+                        onChange: (selectedDates, dateStr, instance) => {
+                            if (selectedDates.length === 2) {
+                                if (instance.formatDate(selectedDates[0], "Y-m-d") === instance.formatDate(selectedDates[1], "Y-m-d")) {
+                                    this.calendar1.setDate(selectedDates, false);
+                                    this.selectedCheckIn = instance.formatDate(selectedDates[0], "Y-m-d");
+                                    this.selectedCheckOut = instance.formatDate(selectedDates[1], "Y-m-d");
+                                    this.orderBtnText = "查看可訂日期";
+                                    Swal.fire({
+                                        icon: "warning",
+                                        title: "操作錯誤",
+                                        text: "入住及退房日期不能相同！"
+                                    });
+                                } else {
+                                    this.calendar1.setDate(selectedDates, false);
+                                    this.selectedCheckIn = instance.formatDate(selectedDates[0], "Y-m-d");
+                                    this.selectedCheckOut = instance.formatDate(selectedDates[1], "Y-m-d");
+                                    this.orderBtnText = "預定";
+                                }
+                            }
+                        },
+                        onClose: (selectedDates, dateStr, instance) => {
+                            this.pricesRequest(@viewModel.RoomId, selectedDates[0], selectedDates[1]);
+                        },
+                        onReady: (selectedDates, dateStr, instance) => {
+                            let dateCheckIn = new URL(window.location.href).searchParams.get("checkInDate", "checkInDate");
+                            let dateCheckOut = new URL(window.location.href).searchParams.get("checkOutDate", "checkOutDate");
+                            if (dateCheckIn && dateCheckOut && dateCheckIn !== dateCheckOut) {
+                                selectedDates[0] = instance.parseDate(dateCheckIn, "Y-m-d");
+                                selectedDates[1] = instance.parseDate(dateCheckOut, "Y-m-d");
+                                instance.setDate(selectedDates);
+                                this.pricesRequest(@viewModel.RoomId, selectedDates[0], selectedDates[1]);
+                                this.selectedCheckIn = instance.formatDate(selectedDates[0], "Y-m-d");
+                                this.selectedCheckOut = instance.formatDate(selectedDates[1], "Y-m-d");
+                                this.orderBtnText = "預定";
+                            }                                                                              
+                        }
+                    });
+                },
+                resizeEvent() {
+                    window.addEventListener("resize", () => {
+                        this.isMobileWidth = window.innerWidth < 768;
+                        this.calendar1.set("showMonths", this.isMobileWidth ? 1 : 2);
+                        this.calendar2.set({
+                            showMonths: this.isMobileWidth ? 1 : 2,
+                        });
+                    });
+                },
+                orderButtonEvent() {
+                    const orderBtn = document.querySelector(".order-button");
+                    orderBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        if (this.calendar2.selectedDates[0] && this.calendar2.selectedDates[1] && this.calendar2.formatDate(this.calendar2.selectedDates[0], "Y-m-d") !== this.calendar2.formatDate(this.calendar2.selectedDates[1], "Y-m-d")) {
+                            
+                            const orderParams = {
+                                checkIn: this.calendar2.formatDate(this.calendar2.selectedDates[0], "Y-m-d"),
+                                checkOut: this.calendar2.formatDate(this.calendar2.selectedDates[1], "Y-m-d"),
+                                guestCount: this.guestCount,
+                                roomId: this.roomId,
+                                roomCategory: "@Html.Raw(viewModel.RoomCategoryName)",
+                                roomName: "@Html.Raw(viewModel.RoomName)",
+                                roomAddress: "@Html.Raw(viewModel.PostalCode + viewModel.CityName + viewModel.DistrictName + viewModel.Street)",
+                                roomAddress: "@Html.Raw(viewModel.PostalCode + viewModel.CityName + viewModel.DistrictName + viewModel.Street)",
+                                roomImg: "@viewModel.RoomImgUrls[1]",
+                                pricePerNight: JSON.stringify(this.pricesData),
+                                priceTotal: this.totalPrice,                           
+                                guestCountLimitaion: @viewModel.GuestCount,
+                            }
+
+                            const queryParams = new URLSearchParams(orderParams);
+                            // for (const [key, value] of Object.entries(orderParams)) {
+                            //     queryParams.append(key, value.toString());
+                            // }
+                            location.href = `/Book/Stays?${queryParams.toString()}`;
+                        } else {
+                            this.calendar2.open();
+                        }
+                    });
+                },
+                async pricesRequest(roomId, checkInDate, checkOutDate) {
+                    //檢查日期是否有效
+                    if (!checkInDate || !checkOutDate) {
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch("/api/RoomListingAPI", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                roomId: roomId,
+                                checkIn: checkInDate,
+                                checkOut: checkOutDate
+                            }),
+                        });
+
+                        if (!response.ok){
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        this.pricesData = await response.json();
+                    } catch(error) {
+                        console.error("Error:", error);
+                    }
+                },
+                // 防呆 按儲存確認登入
+                addWishlistBtn() {
+                    if (this.memberId === 0) {
+                        window.location.href = "/Login/Index";
+                        return;
+                    }
+
+                    fetch('/Wish/GetMemberWishlist')
+                        .then(res => res.json())
+                        .then(data => {
+                            // 用 wishlistId 排序
+                            data.sort((a, b) => b.wishlistId - a.wishlistId);
+                            this.myWishList = data;
+                            this.myWishModel.show();
+                        })
+                        .catch(err => console.error(err));                   
+                },
+                // 命名名稱長度
+                getText() {
+                    if (this.renameInput.length > 20) {
+                        this.renameInput = this.renameInput.slice(0, 20);
+                    }
+                    this.count = this.renameInput.length;
+                },
+                // 防呆 名稱重複( 用戶完成輸入並離開輸入框時 v-on:blur )
+                checkDuplicate() {
+                    const wishItemNames = Array.from(document.querySelectorAll('.wishitem-name')).map(item => item.textContent);
+                    if (wishItemNames.includes(this.renameInput.trim())) {
+                        Swal.fire({
+                            icon: "warning",
+                            text: "該名稱已存在於心願單中，請使用其他名稱！ " 
+                        });
+                        this.renameInput = '';
+                    }
+                },
+                // 命名完的儲存
+                inputResult() {
+                    event.preventDefault();
+
+                    const wishlistName = this.renameInput.trim();
+                    if (wishlistName.length < 1) {
+                        Swal.fire({
+                            icon: "warning",
+                            text: "內容不得為空白 "
+                        });
+                        return;
+                    }
+                    fetch("/Wish/AddWishlist", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ wishlistName: wishlistName, roomId: this.roomId })
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('API 請求失敗');
+                            }
+                        })
+                        .then((data) => {
+                            if (data.success) {
+                                // 關閉輸入彈跳視窗 ,再開啟 收藏的彈跳視窗
+                                this.myRenameModel.hide();
+                                this.addWishlistBtn();
+                                // 儲存的同時將房間加入到自定義類別名稱中
+                                this.addRoomsWishDetail(data.wishlistId);
+                            } else {
+                                // 處理失敗的情況
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "創建心願單失敗！",
+                                    text: data.message
+                                });
+                            }
+                        })
+                        .catch(function (error) {
+                            console.error('Error:', error);
+                        })
+                        .finally(() => {
+                            this.renameInput = '';
+                        });
+                },
+                createWishList() {
+                    this.myWishModel.hide();
+                    this.myRenameModel.show();
+                }, // 列表
+                addRoomsWishDetail(wishlistId) {
+                    console.log(this.roomId);
+                    console.log(wishlistId);
+
+                    fetch('/Wish/AddwishlistDetail',{
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ wishlistId: wishlistId, roomId: this.roomId })
+                    })
+                    .then(function(response){
+                          return response.json()
+                    })
+                    .then(function(data){
+                        if (data.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "加入房間成功！",
+                                showConfirmButton: true
+                            });
+                        }
+                        else{
+                             Swal.fire({
+                                 icon: "warning",
+                                 text: data.message
+                             });
+                        }
+                    }).catch(function (error) {
+                            console.error('Error:', error);
+                     });
+                },
+                plusGuset() {
+                    this.guestCount++;
+                },
+                minusGuset() {
+                    this.guestCount--;
+                },
+                closeDropdown() {
+                    this.dropdownGuest.hide();
+                },
+                resetLocationModal() {
+                    new bootstrap.Modal(this.$refs.locationModal)._element.addEventListener(
+                        "hidden.bs.modal", () => {
+                            this.showLocation = false;
+                            this.showTraffic = false;
+                        }
+                    );
+                },
+                pageGoBack() {
+                    window.history.back();
+                },
+                clearCalendar() {
+                    this.calendar1.clear();
+                    this.calendar2.clear();
+                    this.selectedCheckIn = "選取日期";
+                    this.selectedCheckOut = "選取日期";
+                    this.orderBtnText = "查看可訂日期";
+                    this.pricesData = null;
+                }
+            },
+            computed: {
+                totalPrice() {
+                    if (!this.pricesData) {
+                        return 0;
+                    }
+                    let totalPrice = 0;
+                    for (const date in this.pricesData) {
+                        totalPrice += this.pricesData[date];
+                    }
+                    return totalPrice;
+                },
+                averagePrice() {
+                    if (this.totalPrice === 0) {
+                        return 0;
+                    }
+                    return Math.round(this.totalPrice / Object.keys(this.pricesData).length);
+                },
+                isDisabled() {
+                    return {
+                        minusBtn: this.guestCount === 1,
+                        plusBtn: this.guestCount === @viewModel.GuestCount
+                    };
+                },
+                disabledDates() {
+                    const dateArray = [];
+                    let checkInArray = @Html.Raw(jsonCheckIn);
+                    let checkOutArray = @Html.Raw(jsonCheckOut);
+                    checkInArray.forEach((checkInDate, Index) => {
+                        dateArray.push({
+                            "from": checkInDate.split("T")[0],
+                            "to": checkOutArray[Index].split("T")[0]
+                        });
+                    });
+                    return dateArray;
+                }
+            },
+            mounted() {
+                this.initCalendars();
+                this.resizeEvent();
+                this.orderButtonEvent();
+                this.myWishModel = new bootstrap.Modal(this.$refs.myWish);
+                this.myRenameModel = new bootstrap.Modal(this.$refs.myRename);
+                this.dropdownGuest = new bootstrap.Dropdown(this.$refs.dropdownGuest);
+                this.resetLocationModal();
+            }
+        }).mount("#vuejs")
+    </script>
+    <script>
+        localStorage.setItem('notAvailableCheckIn', `@jsonCheckIn`);
+        localStorage.setItem('notAvailableCheckOut', `@jsonCheckOut`);
+    </script>
+    <script>
+        document.getElementById("chatForm").addEventListener("submit", async function (event) {
+            event.preventDefault();
+            const message = document.getElementById("messageInput").value;
+            document.getElementById("chatResponse").innerHTML += `<p>您: ${message}</p>`;
+            document.getElementById("messageInput").value = "";
+            const response = await fetch("/api/Assistants", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: message }),
+            });
+            const data = await response.text();
+            document.getElementById("chatResponse").innerHTML += `<p>房東: ${data}</p>`;
+        });
+    </script>
+    <script src="~/js/RoomsJS/room.js" asp-append-version="true"></script>
+}
+
+

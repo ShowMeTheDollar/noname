@@ -1,0 +1,106 @@
+﻿@model OpenRoom.Web.ViewModels.OrderModificationViewModel
+@{
+    ViewData["Title"] = "Modify";
+    Layout = "_LayoutCustomer";
+}
+
+@section topCSS {
+    <!-- Semantic UI  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <!-- CSS  -->
+    <link href="~/css/ordercss/modify.css" rel="stylesheet" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+<div class="reservation-change-container container">
+    <section class="reservation-change-section">
+        <h1 class="main-title"><i class="edit outline icon"></i>你想要變更哪些內容?</h1>
+        <p class="main-title-describe">變更後，你可以向房東 Adagio 傳送申請，請對方確認預訂的變更內容。</p>
+
+        <div class="room-item">
+            <div class="room-item-pic">
+                <img src="~/images/wish/change-img.jpg" class="room-img">
+            </div>
+            <div class="room-introduce">
+                <div class="room-item-title">
+                    全新，你所看到的一切都是新的！台中一中街乾淨明亮陽台雙人房
+                </div>
+                <div class="room-item-title-content">
+                    房間．1張床．1間衛浴
+                </div>
+            </div>
+        </div>
+
+        <h2 class="subtitle">預訂詳情</h2>
+        <!------ 手機 ------->
+        <div class="phone-gp">
+            <div class="reservation-date-gp ">
+                <div class="reservation-date-sub-gp">
+                    <div class="reservation-date-title">日期</div>
+                    <div class="reservation-date">5月30日至31日</div>
+                </div>
+                <div class="change-btn">變更</div>
+            </div>
+            <div class="reservation-traveler-gp">
+                <div class="reservation-traveler-sub-gp">
+                    <div class="reservation-traveler-title">旅客</div>
+                    <div class="reservation-guests">1人</div>
+                </div>
+                <div class="change-btn">變更</div>
+            </div>
+        </div>
+        <!------- 桌機------- -->
+        <div class="desktop-gp">
+            <!-- 日期 和 按鈕 -->
+            <div class="reservation-date-title">日期</div>
+
+            <div class="reservation-date-btn-gp ui black large buttons">
+                <button class="reservation-date-btn ui button ">入住：2024年5月30日</button>
+                <!-- <div class="to"></div> -->
+                <button class="reservation-traveler-btn ui button">退房：2024年5月30日</button>
+            </div>
+
+            <!-- <div class="reservation-date-btn-gp btn-group border-2" role="group">
+                <button type="button" class="reservation-date-btn btn btn-block">
+                    <span class="fw-bold">入住：2024年5月30日</span>
+                </button>
+                <button type="button" class="reservation-traveler-btn btn btn-block">
+                    <span class="fw-bold">退房：2024年5月30日</span>
+                </button>
+            </div> -->
+            <!-- 人數 和 按鈕 -->
+            <div class="reservation-traveler-title">旅客</div>
+
+            <select class="reservation-traveler-btn-gp form-select border-2 fw-bold" aria-label="select">
+                <option selected>1人</option>
+                <option value="1">2人</option>
+                <option value="2">3人</option>
+                <option value="3">4人</option>
+                <option value="3">5人</option>
+                <option value="3">6人</option>
+            </select>
+
+        </div>
+
+
+    </section>
+    <!------- 退訂政策 ------>
+    <section class="cancellation-policy-section">
+        <h2 class="subtitle">退訂政策</h2>
+        <p class="cancellation-policy-p">5月29日下午3:00前可免費取消在這之後，該筆預訂則無法退款。</p>
+    </section>
+
+    <div class="send-request-row row">
+        <div class="send-request-div col-12">
+            <a href="#" class="send-request-a">傳送申請</a>
+        </div>
+    </div>
+
+</div>

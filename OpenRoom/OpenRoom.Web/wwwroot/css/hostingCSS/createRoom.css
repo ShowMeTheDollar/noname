@@ -1,0 +1,570 @@
+﻿
+
+html body .container1-createInfo h1 {
+    font-size: 56px;
+    font-weight: 800;
+}
+
+html body .container1-createInfo h2 {
+    font-weight: 600;
+}
+
+html body .container1-createInfo .steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+html body .container1-createInfo .step {
+    text-align: center;
+}
+
+html body .container1-createInfo .step-icon {
+    margin-bottom: 0.5rem;
+}
+
+html body .container1-createInfo .step-icon {
+    height: 100px;
+    width: 100px;
+}
+
+html body .container1-createInfo .step-title {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+html body .container1-createInfo .step-description {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+/* Adjustments for the left column */
+html body .container1-createInfo .col-lg-6.text-start {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* This will vertically center the content in the left column */
+}
+
+html body .container1-createInfo .next.btn.btn-dark {
+    background-color: #2E9C6A !important;
+    border: #2E9C6A !important;
+}
+
+/*container2*/
+html body .container2-introduction h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+html body .container2-introduction span,
+p {
+    font-size: 18px;
+}
+
+/* Adjustments for the left column */
+html body .container2-introduction .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* This will vertically center the content in the left column */
+}
+
+/*container3*/
+
+html body .container3-roomCategory h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+
+html body .container3-roomCategory p {
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+
+html body .container3-roomCategory .option-input {
+    /* 隱藏原生復選框 */
+    display: none;
+}
+
+html body .container3-roomCategory .option-label {
+    display: block;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 15px;
+    transition: border-color 0.3s;
+    cursor: pointer;
+}
+/* 使用偽類改變選中狀態的邊框顏色 */
+html body .container3-roomCategory .option-input:checked + .option-label {
+    border-color: #000;
+    background-color: #dddddd;
+}
+/* 調整原有的hover效果應用到label上 */
+html body .container3-roomCategory .option-label:hover {
+    border-color: #000;
+    background-color: #dddddd;
+}
+/* Add grid layout for buttons */
+html body .container3-roomCategory .options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+html body .container3-roomCategory .option-item p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    html body .container3-roomCategory .options-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*container4*/
+
+html body .container4-roomAddress h1 {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+}
+
+html body .container4-roomAddress p {
+    font-size: 16px;
+}
+
+html body .container4-roomAddress h2 {
+    font-size: 16px;
+    font-weight: 800;
+    text-align: center;
+}
+
+html body .container4-roomAddress span {
+    font-size: 14px;
+}
+
+html body .container4-roomAddress a {
+    color: #000;
+}
+
+html body .container4-roomAddress .map-container {
+    padding-top: 10px;
+    width: 100%;
+    height: 450px !important;
+    width: 600px !important;
+    margin: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    /* Center the map image */
+}
+
+html body .container4-roomAddress .address-form {
+    border-bottom: solid 1px #DDDDDD;
+}
+
+/* Style for the toggle switch */
+html body .container4-roomAddress .form-check-input {
+    width: 2.25rem;
+    height: 1.25rem;
+    /* Align the toggle switch with the text */
+    margin-left: 0.5rem;
+}
+
+html body .container4-roomAddress .form-check {
+    /* Ensure the switch is not too close to the text */
+    padding-left: 10%;
+}
+html body .container4-roomAddress .input-group {
+    max-width: 600px;
+    /* Match the width of the map for alignment */
+    width: 100%;
+    /* Ensure it takes the full width of its parent */
+}
+
+@media (max-width: 768px) {
+    html body .container4-roomAddress .map-container {
+        margin-top: 1rem;
+        overflow: hidden;
+        /* Prevent any overflow */
+        max-width: 100%;
+        height: 100%;
+    }
+
+        html body .container4-roomAddress .map-container iframe {
+            width: 100%;
+        }
+
+    html body .container4-roomAddress .address-form-item,
+    .form-floating {
+        width: 100%;
+        /* Ensure full width on small screens */
+    }
+}
+
+
+/*container5*/
+
+html body .container5-basicInfo h1 {
+    font-size: 48px;
+    font-weight: 800;
+    padding-top: 100px;
+    text-align: center;
+}
+
+
+html body .container5-basicInfo p {
+    font-size: 18px;
+}
+
+html body .container5-basicInfo .main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* Styles for the stepper input */
+html body .container5-basicInfo .stepper-container .row {
+    border-bottom: 1px solid #DDDDDD;
+}
+
+html body .container5-basicInfo .stepper-container .btn {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+html body .container5-basicInfo .not-minus {
+    color: #e0e0e0;
+}
+
+html body .container5-basicInfo .stepper-container .btn:focus {
+    box-shadow: none;
+    /* Removes the focus outline */
+}
+
+/*container6*/
+
+html body .container6-beOutstanding h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+html body .container6-beOutstanding span,
+p {
+    font-size: 18px;
+}
+
+/* Adjustments for the left column */
+html body .container6-beOutstanding .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* This will vertically center the content in the left column */
+}
+
+/*container7*/
+
+html body .container7-facilityService h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+html body .container7-facilityService h2 {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+html body .container7-facilityService p {
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+html body .container7-facilityService a {
+    color: #000;
+}
+
+html body .container7-facilityService .option-input {
+    /* 隱藏原生復選框 */
+    display: none;
+}
+
+html body .container7-facilityService .option-label {
+    display: block;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 15px;
+    transition: border-color 0.3s;
+    cursor: pointer;
+}
+/* 使用偽類改變選中狀態的邊框顏色 */
+html body .container7-facilityService .option-input:checked + .option-label {
+    border-color: #000;
+    background-color: #dddddd;
+}
+/* 調整原有的hover效果應用到label上  */
+html body .container7-facilityService .option-label:hover {
+    border-color: #000;
+    background-color: #dddddd;
+}
+/* Add grid layout for buttons */
+html body .container7-facilityService .options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+html body .container7-facilityService .option-item p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    html body .container7-facilityService .options-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*container8*/
+
+html body .container8-roomImage h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+
+html body .container8-roomImage img {
+    width: 100px;
+    height: 100px;
+}
+
+html body .container8-roomImage .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* 控制圖片之間的間隔 */
+}
+
+html body .container8-roomImage .img-container {
+    position: relative;
+    display: inline-block;
+}
+
+html body .container8-roomImage .img-container img {
+    width: 100px; /* 或其他尺寸 */
+    height: auto;
+}
+
+html body .container8-roomImage .img-container button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+html body .container8-roomImage .img-preview {
+    width: 100px; /* 根據需要調整寬度 */
+    height: auto;
+    margin: 5px; /* 添加一些外邊距 */
+}
+
+/*container9*/
+
+html body .container9-roomName h1 {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+}
+
+html body .container9-roomName p {
+    font-size: 18px;
+}
+
+html body .container9-roomName .input-text {
+    border-radius: 15px;
+    margin: auto;
+    max-width: 600px;
+}
+
+html body .container9-roomName .input-area {
+    /* Adjustments for the input area */
+    padding: 1rem;
+    border: 1px;
+    border-radius: 15px;
+}
+
+html body .container9-roomName .text-input {
+    box-shadow: none;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    resize: none;
+    border-radius: 15px;
+}
+
+html body .container9-roomName .character-count {
+    text-align: left;
+    color: #666;
+}
+
+/*container10*/
+
+html body .container10-roomDescription h1 {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+}
+
+html body .container10-roomDescription p {
+    font-size: 18px;
+}
+
+html body .container10-roomDescription .input-text {
+    border-radius: 15px;
+    margin: auto;
+    max-width: 600px;
+}
+
+html body .container10-roomDescription .input-area {
+    /* Adjustments for the input area */
+    padding: 1rem;
+    border: 1px;
+    border-radius: 15px;
+}
+
+html body .container10-roomDescription .text-input {
+    box-shadow: none;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    resize: none;
+    border-radius: 15px;
+}
+
+html body .container10-roomDescription .character-count {
+    text-align: left;
+    color: #666;
+}
+
+/*container11*/
+
+html body .container11-goingToFinish h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+html body .container11-goingToFinish span,
+p {
+    font-size: 18px;
+}
+
+/* Adjustments for the left column */
+html body .container11-goingToFinish .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* This will vertically center the content in the left column */
+}
+
+/*container12*/
+
+html body .container12-roomPrice h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+html body .container12-roomPrice p {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+html body .container12-roomPrice span {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
+
+
+html body .container12-roomPrice .price-container input {
+    border: 1px solid #000;
+    max-width: 630px;
+    line-height: 1.5;
+    height: 50px;
+    display: inline-block;
+    /* Align with other inline or inline-block elements */
+    text-align: center;
+}
+
+html body .container12-roomPrice .text-grey {
+    color: grey;
+}
+
+html body .container12-roomPrice .price-tip {
+    font-size: 16px;
+}
+
+html body .container12-roomPrice .sale {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+html body .container12-roomPrice a {
+    color: #000;
+}
+
+html body .container12-roomPrice .text-sale {
+    color: #000;
+}
+
+/*container13*/
+
+html body .container13-createFinishAndPublish h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+html body .container13-createFinishAndPublish p {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+
+html body .container13-createFinishAndPublish .left-part img {
+    object-fit: cover; /* Cover the entire div without stretching */
+    height: 100vh;
+}
+
+html body .container13-createFinishAndPublish .right-part {
+    background-color: #000;
+    color: #fff;
+    text-align: start;
+}
+
+html body .container13-createFinishAndPublish .next.btn.btn-dark {
+    background-color: #2E9C6A !important;
+    border: #2E9C6A !important;
+}
+
+
+
+
+
+
+
+
+

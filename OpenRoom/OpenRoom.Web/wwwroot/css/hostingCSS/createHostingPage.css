@@ -1,0 +1,54 @@
+﻿
+h1 {
+    font-size: 56px;
+    font-weight: 800;
+}
+
+h2 {
+    font-weight: 600;
+}
+
+.steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 3rem;
+}
+
+.step {
+    text-align: center;
+}
+
+.step-icon {
+    margin-bottom: 0.5rem;
+}
+
+.step-icon {
+    height: 100px;
+    width: 100px;
+}
+
+.step-title {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.step-description {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+/* Adjustments for the left column */
+.col-lg-6.text-start {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* This will vertically center the content in the left column */
+}
+
+.next.btn.btn-dark {
+    background-color: #DE1361 !important;
+    border: #DE1361 !important;
+}
+
+

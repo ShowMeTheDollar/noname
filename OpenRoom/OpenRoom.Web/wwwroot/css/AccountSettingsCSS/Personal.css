@@ -1,0 +1,171 @@
+﻿.weight600 {
+    font-weight: 600;
+}
+
+.href {
+    color: black;
+    text-decoration: none;
+}
+
+.href-hover:hover {
+    text-decoration: underline;
+}
+
+.personal-content-box {
+    margin: auto;
+    padding: 0px 24px;
+}
+
+.personal-title-h1 {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.personal-title nav i {
+    padding: 0px 16px;
+    align-self: center;
+}
+
+.personal-information-box {
+    width: 58.333333%;
+}
+
+.personal-information-item {
+    border-bottom: solid 1px #DDDDDD;
+}
+
+.information-item-data p {
+    font-size: 14px;
+}
+
+.edit-or-add-button {
+    border: 0;
+    width: 40px;
+    background-color: white;
+    font-size: 14px;
+    text-decoration: underline;
+    margin-left: 8px;
+}
+
+.personal-trouble-shooting-box {
+    width: 33.333333%;
+}
+
+.trouble-shooting-border {
+    border: solid 1px #DDDDDD;
+    border-radius: 12px;
+}
+
+.trouble-shooting-icon i {
+    color: pink;
+}
+
+.trouble-shooting-title {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.trouble-shooting-text {
+    color: #717171;
+}
+
+.trouble-shooting-hr {
+    margin: 32px 0px;
+}
+
+.cancel-button {
+    display: none;
+}
+
+.input-box-w50 {
+    padding: 0px 4px;
+    width: 50%;
+}
+
+.input-box-w100 {
+    padding: 0px 4px;
+    width: 100%;
+}
+
+.save-btn {
+    padding: 14px 24px;
+    margin-bottom: 24px;
+}
+
+.phone-personal-title h1 {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/*以上是網頁內容以下是footer設定*/
+
+.footer-set {
+    border-top: 1px solid #DDDDDD;
+    background-color: #F7F7F7;
+    padding: 20px 60px;
+    font-size: 14px;
+}
+
+.footer-set a {
+    color: black;
+    text-decoration: none;
+}
+
+.footer-set a:hover {
+    text-decoration: underline;
+}
+
+.footer-box1 {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.footer-box1 ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-item li {
+    margin-bottom: 12px;
+}
+
+.footer-item p {
+    margin: 12px 0px;
+}
+
+.footer-item-title {
+    font-weight: 800;
+}
+
+.footer-box2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*media設定*/
+@media screen and (max-width:768px) {
+    .footer-set,
+    .personal-trouble-shooting-box,
+    .personal-title {
+        display: none;
+    }
+
+    .personal-information-box {
+        width: 100%;
+    }
+
+    .input-box-w50,
+    .input-box-w100 {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+@media screen and (min-width:769px) {
+    .phone-personal-title,
+    .back-arrow {
+        display: none;
+    }
+}

@@ -1,0 +1,39 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+}
+
+p {
+    font-size: 18px;
+}
+
+.input-text {
+    border-radius: 15px;
+    margin: auto;
+    max-width: 600px;
+}
+
+.input-area {
+    /* Adjustments for the input area */
+    padding: 1rem;
+    border: 1px;
+    border-radius: 15px;
+}
+
+.text-input {
+    box-shadow: none;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    resize: none;
+    border-radius: 15px;
+}
+
+.character-count {
+    text-align: left;
+    color: #666;
+}
+
+

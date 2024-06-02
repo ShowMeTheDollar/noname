@@ -1,0 +1,318 @@
+﻿.icon-service-group .material-symbols-outlined {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+.order-info-container{
+    padding:10px 10px; 
+}
+/* 地圖---------------------- */
+order-info-map-container {
+    width: 40%;
+}
+
+#map {
+    height: 100%;
+    z-index: 1;
+}
+
+/* 卡片---------------------- */
+.room-icon {
+    position: sticky;
+    z-index: 3;
+    top: 0px;
+    align-items: center;
+    background-color: #fff;
+    height: 40px;
+}
+
+.up-page {
+    padding: 15px 12px;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+    .up-page:active {
+        background-color: #eae6e6;
+    }
+
+.room-pic {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.room-img {
+    width: 100%;
+    border-radius: 25px;
+    vertical-align: bottom;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+.my-wish-card-section{
+    margin-bottom:-20px;
+}
+/* 入住 退房------------------------------- */
+.check-datetime {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #929292;
+}
+
+    .check-datetime p {
+        font-weight: bold;
+        font-size: larger;
+        margin: 0px;
+    }
+
+.check-in-gp {
+    text-align: start;
+}
+
+.check-out-gp {
+    text-align: end;
+}
+
+.check-in-gp,
+.check-out-gp {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.line {
+    width: 1px;
+    border-left: 2px solid #c6c3c3;
+    align-self: center;
+    height: 90px;
+}
+/* 前往房源 按扭區---------------------- */
+/*.go-to-lodging-btn {
+    margin-top: -21px;
+}*/
+
+.btn-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+section > .btn {
+    border-radius: 0px;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+section > .btn,
+section > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+    section > .btn:hover,
+    section > a:hover {
+        background-color: #ebeaea;
+        width: 100%;
+        text-align: left;
+    }
+
+i {
+    margin-left: -10px;
+}
+
+.btn + .btn,
+.btn + .btn:active {
+    border-top: 1px solid #e0e0e0;
+}
+
+.fa-chevron-right {
+    padding-left: 30px;
+    ;
+}
+
+/* 每個 section 排版 ------------------------ */
+.trip-lodging-section {
+    display: grid;
+    justify-items: start;
+}
+
+section h2,
+.total-cost-title {
+    font-weight: bold;
+}
+
+section + section {
+    border-top: 5px solid #e0e0e0;
+}
+
+/* 預訂詳情-------------------------- */
+.fellow-traveler-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.confirmation-code-div {
+    padding-top: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.cancellation-policy-div {
+    padding: 15px 0px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.read-details {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* 如何前往 section 地圖------- */
+.address-map-img {
+    width: 100%;
+    vertical-align: bottom;
+}
+
+/* 守則和指示------------- */
+
+.details{
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline
+}
+
+section,
+.address-div {
+    padding: 20px 0;
+}
+
+/* 房東-------------------- */
+.landlord-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 付款資訊----------------- */
+.total-cost-content {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+
+/* 共同    彈跳視窗-------------------------- */
+.bline {
+    border-bottom: 1px solid #d5d5d5;
+}
+.modal h1 {
+    margin-top: -5px;
+}
+.header{
+    margin-bottom:-14px;
+}
+/* 注意事項 彈跳視窗--------------------------*/
+.check-div,
+.occupancy-div {
+    padding: 10px 0;
+}
+
+.to-notice-div {
+    margin-left: -5px;
+}
+
+.to-notice-title {
+    margin-left: -15px;
+}
+
+.check-title,
+.stay-title {
+    margin-left: -8px;
+}
+
+.to-notice-title {
+    margin-top: -20px;
+}
+
+/* 分享     彈跳視窗-------------------------- */
+.share-address-content,
+.share-address-content-div {
+    text-decoration: underline;
+}
+
+/* 退訂政策 閱讀詳情 彈跳視窗------------- */
+.non-refundable-p {
+    cursor: pointer;
+}
+
+.to-cancellation-header {
+    display: flex;
+    justify-items: end;
+}
+
+.full-refund-div,
+.non-refundable-div {
+    display: flex;
+    gap: 30px;
+}
+
+.full-refund-time,
+.non-refundable-time,
+.non-refundable-check-out {
+    font-size: 13px;
+}
+
+/* Swiper 照片幻燈片--------------------- */
+.swiper-container {
+    width: 100%;
+}
+
+.swiper-slide {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+}
+
+    .swiper-slide img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+:root {
+    --swiper-theme-color: #ededed;
+}
+/* ---- */
+
+@media screen and (max-width:767px) {
+    /*取消桌機版 footer*/
+    .footer-set {
+        display: none;
+    }
+    .order-info-map-container,
+    .copy-address-btn,
+    .directions-btn {
+        display: none;
+    }
+}
+
+@media screen and (min-width:768px) {
+
+    .address-map-pic {
+        display: none;
+    }
+}

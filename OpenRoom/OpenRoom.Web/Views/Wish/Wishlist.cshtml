@@ -1,0 +1,143 @@
+﻿@model OpenRoom.Web.ViewModels.WishlistViewModel
+
+@{
+    ViewData["Title"] = "Wish";
+    Layout = "_LayoutCustomer";
+    var roomCards = Model.CustomCategoryRooms;
+}
+
+@section topCSS {
+    <link href="~/css/wishcss/wish.css" rel="stylesheet" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+@section phoneNav {
+    <partial name="_PhoneNavLoginPartial" />
+}
+<div id="app" class="wish-list-container container">
+    <div class="add-edit-div" v-on:click="editBtnText">
+        <button class="add-edit fs-5">{{ buttonText }}</button>
+    </div>
+    <h1 class="main-wish-title">心願單</h1>
+
+    <div class="room-row row row-cols-2 row-cols-md-4" id="roomRowContainer">
+
+        @foreach (var card in roomCards.OrderByDescending(c => c.Id))
+        {
+            @await Html.PartialAsync("_WishCardPartial", card)
+        }
+    </div>
+
+    <!-- 按钮 -->
+    <div class="more-div ms-3 my-3">
+        <button type="button" class="more-btn btn border-1 text-dark d-block me-auto text-decoration-none fw-bold ">
+            載入更多
+        </button>
+    </div>
+</div>
+
+@section endJS {
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script>
+        // 切換編輯完成 -----------------------------------
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    buttonText: localStorage.getItem('buttonText') || '編輯'
+                };
+            },
+            computed: {
+                showCloseButton() {
+                    return this.buttonText === '完成';
+                }
+            },
+            methods: {
+                // 控制 "關閉" 按鈕的顯示。
+                // 當 buttonText 的值為 "完成" 時，showCloseButton 計算屬性返回 true，讓 "關閉" 按鈕顯示。
+                editBtnText() {
+                    if (this.buttonText === '編輯') {
+                        this.buttonText = '完成';
+                        localStorage.setItem('buttonText', '完成');
+                    } else {
+                        this.buttonText = '編輯';
+                        localStorage.setItem('buttonText', '編輯');
+                    }
+                },
+                closeButtonClicked(wishlistId) {
+                    fetch(`/Wish/DeleteRoomFromWishlist?wishlistId=${wishlistId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('回應時發生錯誤');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "刪除成功!",
+                                    showConfirmButton: true
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.reload();
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Oops...",
+                                    text: data.message || "刪除失敗！"
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: "warning",
+                                text: "操作出現問題！" + error,
+                            });
+                        });
+                },
+                showWishlistDetail(wishlistId) {
+                    console.log(wishlistId);
+                    fetch(`/Wish/WishlistDetail?wishlistId=${wishlistId}`, {
+                        method: 'Get'
+
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('回應時發生錯誤');
+                            }
+                            console.log(response.json());
+                            return response.json();
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: "warning",
+                                text: "操作出現問題！" + error,
+                            });
+                        });
+                }
+            },
+            mounted() {
+                const roomItems = document.querySelectorAll('.room-item');
+                for (let i = 8; i < roomItems.length; i++) {
+                    roomItems[i].style.display = 'none';
+                }
+            }
+        }).mount('#app');
+    </script>
+    <script src="~/js/wishjs/wishlist.js" asp-append-version="true"></script>
+}

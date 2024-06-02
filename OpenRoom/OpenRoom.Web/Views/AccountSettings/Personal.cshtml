@@ -1,0 +1,212 @@
+﻿@{
+    Layout = "_LayoutCustomer";
+    ViewData["Title"] = "Personal";
+    var personalData = Model;
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+@section phoneNav {
+    <partial name="_PhoneNavLoginPartial" />
+}
+
+<link rel="stylesheet" href="~/css/AccountSettingsCSS/Personal.css" />
+
+<div class="back-arrow px-4 py-3 bg-white sticky-top container">
+    <a href="/AccountSettings/Account">
+        <i class="fa-solid fa-angle-left fa-lg href px-1"></i>
+    </a>
+</div>
+<!--上面是手機專有的回上一頁-->
+<section class="personal-content-box mb-5 container">
+    <div class="personal-title my-4">
+        <nav class="d-flex">
+            <a href="/AccountSettings/Account" class="href href-hover weight600">帳號</a>
+            <i class="fa-solid fa-angle-right"></i>
+            <span class="">個人資料</span>
+        </nav>
+        <h1 class="personal-title-h1 mt-3">個人資料</h1>
+    </div>
+    <!--上面是網頁title下面是手機title-->
+    <div class="phone-personal-title my-3">
+        <h1 class="mt-5">個人資料</h1>
+    </div>
+    <!--以下是內容-->
+    <div class="d-flex justify-content-between">
+        <div class="personal-information-box">
+            <div class="personal-information-item">
+                <div class="d-flex justify-content-between">
+                    <div class="information-item-text pt-4">
+                        <div class="information-item-title">
+                            <h2 class="fs-6">法定名稱</h2>
+                        </div>
+                        <div class="information-item-data pb-4">
+                            <span class="text-secondary">@personalData.FirstName   @personalData.LastName</span>
+                            <span class="text-secondary d-none">(更換內容)-這是你旅行證件（駕照或護照）上所記載的姓名。</span>
+                        </div>
+                    </div>
+                    <div class="py-4" >
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#legal-name-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#legal-name-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="information-change-box">
+                    <form id="legal-name-collapse" class="collapse" method="post" action="@Url.Action("Personal", "AccountSettings")">
+                        <div class="mb-3 d-flex flex-wrap">
+                            <div class="input-box-w50 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="名字" value="@personalData.FirstName" name="FirstName">
+                                <label for="floatingInput">名字</label>
+                            </div>
+                            <div class="input-box-w50 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="姓氏" value="@personalData.LastName" name="LastName">
+                                <label for="floatingInput">姓氏</label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="Id" value="@Model.Id">
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+            <div class="personal-information-item">
+                <div class="d-flex justify-content-between">
+                    <div class="information-item-text py-4">
+                        <div class="information-item-title ">
+                            <h2 class="fs-6">電話號碼</h2>
+                        </div>
+                        <div class="information-item-data">
+                            <span class="text-secondary">新增電話號碼，以便旅客和 Openroom 能夠與你聯絡。你可以新增其他號碼並選擇其使用方式。</span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600">新增</button>
+                        <button class="cancel-button">取消</button>
+                    </div>
+                </div>
+            </div>
+            <div class="personal-information-item">
+                <div class="d-flex justify-content-between">
+                    <div class="information-item-text py-4">
+                        <div class="information-item-title">
+                            <h2 class="fs-6">政府核發的身分證件</h2>
+                        </div>
+                        <div class="information-item-data">
+                            <span class="text-secondary information-ID">未提供</span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600">新增</button>
+                        <button class="cancel-button">取消</button>
+                    </div>
+                </div>
+            </div>
+            <div class="personal-information-item">
+                <div class=" d-flex justify-content-between">
+                    <div class="information-item-text py-4">
+                        <div class="information-item-title">
+                            <h2 class="fs-6">地址</h2>
+                        </div>
+                        <div class="information-item-data">
+                            <span class="text-secondary">
+                                @personalData.CountryName @personalData.Street @personalData.CityName @personalData.DistrictName @personalData.PostalCode
+                            </span>
+                            <span class="text-secondary d-none">(更換內容)-使用永久地址接收郵件。</span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#personal-address-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#personal-address-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="information-change-box">
+                    <form id="personal-address-collapse" class="collapse" method="post" action="@Url.Action("Personal", "AccountSettings")">
+                        <div class="mb-3 d-flex flex-wrap">
+                            <div class="input-box-w100 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="國家 / 地區" value="@personalData.CountryName" name="CountryName">
+                                <label for="floatingInput">國家 / 地區</label>
+                            </div>
+                            <br>
+                            <div class="input-box-w100 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="街道地址" value="@personalData.Street" name="Street">
+                                <label for="floatingInput">街道地址</label>
+                            </div>
+                            <div class="input-box-w50 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="城市" value="@personalData.CityName" name="CityName">
+                                <label for="floatingInput">城市</label>
+                            </div>
+                            <div class="input-box-w50 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="州 / 省 / 郡 / 區" value="@personalData.DistrictName" name="DistrictName">
+                                <label for="floatingInput">州 / 省 / 郡 / 區</label>
+                            </div>
+                            <div class="input-box-w50 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="郵遞區號" value="@personalData.PostalCode" name="PostalCode">
+                                <label for="floatingInput">郵遞區號</label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="Id" value="@personalData.Id">
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+            <div class="personal-information-item">
+                <div class="d-flex justify-content-between">
+                    <div class="information-item-text py-4">
+                        <div class="information-item-title">
+                            <h2 class="fs-6">緊急聯絡人</h2>
+                        </div>
+                        <div class="information-item-data">
+                            <span class="text-secondary">@((personalData.EmergencyContact != null) ? personalData.EmergencyContact : "未提供")</span>
+                            <span class="text-secondary d-none">(更換內容)-發生緊急情況時，我們可以通知的可靠聯絡人。</span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#personal-emergency-content-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#personal-emergency-content-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="information-change-box">
+                    <form id="personal-emergency-content-collapse" class="collapse" method="post" action="@Url.Action("Personal", "AccountSettings")">
+                        <div class="mb-3 d-flex flex-wrap">
+                            <div class="input-box-w100 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="名稱" value="@personalData.EmergencyContact" name="EmergencyContact">
+                                <label for="floatingInput">名稱</label>
+                            </div>
+                            <div class="input-box-w100 form-floating mb-2">
+                                <input type="text" class="form-control" placeholder="電話號碼" value="@personalData.EmergencyNumber" name="EmergencyNumber">
+                                <label for="floatingInput">電話號碼</label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="Id" value="@personalData.Id">
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="personal-trouble-shooting-box">
+            <div class="trouble-shooting-border p-4">
+                <div class="trouble-shooting-icon">
+                    <i class="fa-solid fa-file-shield fa-3x"></i>
+                </div>
+                <div class="trouble-shooting-title mt-3">為什麼這裡沒有顯示我的資料？</div>
+                <div class="trouble-shooting-text mt-3">為了保護你的身分，我們隱藏了部分帳號詳情。</div>
+                <hr class="trouble-shooting-hr">
+                <div class="trouble-shooting-icon">
+                    <i class="fa-solid fa-lock fa-3x"></i>
+                </div>
+                <div class="trouble-shooting-title mt-3">哪些詳細資訊可以編輯？</div>
+                <div class="trouble-shooting-text mt-3">你可以更改聯絡資訊和個人資料。如果相關資訊曾用於身分驗證，那麼你必須再次驗證身分，才能繼續預訂旅程、出租房源或舉辦體驗。</div>
+                <hr class="trouble-shooting-hr">
+                <div class="trouble-shooting-icon">
+                    <i class="fa-regular fa-eye fa-3x"></i>
+                </div>
+                <div class="trouble-shooting-title mt-3">哪些資訊會提供給其他人？</div>
+                <div class="trouble-shooting-text mt-3">只有在預訂確認後，Openroom 才會提供聯絡資訊給房東、體驗達人和旅客。</div>
+            </div>
+        </div>
+    </div>
+</section>

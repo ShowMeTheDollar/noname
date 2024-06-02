@@ -1,0 +1,104 @@
+﻿@model OpenRoom.Admin.ViewModels.DashboardViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">儀錶板</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-header fw-bolder">房源總數</div>
+                @* <div class="card-body">房源總數</div> *@
+                <div class="card-body">
+                    <h2 class="card-title text-center">@Model.RoomCount 筆</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-secondary text-white mb-4">
+                <div class="card-header fw-bolder">訂單總數</div>
+             @*    <div class="card-body">訂單總數</div> *@
+                <div class="card-body">
+                    <h2 class="card-title text-center">@Model.OrderCount 筆</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                  
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-info text-white mb-4">
+                <div class="card-header fw-bolder">會員總數</div>
+                @* <div class="card-body">會員總數</div> *@
+                <div class="card-body">
+                    <h2 class="card-title text-center">@Model.MemberCount 筆</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-header fw-bolder">銷售總額</div>
+               @*  <div class="card-body">銷售總額</div> *@
+                <div class="card-body">
+                    <h2 class="card-title text-center">@Model.SalesTotal 元</h2>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="revenueChart" style="height: 500px"></div>
+
+    <div id="ordersChart" style="height: 500px"></div>
+
+    @* <div class="row">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    每月營收分布
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    每月訂單數量
+                </div>
+                <div class="card-body">
+                    <canvas id="ordersChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+ *@
+
+
+@section Scripts{
+    <!--chart.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <!--echarts-->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+}

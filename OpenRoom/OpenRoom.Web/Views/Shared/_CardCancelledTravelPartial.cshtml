@@ -1,0 +1,21 @@
+﻿@model OpenRoom.Web.ViewModels.TravelCard
+
+@{
+    var cardMdel = Model;
+}
+
+<div class="col-12 col-sm-12 col-md-6">
+    <div class="cancell-room-item">
+        <div class="cancell-pic">
+            <img src="@cardMdel.ImgUrl" class="cancell-room-img" onload="imageLoaded(this)">
+            <div class="loader-container">
+                <div class="loader"></div>
+            </div>
+        </div>
+        <div class="cancell-room-introduce">
+            <h3 class="cancell-room-item-main-title">@cardMdel.Title</h3>
+            <div class="host">房東：@cardMdel.HostName</div>
+            <div class="room-item-date">@cardMdel.CheckIn.ToString("yyyy年MM月dd日") - @cardMdel.CheckOut.ToString("yyyy年MM月dd日")</div>
+        </div>
+    </div>
+</div>

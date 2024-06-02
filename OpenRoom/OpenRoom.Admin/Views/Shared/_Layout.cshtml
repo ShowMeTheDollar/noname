@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenRoom-Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!--Vue 3 easy data table-->
+    <link href="https://unpkg.com/vue3-easy-data-table/dist/style.css" rel="stylesheet" />
+    <!--sb styles.css-->
+    <link href="~/css/style.css" rel="stylesheet" />
+    @await RenderSectionAsync("CSS", required: false)
+
+</head>
+<body>
+    <header>
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-success">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3 bg-white" href="/Home/Dashboard">
+                <img width="auto" height="50" src="~/assets/img/_Layout/icon/_logo-txt.jpg" alt="header-icon" />
+                </a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 mx-4 me-lg-0" id="sidebarToggle" href="#!">
+                <i class="fas fa-bars"></i>
+            </button>          
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user fa-fw"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" href="#">設定</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">活動紀錄</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                            <button class="dropdown-item" id="logout-btn">登出</button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion bg-success" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading  text-white">Core</div>
+                        <a class="nav-link text-white" href="/Home/Dashboard">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            Pages
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                    Authentication
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link text-white" href="/Auth/Login">Login</a>
+
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed text-white" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                    Error
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link text-white" href="/Auth/Error401">401 Page</a>
+                                        <a class="nav-link text-white" href="/Auth/Error404">404 Page</a>
+                                        <a class="nav-link text-white" href="/Auth/Error500">500 Page</a>
+                                    </nav>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="sb-sidenav-menu-heading  text-white">Addons</div>
+                        <a class="nav-link text-white" href="/Home/Charts">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-chart-area"></i>
+                            </div>
+                            Charts
+                        </a>
+                        <a class="nav-link text-white" href="/Home/ECharts">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-chart-area"></i>
+                            </div>
+                            ECharts
+                        </a>
+                        <a class="nav-link text-white" href="/Home/MemberList">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            會員Table資訊
+                        </a>
+                        <a class="nav-link text-white" href="/Home/RoomSourceList">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            房源Table資訊
+                        </a>
+                        <a class="nav-link text-white" href="/Home/OrderList">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            訂單Table資訊
+                        </a>
+                        <a class="nav-link text-white" href="/Home/WishList">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            收藏單Table資訊
+                        </a>
+                        <a class="nav-link text-white" href="/Home/RoomCharts">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            房源Charts
+                        </a>
+                        <a class="nav-link text-white" href="/Home/OrderCharts">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            訂單Charts
+                        </a>
+                        <a class="nav-link text-white" href="/Home/WishCharts">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            心願單Charts
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    OpenRoom - Admin
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- cookie.js -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+    <!-- toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!--fontawesome-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- vue3 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.2.1/dist/vue.global.js"></script>
+
+    <!-- vue3-easy-data-table -->
+    <script src="https://unpkg.com/vue3-easy-data-table"></script>
+
+    <!--datatable-->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+
+    <!--sb scripts-->
+    <script src="~/js/script.js" asp-append-version="true"></script>
+
+    <script src="~/js/request.js" asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,21 @@
+﻿@model OpenRoom.Web.ViewModels.CustomCategory
+@{
+    var cardModel = Model;
+
+}
+
+
+<div class="room-item col mb-5" >
+    <a href="@cardModel.WishlistURL"  class="room-link">
+        <div class="room-pic">
+            <div class="loader-container">
+                <div class="loader"></div>
+            </div>
+            <img src="@cardModel.ImgUrl" class="room-img" >
+            <button type="button" class="close-button" v-show="showCloseButton"  v-on:click.prevent="closeButtonClicked(@cardModel.Id)">X</button>
+        </div>
+        <h2 class="subtitle mt-2">@cardModel.WishlistName</h2>
+       
+        <div class="saved">已儲存 @cardModel.SavedCount 項</div>
+    </a>
+</div>

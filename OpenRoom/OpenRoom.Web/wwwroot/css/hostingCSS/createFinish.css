@@ -1,0 +1,29 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+p {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+
+.left-part img {
+    object-fit: cover; /* Cover the entire div without stretching */
+    height: 100vh;
+}
+
+.right-part {
+    background-color: #000;
+    color: #fff;
+    text-align: start;
+}
+
+.next.btn.btn-dark {
+    background-color: #DE1361 !important;
+    border: #DE1361 !important;
+}
+
+

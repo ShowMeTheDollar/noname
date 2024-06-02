@@ -1,0 +1,223 @@
+﻿.href {
+    color: black;
+    text-decoration: none;
+}
+
+.href-hover:hover {
+    text-decoration: underline;
+}
+
+.weight600 {
+    font-weight: 600;
+}
+
+.login-and-security-box {
+    margin: auto;
+    padding: 0px 24px;
+}
+
+.login-and-security-title {
+    margin: 40px 0px;
+}
+
+.login-and-security-title h1 {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.login-and-security-title nav i {
+    padding: 0px 16px;
+    align-self: center;
+}
+
+.security-navigation-bar button {
+    border: 0px;
+    font-size: 14px;
+}
+
+.security-navigation-bar button:nth-child(1) {
+    color: #2E9C6A;
+    border-bottom: #2E9C6A solid 1.6px;
+}
+
+.login-status {
+    padding-top: 32px;
+    border-top: 1px solid rgb(235, 235, 235);
+}
+
+.login-status-title h2 {
+    font-weight: 800;
+    font-size: 24px;
+    padding: 32px 0px 16px;
+}
+
+.account-status-box {
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.account-status-content {
+    color: #484848;
+}
+
+.update-and-connect-button button {
+    border: 0px;
+    background-color: white;
+    color: #2E9C6A;
+}
+
+.update-and-connect-button button:hover {
+    text-decoration: underline;
+    color: #2E9C6A;
+}
+
+.security-advise-border {
+    border: solid 1px #DDDDDD;
+    border-radius: 12px;
+}
+
+.security-advise-icon i {
+    background-image: linear-gradient(to right, white 50%, yellow 50%);
+}
+
+.security-advise-title {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.security-advise-subtitle {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.security-advise-text {
+    color: #484848;
+}
+
+.security-advise-hr {
+    margin: 24px 0px;
+    color: rgb(255, 255, 255);
+}
+
+.improve-and-update-button {
+    padding: 10px 22px;
+    border: 1.6px solid white;
+    background-color: #2E9C6A;
+    color: white;
+    font-weight: 800;
+    border-radius: 5px;
+}
+
+.password-input {
+    padding: 11px;
+    width: 100%;
+    box-sizing: border-box;
+    border-color: #EBEBEB;
+    border-radius: 4px;
+}
+
+.need-new-password {
+    color: #2E9C6A;
+}
+
+.cancel-button {
+    display: none;
+}
+
+.last-time-update {
+    display: none;
+}
+
+.account-stop-content a {
+    color: #D93900;
+    text-decoration: none;
+}
+
+.account-stop-content:hover a {
+    color: #2E9C6A;
+    text-decoration: underline;
+}
+
+.phone-login-and-security-title h1 {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/*以上是網頁內容以下是footer設定*/
+
+.footer-set {
+    border-top: 1px solid #DDDDDD;
+    background-color: #F7F7F7;
+    padding: 20px 60px;
+    font-size: 14px;
+}
+
+.footer-set a {
+    color: black;
+    text-decoration: none;
+}
+
+.footer-set a:hover {
+    text-decoration: underline;
+}
+
+.footer-box1 {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.footer-box1 ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-item li {
+    margin-bottom: 12px;
+}
+
+.footer-item p {
+    margin: 12px 0px;
+}
+
+.footer-item-title {
+    font-weight: 800;
+}
+
+.footer-box2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*media設定*/
+@media screen and (max-width:768px) {
+    .footer-set,
+    .login-and-security-title,
+    .security-navigation-bar {
+        display: none;
+    }
+
+    .login-status {
+        border: 0px;
+    }
+}
+
+@media screen and (min-width:769px) {
+    .phone-login-and-security-title,
+    .back-arrow {
+        display: none;
+    }
+
+    .login-status-and-security-advise {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .login-status {
+        width: 58.333333%;
+    }
+
+    .security-advise {
+        width: 33.333333%;
+    }
+}

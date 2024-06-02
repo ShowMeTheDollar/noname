@@ -1,0 +1,282 @@
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Members Management";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">會員Table資訊</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Home/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active">會員Table資訊</li>
+    </ol>
+
+    <div class="container">
+        <div id="app" class="">
+            <div class="col-12 d-flex ">
+                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#create-modal">
+                    新增
+                    <i class="fa-solid fa-circle-plus"></i>
+                </button>
+            </div>
+
+            <easy-data-table @* v-model:server-options="serverOptions" *@ @* v-model:items-selected="itemsSelected" *@ show-index
+                             buttons-pagination @* :server-items-length="serverItemsLength" *@ alternating :headers="headers"
+                             :items="items" @* :loading="loading" *@>
+                <!-- 使用 slot render 選項自訂 "operation" 欄位的內容 -->
+                <template #item-operation="item">
+                    <div class="operation-wrapper">
+                        <button v-on:click="handleEdit(item)" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                data-bs-target="#edit-modal">
+                            Edit
+                        </button>
+
+                        <button v-on:click="handleDelete(item)" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </div>
+                </template>
+            </easy-data-table>
+
+
+            <!-- Data Table for Members -->
+       @*      <easy-data-table :headers="headers" :items="items" :loading="loading">
+                <template v-slot:item="{ item }">
+                    <td>{{ item.Avatar }}</td>
+                    <td>{{ item.FirstName }}</td>
+                    <td>{{ item.LastName }}</td>
+                    <td>{{ item.Email }}</td>
+                    <td>{{ item.Mobile }}</td>
+                    <td>{{ item.EmergencyNumber }}</td>
+                    <td>{{ item.PhoneNumber }}</td>
+                    <td>{{ item.EmergencyContact }}</td>
+                </template>
+                <template v-slot:item-operation="{ item }">
+                    <button @@click="handleEdit(item)" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                    <button @@click="handleDelete(item)" class="btn btn-danger">Delete</button>
+                </template>
+            </easy-data-table>
+             *@
+
+            @* <easy-data-table :headers="headers" :items="items" :loading="loading">
+                <template v-slot:default="{ row }">
+                    <td>{{ row.item.Avatar }}</td>
+                    <td>{{ row.item.FirstName }}</td>
+                    <td>{{ row.item.LastName }}</td>
+                    <td>{{ row.item.Email }}</td>
+                    <td>{{ row.item.Mobile }}</td>
+                    <td>{{ row.item.EmergencyNumber }}</td>
+                    <td>{{ row.item.PhoneNumber }}</td>
+                    <td>{{ row.item.EmergencyContact }}</td>
+                    <td>
+                        <button @@click="handleEdit(row.item)" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                        <button @@click="handleDelete(row.item)" class="btn btn-danger">Delete</button>
+                    </td>
+                </template>
+            </easy-data-table> *@
+
+            <!-- 新增 Modal-->
+            <div class="modal fade" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">                              
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>FirstName</label>
+                                    <input v-model="createData.FirstName" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>LastName</label>
+                                    <input v-model="createData.LastName" class="form-control"
+                                           type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Email</label>
+                                    <input v-model="createData.Email" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Mobile</label>
+                                    <input v-model="createData.Mobile" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>EmergencyNumber</label>
+                                    <input v-model="createData.EmergencyNumber" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>PhoneNumber</label>
+                                    <input v-model="createData.PhoneNumber" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>EmergencyContact</label>
+                                    <input v-model="createData.EmergencyContact" class="form-control" type="text">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" v-on:click="createMethod">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--編輯 Modal -->
+            <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">                          
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>FirstName</label>
+                                    <input v-model="currentData.FirstName" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>LastName</label>
+                                    <input v-model="currentData.LastName" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Email</label>
+                                    <input v-model="currentData.Email" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>Mobile</label>
+                                    <input v-model="currentData.Mobile" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>EmergencyNumber</label>
+                                    <input v-model="currentData.EmergencyNumber" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>PhoneNumber</label>
+                                    <input v-model="currentData.PhoneNumber" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>EmergencyContact</label>
+                                    <input v-model="currentData.EmergencyContact" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" v-on:click="updateMethod">更新</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const App = Vue.createApp({
+            components: {
+                EasyDataTable: window['vue3-easy-data-table'],
+            },
+            data() {
+                return {
+                    createData: {
+                        
+                        FirstName: '',
+                        LastName: '',
+                        Email: '',
+                        Mobile: '',
+                        EmergencyNumber: '',
+                        PhoneNumber: '',
+                        EmergencyContact: ''
+                    },
+                    currentData: {
+                        
+                        FirstName: '',
+                        LastName: '',
+                        Email: '',
+                        Mobile: '',
+                        EmergencyNumber: '',
+                        PhoneNumber: '',
+                        EmergencyContact: ''
+                    },
+                    headers: [
+                      
+                        {text:"Id", value:"id"},
+                        { text: "FirstName", value: "firstName" },
+                        { text: "LastName", value: "lastName" },
+                        { text: "Email", value: "email" },
+                        { text: "Mobile", value: "mobile" },
+                        { text: "EmergencyNumber", value: "emergencyNumber" },
+                        { text: "PhoneNumber", value: "phoneNumber" },
+                        { text: "EmergencyContact", value: "emergencyContact" }
+                    ],
+                    items: [],
+                    
+                }
+            },
+            created() {
+                this.getAll();
+            },
+            methods: {
+                handleEdit(row) {
+                    //this.currentData.Name = row.Name
+                    this.currentData = { ...row };
+                    // 在這裡執行編輯操作，你可以訪問 row 中的資料
+                    console.log('編輯操作，資料為：', this.currentData);
+                },
+                handleDelete(row) {
+                    // 在這裡執行刪除操作，你可以訪問 row 中的資料
+                    console.log('刪除操作，資料為：', row);
+                },
+                createMethod() {
+                    // todo: 執行新增操作
+                },
+                updateMethod() {
+                    // todo: 執行更新操作
+                },
+                getAll() {
+
+                    this.loading = true;                
+                    // 使用 window.location.origin 獲取當前網站的基本 URL
+                    const url = new URL('/api/Members', window.location.origin).href;
+                    //axios.get("https://localhost:7226/api/Members")
+                    //axios.get("https://test20240318vivian-test.azurewebsites.net/api/Members")
+                    axios.get(url)
+                        .then(res => {
+                            if (res.status === 200) {
+                                toastr.success("Data loaded successfully!");
+                                console.log("Loaded data:", res.data); // Log the data here
+                                //debugger;
+                                    this.items = res.data;
+                                // this.items = res.data.map(member => ({
+                                //     Avatar: member.avatar,
+                                //     FirstName: member.firstName,
+                                //     LastName: member.lastName,
+                                //     Email: member.email,
+                                //     Mobile: member.mobile,
+                                //     EmergencyNumber: member.emergencyNumber,
+                                //     PhoneNumber: member.phoneNumber,
+                                //     EmergencyContact: member.emergencyContact
+                                // }));
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            toastr.error("Failed to load data.");
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
+
+                },
+                mounted() {
+                    this.getAll();
+                },
+            }
+        }).mount('#app');
+    </script>
+}

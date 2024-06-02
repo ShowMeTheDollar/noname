@@ -1,0 +1,282 @@
+﻿.phone-nav-set {
+    position: sticky !important;
+    bottom: 0px !important;
+    z-index: 4 !important;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+.room-icon {
+    position: sticky;
+    z-index: 3;
+    top: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    height: 40px;
+}
+
+.room-icon-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.up-page,
+.share-detail,
+.rename-settings {
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.up-page {
+    padding: 15px 12px;
+}
+
+.share-detail {
+    padding: 5px 11px;
+}
+
+.rename-settings {
+    padding: 4px 10px;
+}
+
+    .share-detail:active,
+    .rename-settings:active,
+    .up-page:active {
+        background-color: #eae6e6;
+    }
+
+/* 新增日期 人數 */
+.date-peoples {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+    .date-peoples button {
+        background-color: #FFFFFF;
+        border: 1px solid #bebdbd;
+        border-radius: 20px;
+        padding: 6px 12px;
+        width: fit-content;
+        box-shadow: 0px 3px 3px 1px #dddddd;
+        width: 100px;
+        font-weight: bold;
+    }
+
+        .date-peoples button:hover {
+            transform: scale(0.96);
+            transition: transform 0.1s;
+            border: 1px solid #bebdbd;
+        }
+/*日曆 ------*/
+.my-wish-detail-container {
+    position: relative;
+}
+
+#date-picker-container {
+    position: absolute;
+    top: 180px;
+    margin: auto;
+}
+/*房間 ------*/
+.with-pets {
+    cursor: pointer;
+}
+
+.close-btn,
+.close-btn:hover {
+    border: 1px solid #c3c2c2;
+    box-shadow: 0px 3px 5px #91918f;
+}
+
+    .close-btn:hover {
+        transform: scale(0.96);
+        transition: transform 0.3s;
+    }
+
+/*.room-item {
+    margin-bottom: 45px;
+}*/
+
+.room-pic {
+    /*width: 100%;*/ /* 使用百分比來設置寬度 */
+    /*padding-top: 100%;*/ /* 使用 padding-top 來維持正方形比例 */
+    /*overflow: hidden;*/
+}
+
+/*.room-img {
+    width: 100%;
+    border-radius: 25px;
+    vertical-align: bottom;
+}
+
+.room-pic-love {
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    z-index: 2;
+}
+
+.love-btn {
+    color: #fff;
+}
+
+    .love-btn:hover {
+        color: red;
+        transition: color 0.5s;
+    }
+
+.room-introduce {
+    margin: 10px 0px;
+}
+
+.room-detail {
+    margin-top: -4px;
+}
+.room-item-date,
+.room-item-total {
+    color: #656565;
+}
+
+.room-item-price {
+    color: #000;
+    font-weight: bold;
+    margin: 2px 0px;
+}
+
+    .room-item-price:hover, .up-page:hover {
+        color: #000;
+    }
+
+.room-item-total {
+    border: none;
+    display: inline;
+    text-decoration: underline;
+    font-weight: 400;
+    margin-left: -5px;
+    cursor: pointer;
+}
+
+.room-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}*/
+
+
+.main-wish-title,
+.subtitle {
+    color: black;
+}
+
+.main-wish-title {
+    font-weight: bold;
+    margin: 10px 0px;
+}
+
+.main-wish-title,
+.date-peoples {
+    padding: 10px;
+}
+
+.subtitle {
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+/*共同彈跳視窗 -----------------*/
+.header {
+    margin-bottom: -16px;
+}
+/* 價格明細 彈跳視窗 ---------------- */
+.modal h1 {
+    margin-top: -6px;
+}
+
+.sub1-set,
+.sub2-set {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.bline {
+    border: 1px solid #eeeeee;
+}
+
+/* 上方分享 彈跳視窗 --------------- */
+.send-link-btn,
+.cooperation-btn {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    border: 1px solid #c3c2c2;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 3px 3px 5px 2px #c3c2c2;
+}
+
+    .send-link-btn:hover,
+    .cooperation-btn:hover {
+        transform: scale(0.97);
+        transition: transform 0.3s;
+        color: #000;
+    }
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+/* 重新命名彈跳視窗--------------------- */
+#to-rename-settings .sub1-set, #to-rename-settings .sub2-set {
+    cursor: pointer;
+}
+
+#to-rename-sub-btn-gp .cancel-btn, 
+#to-delete-sub-btn-gp .cancel-btn {
+    background-color: #FFFFFF;
+}
+/* 地圖--------------------------------- */
+.wish-map-container { 
+    width: 40%;
+}
+
+    .wish-map-container #map {
+        height: 100%;
+        z-index: 1;
+    }
+
+@media screen and (max-width:767px) {
+    /*   footer    */
+    .phone-nav-set {
+        position: relative;
+        z-index: 1;
+    }
+
+    .footer-set {
+        display: none;
+    }
+
+    /*桌機地圖*/
+
+    .wish-map-container {
+        display: none;
+    }
+}

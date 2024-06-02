@@ -1,0 +1,66 @@
+﻿h2 span:hover {
+    /* border-radius: 50%; */
+    background-color: #EBEBEB;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+u:hover {
+    cursor: pointer;
+}
+
+a {
+    color: black;
+}
+
+.room-name,
+.room-type,
+.room-rating {
+    display: -webkit-box;
+    /* 設定顯示 1 行 */
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.room-name {
+    /* 設定顯示 2 行 */
+    -webkit-line-clamp: 2;
+}
+
+.booking-button {
+    background-color:#2E9C6A;
+    cursor: pointer;
+}
+
+.mobile-divider {
+    background-color: #EBEBEB;
+    height: 8px;
+}
+
+@media screen and (min-width:768px) {
+    .room-area {
+        border: 1px solid gray;
+        border-radius: 20px;
+        padding: 25px;
+        margin-top: 24px;
+        position: sticky;
+        top: 120px;
+    }
+
+    .room-details,
+    .bill-statement {
+        border-bottom: 1.5px solid #DDDDDD;
+        margin-bottom: 20px;
+    }
+
+    .trip-details,
+    .payment-method,
+    .cancellation-policy {
+        border-bottom: 1.5px solid #DDDDDD;
+    }
+}
+
+/* .room-details{
+            box-shadow: 0px 8px 0px 0px #EBEBEB;
+        } */

@@ -1,0 +1,41 @@
+﻿/*register*/
+.register {
+    margin:5%
+}
+
+.login-register a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.email-input,
+.password-input {
+    height:60px
+}
+
+.signin-btn {
+    position: relative;
+    border: 1px solid #aaaaaa;
+    display: flex;
+    align-items: center;
+    text-align: center;       
+    border-radius: 5px;   
+}
+
+.signin-btn:hover {   
+    border: 1px solid #aaaaaa;
+    transform: scale(0.97);
+}
+
+.signin-p {
+    margin: 16px auto;
+}
+
+.continue-btn {
+    border: 1px solid #aaaaaa;
+    background-color: #2E9C6A;
+}
+
+.continue-btn:hover {
+    background-color: #76B84F;
+}

@@ -1,0 +1,756 @@
+﻿
+@model HostDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_LayoutCustomer";
+    
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+@section topCSS {
+    <!-- CSS  -->
+    <link href="~/css/hostingCSS/details.css" rel="stylesheet" />
+}
+
+
+<section class="px-4 mb-5 container">
+    <div class="details-title my-4">
+        <h1 class="details-title-h1 mt-3">變更房源</h1>
+        <div class="mt-2 fs-3">@Model.Name</div>
+    </div>    
+
+            <div class="details-change-item room-images">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">房源照片</h2>
+                        </div>
+                        <div class="details-item-data">
+                            <span class="text-secondary">請編輯並上傳7張以上的相片</span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#photos-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#photos-collapse">取消</button>
+                    </div>
+                </div>
+                <div id="photos-collapse" class="collapse">
+                    <form method="post" enctype="multipart/form-data" asp-action="UpdateRoomImages" class="container image-wrapper">
+                    <div id="app">
+                        <input type="hidden" asp-for="RoomId" />
+                                                  
+                            <!-- 圖片預覽區域 -->
+                            <div class="preview">
+                        <div v-for="(src, index) in imageUrls" :key="index" class="img-container" />
+                        <img :src="src" class="img-preview">
+                               
+                            </div> 
+                    
+                
+                    <div class="row w-100" id="gridDemo">
+                                <label class="col-12 col-md-6 col-lg-4 img-box grid-square" for="uploadfile">
+                                    <img src="https://www.chanchao.com.tw/digital/images/default.jpg" alt="image preview" style="width:100px; height:auto;">
+                                    <div class="spinner-border d-none" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </label>
+                       @*  <input type="file" asp-for="ImageUrls" accept="image/*" id="uploadfile" class="d-none" multiple name="files"> *@
+                        <input type="file" @@change="handleFileSelect" accept="image/*" id="uploadfile" class="d-none" multiple>
+                            </div>                            
+                    <button type="button" class="btn btn-dark save-btn weight600 mt-3" @@click="submitForm" :disabled="savingImgs">儲存</button>
+                    </div>
+                </form>
+           </div>
+    </div>
+
+            <div class="details-change-item room-name">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">房源標題</h2>
+                        </div>
+                        <div class="details-item-data">
+                            <span class="text-secondary">小屋的名稱</span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#house-name-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#house-name-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="details-change-box collapse" id="house-name-collapse">
+                    <form method="post" asp-action="UpdateRoomName">
+                        <input type="hidden" asp-for="RoomId" />
+                        <div class="mb-3 d-flex flex-wrap">
+                            <div class="input-box-w100 form-floating mb-2">
+                                @* <input type="text" asp-for="Name" class="form-control" placeholder="房源標題" value="@Model.Name"> *@
+                                <input type="text" asp-for="Name" class="form-control" placeholder="房源標題">
+                                <label for="Name">房源標題</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details-change-item room-description">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">房源描述</h2>
+                        </div>
+                        <div class="details-item-data">
+                            <span class="text-secondary"></span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#house-description-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#house-description-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="details-change-box collapse" id="house-description-collapse">
+                    <form method="post" asp-action="UpdateRoomDescription">
+                        <input type="hidden" asp-for="RoomId" />
+                        <div class="mb-3 d-flex flex-wrap">
+                            <div class="input-box-w100 form-floating mb-2">
+                                @* <input type="text" asp-for="Description" class="form-control" placeholder="房源描述" value="@Model.Description"> *@
+                                <input type="text" asp-for="Description" class="form-control" placeholder="房源描述">
+                                <label for="floatingInput">房源描述</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details-change-item room-counts">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">房源容納人數及相關設施</h2>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#how-many-can-stay-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#how-many-can-stay-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="details-change-box">
+                    <form id="how-many-can-stay-collapse" class="collapse" method="post" asp-action="UpdateRoomCounts">
+                        <input type="hidden" asp-for="RoomId" />
+                        <div id="Count" class="mb-3 d-flex flex-wrap align-items-center justify-content-between">
+                            <div class="customer-count-number  me-3 border-bottom border-dark">
+                                <label>房客人數</label>
+                                <input type="number" asp-for="GuestNumber" min="1" class="form-control" />                         
+                            </div>
+                            <div class="bedroom-count-number me-3 border-bottom border-dark">
+                                <label>臥室數量</label>
+                                <input type="number" asp-for="BedroomCount" min="1" class="form-control" />       
+                            </div>
+                            <div class="bed-count-number  me-3 border-bottom border-dark">
+                                <label>床位數量</label>
+                                <input type="number" asp-for="BedCount" min="1" class="form-control" />                    
+                            </div>
+                            <div class="bathroom-count-number me-3 border-bottom border-dark">
+                                <label>衛浴數量</label>
+                                <input type="number" asp-for="BathroomCount" min="1" class="form-control" />                             
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details-change-item room-state">
+                 <form method="post" asp-action="UpdateRoomState">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">房源狀態</h2>
+                        </div>
+                    </div>
+                        <!-- Include RoomId as a hidden input -->
+                        <input type="hidden" asp-for="RoomId" />
+                    <div class="dropdown ms-auto">
+                    <select asp-for="State" asp-items="Model.RoomStatusOptions" class="form-select">
+                            @* <option value="0">進行中</option>
+                            <option value="1">已上架</option>
+                            <option value="2">未上架</option>
+                            <option value="3">已刪除</option> *@
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-dark save-btn weight600 ms-3 my-auto">確認</button>
+                </div>
+                </form>
+            </div>
+
+            <div class="details-change-item room-services">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">設備與服務</h2>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#equipment-and-services-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#equipment-and-services-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="details-change-box collapse" id="equipment-and-services-collapse">
+                    <form method="post" asp-action="UpdateRoomAmenities">
+                        <input type="hidden" asp-for="RoomId" />
+                        <div class="d-flex flex-wrap mb-5" style="gap: 10px;">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="Wifi" name="amenities" value="Wifi" @(Model.Amenities.Contains("Wifi") ? "checked" : "") />
+                        <label class="form-check-label" for="Wifi">Wifi</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tv" name="amenities" value="電視" @(Model.Amenities.Contains("電視") ? "checked" : "") />
+                        <label class="form-check-label" for="tv">電視</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="kitchen" name="amenities" value="廚房" @(Model.Amenities.Contains("廚房") ? "checked" : "") />
+                        <label class="form-check-label" for="kitchen">廚房</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="laundry" name="amenities" value="洗衣機" @(Model.Amenities.Contains("洗衣機") ? "checked" : "") />
+                        <label class="form-check-label" for="laundry">洗衣機</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="parking" name="amenities" value="室內免費停車" @(Model.Amenities.Contains("室內免費停車") ? "checked" : "") />
+                        <label class="form-check-label" for="parking">室內免費停車</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="ac" name="amenities" value="空調設備" @(Model.Amenities.Contains("空調設備") ? "checked" : "") />
+                        <label class="form-check-label" for="ac">空調設備</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="pool" name="amenities" value="游泳池" @(Model.Amenities.Contains("游泳池") ? "checked" : "") />
+                        <label class="form-check-label" for="pool">游泳池</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tub" name="amenities" value="按摩浴缸" @(Model.Amenities.Contains("按摩浴缸") ? "checked" : "") />
+                        <label class="form-check-label" for="tub">按摩浴缸</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="outdoor" name="amenities" value="庭院" @(Model.Amenities.Contains("庭院") ? "checked" : "") />
+                        <label class="form-check-label" for="outdoor">庭院</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="grill" name="amenities" value="烤肉區" @(Model.Amenities.Contains("烤肉區") ? "checked" : "") />
+                        <label class="form-check-label" for="grill">烤肉區</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="deck" name="amenities" value="戶外用餐區" @(Model.Amenities.Contains("戶外用餐區") ? "checked" : "") />
+                        <label class="form-check-label" for="deck">戶外用餐區</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="fire" name="amenities" value="火坑" @(Model.Amenities.Contains("火坑") ? "checked" : "") />
+                        <label class="form-check-label" for="fire">火坑</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="smoke" name="amenities" value="煙霧警報器" @(Model.Amenities.Contains("煙霧警報器") ? "checked" : "") />
+                        <label class="form-check-label" for="smoke">煙霧警報器</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="medical" name="amenities" value="急救包" @(Model.Amenities.Contains("急救包") ? "checked" : "") />
+                        <label class="form-check-label" for="medical">急救包</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="alarm" name="amenities" value="一氧化碳警報器" @(Model.Amenities.Contains("一氧化碳警報器") ? "checked" : "") />
+                        <label class="form-check-label" for="alarm">一氧化碳警報器</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="extinguisher" name="amenities" value="滅火器" @(Model.Amenities.Contains("滅火器") ? "checked" : "") />
+                        <label class="form-check-label" for="extinguisher">滅火器</label>
+                    </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="cctv" name="amenities" value="監視錄影器" @(Model.Amenities.Contains("監視錄影器") ? "checked" : "") />
+                        <label class="form-check-label" for="cctv">監視錄影器</label>
+                    </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="weapon" name="amenities" value="武器" @(Model.Amenities.Contains("武器") ? "checked" : "") />
+                        <label class="form-check-label" for="weapon">武器</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="animal" name="amenities" value="危險動物" @(Model.Amenities.Contains("危險動物") ? "checked" : "") />
+                        <label class="form-check-label" for="animal">危險動物</label>
+                    </div>
+                    </div>
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="details-change-item room-category">
+                 <form method="post" asp-action="UpdateRoomCategory">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">描述你的房源類型</h2>
+                        </div>
+                    </div>
+                        <!-- Include RoomId as a hidden input -->
+                        <input type="hidden" asp-for="RoomId" />
+                        <div class="dropdown ms-auto">
+                            <div class="dropdown ms-auto">
+                        <select asp-for="RoomCategoryId" name="categoryId" asp-items="@Model.RoomCategories" class="form-select">
+                            @* <option value="1">公寓</option>
+                                    <option value="2">獨棟</option>
+                                    <option value="3">家庭式</option>
+                                    <option value="4">精品</option>
+                                    <option value="5">莊園</option>
+                                    <option value="6">民宿</option>
+                                    <option value="7">小木屋</option>
+                                    <option value="8">帳篷</option>
+                                    <option value="9">露營車</option> *@
+                            <option value="">請選擇房源類別</option>
+                                </select>
+                            </div>                        
+                       
+                    </div>
+                    <button type="submit" class="btn btn-dark save-btn weight600 ms-3 my-auto">確認</button>
+                </div>
+                </form>
+            </div>
+
+            <div class="details-change-item room-address">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">地址</h2>
+                        </div>
+                        <div class="details-item-data">
+                            <span class="text-secondary"></span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#address-change-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#address-change-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="details-change-box collapse" id="address-change-collapse">
+                    <form method="post" asp-action="UpdateRoomAddress">
+                        <input type="hidden" asp-for="RoomId" />
+                        <div class="mb-3">
+                            <div class="form-floating mb-2">
+                        <select asp-for="Address.Country" name="country" class="form-select" id="Country" aria-label="Country select">
+                                    <option selected>臺灣</option>
+                                    <!-- ... other options ... -->
+                                </select>
+                                <label for="country" >@Model.Address.Country</label>
+                            </div>
+                            <div class="form-floating mb-2">
+                                @* <input type="text" class="form-control" id="streetAddress" placeholder="街道地址" v-model="formData.address.streetAddress">
+                                <label for="streetAddress">@Model.Address.StreetAddress</label> *@
+                        <input type="text" name="streetAddress" asp-for="Address.StreetAddress" class="form-control" placeholder="街道地址">
+                            </div>
+                            <div class="form-floating mb-2">
+                                @* <input type="text" class="form-control" id="city" placeholder="城市" v-model="formData.address.city">
+                                <label for="city">@Model.Address.City</label> *@
+                        <input type="text" name="city" asp-for="Address.City" class="form-control" placeholder="城市">
+                            </div>
+                            <div class="form-floating mb-2">
+                                @* <input type="text" class="form-control" id="district" placeholder="鎮 / 村" v-model="formData.address.district">
+                                <label for="district">@Model.Address.District</label> *@
+                        <input type="text" name="district" asp-for="Address.District" class="form-control" placeholder="鎮 / 村">
+                            </div>
+                            <div class="form-floating mb-2">
+                                @* <input type="text" class="form-control" id="postalCode" placeholder="郵遞區號 ( 如適用 )" v-model="formData.address.postalCode">
+                                <label for="postCode">@Model.Address.PostalCode</label> *@
+                        <input type="text" name="postalCode" asp-for="Address.PostalCode" class="form-control" placeholder="郵遞區號">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details-change-item street-description">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">街區描述</h2>
+                        </div>
+                        <div class="details-item-data">
+                            <span class="text-secondary"></span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#street-description-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#street-description-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="details-change-box collapse" id="street-description-collapse">
+                    <!-- Add method and asp-action to point to your update handler -->
+                    <form method="post" asp-action="UpdateStreetDescription">
+                        <input type="hidden" asp-for="RoomId" />
+                        <div class="mb-3 d-flex flex-wrap">
+                            <div class="input-box-w100 form-floating mb-2">
+                                <input type="text" asp-for="StreetDescription" class="form-control" placeholder="房源標題" value="@Model.StreetDescription">
+                                <label for="StreetDescription">街區描述</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details-change-item room-transportation">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">周邊交通</h2>
+                        </div>
+                        <div class="details-item-data">
+                            <span class="text-secondary"></span>
+                        </div>
+                    </div>
+                    <div class="py-4">
+                        <button class="edit-or-add-button weight600 btn p-0" data-bs-toggle="collapse" data-bs-target="#surround-transportation-collapse">編輯</button>
+                        <button class="cancel-button btn p-0" data-bs-toggle="collapse" data-bs-target="#surround-transportation-collapse">取消</button>
+                    </div>
+                </div>
+                <div class="details-change-box collapse" id="surround-transportation-collapse">
+                    <!-- Add method and asp-action to point to your update handler -->
+                    <form method="post" asp-action="UpdateRoomTransportation">
+                        <input type="hidden" asp-for="RoomId" />
+                        <div class="mb-3 d-flex flex-wrap">
+                            <div class="input-box-w100 form-floating mb-2">
+                        <input type="text" asp-for="Transportation" class ="form-control" placeholder="周邊交通" value="@Model.Transportation">
+                                <label for="floatingInput">周邊交通</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-dark save-btn weight600">儲存</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details-change-item room-checkin">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">入住時段</h2>
+                        </div>
+                    </div>
+                    <!-- The form now wraps the dropdown selections and the confirm button -->
+                <form class="d-flex ms-auto" method="post" asp-action="UpdateRoomCheckIn">
+                    <div class="dropdown-box d-flex ms-auto">
+                        <div class="dropdown px-2">
+
+                            <label for="checkInStartTime">開始時間</label>
+                                @* <select id="checkInStartTime" asp-for="CheckInStartTime" name="CheckInStartTime" class="form-control">
+                                @Html.Raw(Model.CheckInStartTimeOptions)
+                            </select> *@
+                        <select asp-for="CheckInStartTimeString" class="form-select">
+                            <option value="8:00">8:00</option>
+                            <option value="9:00">9:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+                        </select>
+                        </div>
+
+                        <div class="dropdown px-2">
+                            <label for="checkInEndTime">結束時間</label>
+                               @*  <select id="checkInEndTime" asp-for="CheckInEndTime" name="CheckInEndTime" class="form-control">
+                                @Html.Raw(Model.CheckInEndTimeOptions)
+                            </select> *@
+                        <select asp-for="CheckInEndTimeString" class="form-select">
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+                            <option value="00:00">00:00</option>
+                            </select> 
+                        </div>
+                    </div>
+                        <input type="hidden" asp-for="RoomId" />
+                        <button type="submit" class="btn btn-dark save-btn weight600 ms-3 my-auto">確認</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="details-change-item room-checkout">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="details-item-text py-4">
+                        <div class="details-item-title">
+                            <h2 class="fs-6">退房時間</h2>
+                        </div>
+                    </div>
+                     <!-- The form now wraps the dropdown selection and the confirm button -->
+                    <form class="d-flex ms-auto" method="post" asp-action="UpdateRoomCheckOut">
+                    <div class="dropdown-box d-flex ms-auto">
+                        <div class="dropdown">
+                            <label for="checkOutTime">退房時間</label>
+                                @* <select id="checkOutTime" asp-for="CheckOutTime" name="CheckOutTime" class="form-control">
+                                @Html.Raw(Model.CheckOutTimeOptions)
+                            </select> *@
+                        <select asp-for="CheckOutTimeString" class="form-select">
+                            <option value="00:00">00:00</option>
+                            <option value="1:00">1:00</option>
+                            <option value="2:00">2:00</option>
+                            <option value="3:00">3:00</option>
+                            <option value="4:00">4:00</option>
+                            <option value="5:00">5:00</option>
+                            <option value="6:00">6:00</option>
+                            <option value="7:00">7:00</option>
+                            <option value="8:00">8:00</option>
+                            <option value="9:00">9:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="22:00">22:00</option>
+                            <option value="23:00">23:00</option>
+                            </select> 
+                        </div>
+                            <input type="hidden" asp-for="RoomId" />
+                            <button type="submit" class="btn btn-dark save-btn weight600 ms-3 my-auto">確認</button>
+                    
+                    </div>
+                    </form>
+                </div>
+            </div>
+      
+
+</section>
+@section endJS {
+    <script src="~/lib/js-cookie/js.cookie.js"></script>
+    <script src="~/lib/vue/vue.global.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script type="text/javascript">
+        var sourceUrl = '@Url.Action("Source", "Hosting")';
+    </script>
+    <script src="~/js/hostingJS/backSource.js" asp-append-version="true"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    
+                    imageUrls: [],// 初始化為空陣列，後續將從後端獲取真實data
+                    formData: { // 定義 formData 對象，用於存放表單數據
+                        imageUrls: [] // 這裡存放最終要提交的圖片URLs
+                    },
+                    roomId: null,
+                    savingImgs: false,
+                }
+            },
+            methods: {
+               
+                async loadImageUrls(roomId) {              
+                    try {
+                        const response = await fetch(`/api/HostingApi/GetImages/${roomId}`);
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch room images');
+                        }
+                        const imageUrls = await response.json();
+                        this.imageUrls = imageUrls;
+                    } catch (error) {
+                        console.error('Error loading room images:', error);
+                    }
+                },
+                // 處理文件選擇的方法
+                handleFileSelect(event) {
+                    const files = event.target.files;
+                    //if (!files.length) return;
+
+                    //Add sweetalert
+                    // 檢查文件數量是否滿足要求
+                    console.log(files);
+                    if (files.length < 7) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '錯誤',
+                            text: '至少需要上傳7張圖片',
+                            confirmButtonText: '確定',
+                        });
+                        return;
+                    }
+                    
+
+                    
+
+                    this.imageUrls = []; // 清空先前的圖片URLs
+                    Array.from(files).forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            this.imageUrls.push(e.target.result); // 更新圖片預覽URLs
+                            //  不需要再次更新 formData.imageUrls，將在 uploadImages 中處理
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                    // //sweetalert
+                    // let uploadedCount = 0; // 用於跟蹤上傳完成的圖片數量
+
+                    // for (let file of files) {
+                    //     const reader = new FileReader();
+                    //     reader.onload = (e) => {
+                    //         // 直接將圖片DataURL新增到imageUrls陣列，用於顯示
+                    //         this.formData.imageUrls.push(e.target.result);
+
+
+                    //         //sweetalert
+                    //         // 每讀取完成一個文件，就視為一個文件上傳完成
+                    //         uploadedCount++;
+                    //         if (uploadedCount === files.length) {
+                    //             // 所有文件都已處理完畢，開始上傳邏輯
+                    //             this.uploadImages(files).then(urls => {
+                    //                 if (urls && urls.length > 0) {
+                    //                     this.formData.imageUrls = urls; // 更新formData中的imageUrls
+                    //                     this.$nextTick(() => {
+                    //                         this.$refs.hiddenInput.value = this.formData.imageUrls.join(',');
+                    //                     });
+                    //                     this.saveFormData(); // 保存formData到Cookie
+
+                    //                     // 上傳成功提示
+                    //                     Swal.fire({
+                    //                         icon: 'success',
+                    //                         title: '上傳成功',
+                    //                         showConfirmButton: false,
+                    //                         timer: 1500,
+                    //                     });
+                    //                 }
+                    //             }).catch(error => {
+                    //                 console.error('上傳失敗:', error);
+                    //                 Swal.fire({
+                    //                     icon: 'error',
+                    //                     title: '上傳失敗',
+                    //                     text: error.toString(),
+                    //                 });
+                    //             });
+                    //         }
+                    //     };
+
+                    //     reader.readAsDataURL(file);
+                    // }                    
+                },
+                // async uploadImages(files) {
+                //     const formData = new FormData();
+                //     for (let i = 0; i < files.length; i++) {
+                //         formData.append('files', files[i]); // 'files' 是後端接收文件的參數名
+                //     }
+
+                //     try {
+                //         const response = await fetch('/api/UploadImage/upload/', { // 修改為我們的上傳 API 端點
+                //             method: 'POST',
+                //             body: formData,
+                //             //注意：當使用 FormData 時，不要設置 'Content-Type' header?!
+                //             // 瀏覽器會自動設置正確的 'Content-Type' 和邊界?!
+                //         });
+                //         if (!response.ok) {
+                //             throw new Error('Network response was not ok');
+                //         }
+                //         const urls = await response.json(); // 假設後端返回的是上傳圖片的 URL 陣列
+                //         this.formData.imageUrls = urls;// 更新formData中的imageUrls
+                       
+                //         return urls;
+                //     } catch (error) {
+                //         console.error('Error:', error);
+                //         //return []; // 發生錯誤時返回空陣列
+                //         throw error; //  拋出錯誤，以便調用方處理
+                //     }
+                // },
+                async submitForm() {
+                    this.savingImgs = true;
+                    // 建FormData對象用於上傳文件
+                    const formData = new FormData();
+                    const uploadInput = document.querySelector('#uploadfile');
+                    console.log(uploadInput);
+                    Array.from(uploadInput.files).forEach(file => {
+                        formData.append('files', file);
+                    });
+
+                    try {
+                        Swal.fire({
+                            title: '處理中...',
+                            text: '請稍後...',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                        });
+                        // 上傳圖片到 Cloudinary
+                        const uploadResponse = await fetch('/api/UploadImage/upload', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        if (!uploadResponse.ok) throw new Error('Failed to upload images to Cloudinary');
+                        const urls = await uploadResponse.json(); // 假設後端返回的是上傳圖片的 URL 陣列
+
+                        //  更新DB中的圖片 URL
+                        const updateResponse = await fetch(`/api/HostingApi/UpdateImages/${this.roomId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(urls),
+                        });
+                        if (!updateResponse.ok) throw new Error('Failed to update room images');
+
+                        // 顯示成功提示，並可能進行頁面跳轉或其他操作
+                        Swal.fire('成功', '圖片更新成功', 'success');
+                    } catch (error) {
+                        console.error('Error:', error);
+                        Swal.fire('錯誤', '更新圖片過程中出現錯誤', 'error');
+                    }finally{
+                        this.savingImgs = false;
+                    }
+                }
+               
+            },
+            mounted() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const roomId = urlParams.get('roomId');
+                if (roomId) {
+                    this.roomId = roomId; // 正確賦值給 Vue 實例的 roomId 屬性
+                    this.loadImageUrls(roomId); //調用 loadImageUrls 方法並傳入 roomId
+                } else {
+                    console.error("Room ID is missing.");
+                    //  根據應用需求，您可能需要重定向用戶或顯示錯誤訊息
+                }
+            }
+        }).mount('#app');
+
+    </script>
+}

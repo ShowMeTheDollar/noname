@@ -1,0 +1,448 @@
+﻿
+@model OpenRoom.Web.ViewModels.OrderingViewModel 
+@{
+    Layout = "_LayoutCustomer";
+    ViewData["Title"] = "Stays";
+
+    var order = Model;
+    var roomId = order.RoomId.ToString();
+    var dateStr = $"{order.CheckIn.ToString("yyyy-MM-dd")} 至 {order.CheckOut.ToString("yyyy-MM-dd")}";
+
+    var allowedCancellationDateCount = 14; //入住幾日前可取消
+    var cancellationDeadline = order.CheckIn.AddDays(-allowedCancellationDateCount).ToString("MM 月 dd 日");
+    var noRefund = order.CheckIn.AddDays(1-allowedCancellationDateCount).ToString("MM 月 dd 日");
+
+    ViewBag.CancellationDeadline = cancellationDeadline;
+    ViewBag.NoRefund = noRefund;
+}
+
+@section topCSS {
+    <link rel="stylesheet" href="~/css/BookCSS/stays.css"/>
+}
+
+@section endJS {
+    <script>
+        // 編輯入住人數
+        const addButton = document.querySelector('.add');
+        const removeButton = document.querySelector('.remove');
+        const saveButton = document.querySelector('.btn-save');
+        const closeButton = document.querySelector('.btn-close');
+        const guestCountModal = document.querySelector('.guest-count');
+        let guestCountOnPage = document.querySelector('.headcount');
+        let guestCountHidden = document.querySelector('.headcount-input');
+
+        let guestCount = parseInt(guestCountModal.textContent);
+        const warning = document.querySelector('.warning')
+
+        addButton.addEventListener('click', () => {
+            if (guestCount < @order.GuestCountLimitation) {
+                guestCount++;
+                guestCountModal.textContent = guestCount;
+            }
+
+            if (guestCount == @order.GuestCountLimitation) {
+                warning.textContent = `人數上限為 ${@order.GuestCountLimitation} 人`
+            }
+          });
+
+        removeButton.addEventListener('click', () => {
+            if (guestCount > 1) {
+                guestCount--;
+                guestCountModal.textContent = guestCount;
+            }
+        });
+
+        saveButton.addEventListener('click', () => {
+            guestCountOnPage.textContent = `${guestCount} 人`;
+            guestCountHidden.value = guestCount
+            warning.textContent = '';
+        });
+
+        closeButton.addEventListener('click', () => {
+            warning.textContent = '';
+        });
+    </script>
+    <script>
+        // flatpickr 
+
+        // 取得不可下訂的日期
+        const notAvailableCheckIn = localStorage.getItem('notAvailableCheckIn').replace(/&quot;/g, '"');
+        const notAvailableCheckOut = localStorage.getItem('notAvailableCheckOut').replace(/&quot;/g, '"');
+        const disabledCheckInDates = notAvailableCheckIn ? JSON.parse(notAvailableCheckIn) : [];
+        const disabledCheckOutDates = notAvailableCheckOut ? JSON.parse(notAvailableCheckOut) : [];
+        const disabledDates = getDisabledDates(disabledCheckInDates, disabledCheckOutDates);
+
+        let checkInDate = document.querySelector('.checkInDate').value;
+        let checkOutDate = document.querySelector('.checkOutDate').value;
+
+
+        function getDisabledDates(disabledCheckInDates, disabledCheckOutDates) {
+            const dateArray = [];
+
+            disabledCheckInDates.forEach((checkInDate, Index) => {
+                dateArray.push({
+                    "from": checkInDate.split("T")[0],
+                    "to": disabledCheckOutDates[Index].split("T")[0]
+                });
+            });
+            return dateArray;
+        };
+
+        function updatePricePerDay(pricesData) {
+            const roomPriceArea = document.querySelector('.room-price-area');
+            let totalPrice = 0;
+            let totalQuantity = 0;
+            const roomPriceDiv = document.createElement('div');
+                
+            for (const date in pricesData) {
+                if (pricesData.hasOwnProperty(date)) {
+                    totalPrice += pricesData[date];
+                    totalQuantity++;
+                }
+            };
+
+            roomPriceArea.innerHTML = '';
+            roomPriceDiv.classList.add('room-price-before-tax', 'd-flex', 'justify-content-between');
+            roomPriceDiv.innerHTML = `
+                <p class="d-inline-block">入住 ${totalQuantity} 晚稅前總價</p>
+                <p class="d-inline-block">NT$ ${totalPrice.toLocaleString('zh-TW')}</p>
+            `;
+            roomPriceArea.appendChild(roomPriceDiv);
+        };
+
+        function upadateTotalPrice(pricesData){
+            const priceTotal = document.querySelector('.price-total');
+            const priceTotalInput = document.querySelector('.price-total-input');
+            const priceDataArray = Object.values(pricesData);
+            let totalPrice = 0;
+            priceDataArray.forEach (price => {
+                totalPrice += price;
+            });
+            priceTotal.innerHTML = `NT$ ${totalPrice.toLocaleString('zh-TW')}`;
+            priceTotalInput.value = totalPrice;
+        }
+
+        function upadateCancellationDeadline(startDate) {
+            const allowedCancellationDateCount = @allowedCancellationDateCount;
+            const today = new Date();
+            const cancellationDeadline = new Date(startDate.getTime() - (allowedCancellationDateCount * 24 * 60 * 60 * 1000));
+            const noRefund = new Date(startDate.getTime() - ((allowedCancellationDateCount - 1) * 24 * 60 * 60 * 1000));
+
+            const cancellationElement = document.querySelector('.cancellation-deadline');
+            const cancellationModal = document.querySelector('.date-full-refund');
+            const noRefundModal = document.querySelector('.date-no-refund');
+
+            if (cancellationDeadline <= today) {
+                const formattedCancellationDeadline = `${today.getMonth() + 1} 月 ${today.getDate()} 日`;
+                const formattedNoRefund = `${today.getMonth() + 1} 月 ${today.getDate() + 1} 日`;
+
+                cancellationElement.innerText = formattedCancellationDeadline;
+                cancellationModal.innerText = formattedCancellationDeadline;
+                noRefundModal.innerText = formattedNoRefund;
+            }else{
+                const formattedCancellationDeadline = `${cancellationDeadline.getMonth() + 1} 月 ${cancellationDeadline.getDate()} 日`;
+                const formattedNoRefund = `${noRefund.getMonth() + 1} 月 ${noRefund.getDate()} 日`
+
+                cancellationElement.innerText = formattedCancellationDeadline;
+                cancellationModal.innerText = formattedCancellationDeadline;
+                noRefundModal.innerText = formattedNoRefund;
+            }
+        }
+        
+        flatpickr(".calendar-picker", {
+            mode: "range",
+            showMonths: window.innerWidth < 768? 1:2,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today",
+            defaultDate: [checkInDate, checkOutDate],
+            disable: disabledDates,
+            onClose: function (selectedDates, dateStr, instance) {
+                if (selectedDates.length === 2) {
+                    if (instance.formatDate(selectedDates[0], "Y-m-d") === instance.formatDate(selectedDates[1], "Y-m-d")) {
+                        alert("Check-in 日期和 Check-out 日期不能相同！");
+                        return;
+                    }
+                    // 獲取並調整開始日期
+                    let startDate = new Date(selectedDates[0]);
+                    startDate.setMinutes(startDate.getMinutes() - startDate.getTimezoneOffset());
+                    document.getElementById("startDatePicker").value = startDate.toISOString().substring(0, 16);
+                  
+                    // 獲取並調整結束日期
+                    let endDate = new Date(selectedDates[1]);
+                    endDate.setMinutes(endDate.getMinutes() - endDate.getTimezoneOffset());
+                    document.getElementById("endDatePicker").value = endDate.toISOString().substring(0, 16);
+
+                    //將開始與結束日期顯示到畫面上
+                    document.querySelector('.trip-dates').innerText = `${startDate.toISOString().substring(0, 10)} 至 ${endDate.toISOString().substring(0, 10)}`;
+
+                    //更新價格
+                    fetch("/api/RoomListingAPI", {
+                        method: "POST",
+                        body: JSON.stringify({
+                                "roomId": @roomId,
+                                "checkIn": `${startDate.toISOString().substring(0, 10)}`,
+                                "checkOut": `${endDate.toISOString().substring(0, 10)}`
+                        }), 
+                        headers: {
+                            "Content-type": "application/json"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        pricesData = data;
+                        //console.log(pricesData);
+                        updatePricePerDay(pricesData);
+                        upadateTotalPrice(pricesData);
+                    })
+                    .catch(error => console.error(error));
+
+                    //更新取消截止日
+                    upadateCancellationDeadline(startDate);
+                }
+            }
+        });
+    </script>
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_MiniFooterPartial" />
+}
+
+<h2 class="container text-start pt-5 d-md-block">
+    <a asp-controller="Rooms" asp-action="Index" asp-route-id="@order.RoomId" class="text-decoration-none">
+        <span class="material-symbols-outlined align-center p-3 rounded-circle border-0">chevron_left</span>
+     </a>
+     確認並付款
+</h2>
+
+@* <form method="post" asp-controller="Ecpay" asp-action="SaveOrder"> *@
+<form method="post" asp-controller="Ecpay" asp-action="SubmitOrder">
+<div class="order-content container-md d-md-flex flex-md-row-reverse justify-content-md-between align-items-start">
+        <section class="room-area container py-4 col-md-5">
+            <div class="room-details d-flex gap-3 py-4" style="height: 150px;">
+                <img src=@order.RoomImg alt="房源照片" class="room-photo rounded">
+                <div class="room-description d-inline-block">
+                    <input asp-for="RoomId" value="@order.RoomId" hidden></input>
+                    <p class="room-name fw-semibold mb-1">@order.RoomName</p>
+                    <p class="room-type mb-1">出租房源中的 @order.RoomCategory</p>
+                    <p class="room-rating mb-1">
+                        <span>&#9733</span>@order.Rating
+                        <span class="room-review-count">(@order.ReviewCount 則評價)</span>
+                    </p>
+                </div>
+            </div>
+            <div class="price-details">
+                <h3 class="py-3 ">價格詳情</h3>
+                <div class="bill-statement">
+                    <div class="room-price-area">
+                   @*      @foreach(var group in order.PricePerNight.GroupBy(p => p.Value))
+                        {
+                            <div class="room-price-before-tax d-flex justify-content-between">
+                            <p class="d-inline-block">@decimal.Parse(@group.Key).ToString("C0")</p>
+                            <p class="d-inline-block">x @group.Count() 晚</p>
+                            </div>
+                        } *@
+                        <div class="room-price-before-tax d-flex justify-content-between">
+                        <p class="d-inline-block">入住 @(order.PricePerNight.Count()) 晚稅前總價</p>
+                        <p class="d-inline-block">@order.PriceTotal.ToString("C0")</p>
+                        </div>
+                    </div>  
+                    <div class="discount d-flex justify-content-between">
+                        <p class="d-inline-block">早鳥優惠</p>
+                        <p class="d-inline-block">NT$0</p>
+                    </div>
+                    <div class="tax d-flex justify-content-between">
+                        <p class="d-inline-block">稅費</p>
+                        <p class="d-inline-block">NT$0</p>
+                    </div>
+                </div>
+                <div class="bill-total">
+                    <div class="fw-semibold d-flex justify-content-between">
+                        <p class="d-inline-block">總價
+                            <span class="currency"><u>(TWD)</u></span>
+                        </p>
+                        <p class="price-total d-inline-block" asp-for="PriceTotal">@order.PriceTotal.ToString("C0")</p>
+                        <input class="price-total-input" asp-for="PriceTotal" value="@order.PriceTotal" hidden></input>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="mobile-divider d-md-none"></div>
+        <section class="order-area col-md-6" id="vuejs">
+            <div class="trip-details container py-4">
+                <h3 class="py-3">你的旅程</h3>
+                <div class="d-flex justify-content-between">
+                    <div class="date-area d-inline-block">
+                        <h4 class="py-2">日期</h4>
+                        <p class="trip-dates">@dateStr</p>
+                        <input type="datetime" id="startDatePicker" asp-for="CheckIn" class="checkInDate" hidden></input>
+                        <input type="datetime" id="endDatePicker" asp-for="CheckOut" class="checkOutDate" hidden></input>
+                    </div>
+                    <div class="d-inline-block">
+                        <u class="calendar-picker fw-semibold">編輯</u>
+                    </div>
+                </div>
+                <div class="trip-guests d-flex justify-content-between">
+                    <div class="guests-area d-inline-block">
+                        <h4 class="py-2">房客人數</h4>
+                        <p class="headcount">@order.GuestCount 人</p>
+                        <input asp-for="GuestCount" class="headcount-input" hidden></input>
+                    </div>
+                    <div class="d-inline-block">
+                        <u class="fw-semibold" data-bs-toggle="modal" data-bs-target="#editHeadcount">編輯</u>
+                    </div>
+                    <!-- 編輯房客人數 Modal -->
+                    <div class="modal fade" id="editHeadcount" tabindex="-1" aria-labelledby=""
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="mt-3">
+                                        <h5 class="modal-title fs-3" id="exampleModalLabel">房客人數</h5>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                     @* @await Html.PartialAsync("_TravelerModelPartial") *@
+                                    <div class="row row-cols-2 gy-3 gx-0  px-2 justify-content-between">
+                                        <div>
+                                            <div class="fw-bold fs-5">旅客</div>
+                                        </div>
+                                        <div class="text-end">
+                                            <button type="button" class="remove circle-button btn rounded-circle me-1 px-2 py-1 btn-count align-baseline">
+                                                <span class="material-symbols-outlined fs-6 align-middle">remove</span>
+                                            </button>
+                                            <span class="guest-count align-middle">@order.GuestCount</span>
+                                            <button type="button" class="add circle-button btn rounded-circle ms-1 px-2 py-1 btn-count align-baseline">
+                                                <span class="material-symbols-outlined fs-6 align-middle">add</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="text-end">
+                                        <p class="warning text-danger font-weight-bold pt-3"></p>
+                                    </div>
+                                    <button type="button" class="btn-save btn btn-outline-light text-dark text-decoration-underline d-block ms-auto"
+                                            data-bs-dismiss="modal" aria-label="Save">
+                                        儲存
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-divider d-md-none"></div>
+            <div class="payment-method container py-4">
+                <div class="d-flex justify-content-between">
+                    <h3 class="py-3 d-inline-block">付款方式</h3>
+                    <div class="d-flex align-content-center gap-2">
+                        <img src="~/images/booking/visa.svg" alt="" style="width: 30px;">
+                        <img src="~/images/booking/mastercard.svg" alt="" style="width: 30px;">
+                        <img src="~/images/booking/jcb.svg" alt="" style="width: 30px;">
+                    </div>
+                </div>
+                <select class="form-select form-select-lg mb-3" asp-for="PaymentMethod" aria-label=".form-select-lg example">
+                    <option selected>請選擇</option>
+                @*     <option value="1" class="credit-card-last-four-nums">••••0105</option>
+                    <hr class="dropdown-divider"> *@
+                    <option value="0">綠界金流 - 信用卡或簽帳卡</option>
+                @*  <option value="1">ATM 轉帳</option>
+                    <option value="2">超商付款</option> *@
+                </select>
+
+            </div>
+            <div class="mobile-divider d-md-none"></div>
+            <div class="cancellation-policy container py-4">
+                <h3 class="py-3">退訂政策</h3>
+                <p class="cancellation-content">
+                    @if (order.CheckIn.AddDays(-14) <= DateTime.Today)
+                    {
+                        <strong>在 <span class="cancellation-deadline">@DateTime.Today.ToString("MM 月 dd 日")</span>前可以免費取消。</strong>
+                    }
+                    else
+                    {
+                        <strong>在 <span class="cancellation-deadline">@cancellationDeadline</span>前可以免費取消。</strong>   
+                    }
+                    在這之後，該筆預訂則無法退款。
+                    <u class="fw-semibold cancellation-more-info" data-bs-toggle="modal"
+                        data-bs-target="#cancellationModal">了解詳情</u>
+                </p>
+                <!-- 退訂政策了解詳情 MODAL -->
+                @* @await Html.PartialAsync("~/Views/Shared/SharedModal/_CancellationPolicyModal.cshtml") *@
+                <div class="modal fade" id="cancellationModal" tabindex="-1" aria-labelledby="退訂政策詳情"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="btn-close mb-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <h5 class="fs-4 fw-bold mb-5" id="exampleModalLabel">《退訂政策》</h5>
+                                <p class="fs-5 fw-semibold mb-2">取消截止時間</p>
+                                <div class="d-flex border-bottom border-light border-2 pt-3">
+                                    <p class="date-full-refund fw-semibold">
+                                        @if (order.CheckIn.AddDays(-allowedCancellationDateCount) <= DateTime.Today)
+                                        {
+                                            @DateTime.Today.ToString("MM 月 dd 日");
+                                        }
+                                        else
+                                        {
+                                            @cancellationDeadline;
+                                        }
+                                        <span class="time-full-refund d-block fw-normal">23:59 前</span>
+                                    </p>
+                                    <p class="ms-5">全額退款：你將拿回已支付的全部款項。</p>
+                                </div>
+                                <div class="d-flex border-bottom border-light border-2 pt-3">
+                                    <p class="date-no-refund fw-semibold">
+                                        @if (order.CheckIn.AddDays(-allowedCancellationDateCount) <= DateTime.Today)
+                                        {
+                                            @DateTime.Today.AddDays(1).ToString("MM 月 dd 日"); 
+                                        }
+                                        else
+                                        {
+                                            @noRefund;
+                                        }
+                                        <span class="time-no-refund d-block fw-normal">00:00 起</span>
+                                    </p>
+                                    <p class="ms-5">無法退款</p>
+                                </div>
+                                <p class="fw-semibold my-4"><u>了解更多有關《退訂政策》的事宜</u></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mobile-divider d-md-none"></div>
+            <div class="cancellation-policy container py-4">
+                <h3 class="py-3">基本守則</h3>
+                <p>我們請房客記得遵守幾個簡單的事項，當個優質的房客。</p>
+                <ul>
+                    <li>遵守《房屋守則》</li>
+                    <li>把房源當成自己的家來愛護</li>
+                </ul>
+            </div>
+            <div class="mobile-divider d-md-none"></div>
+            <div class="booking container py-4">
+                <p class="booking-consent py-3">點選以下按鈕即表示本人同意
+                    <a href="" class="fw-semibold">房東的《房屋守則》</a>、
+                    <a href="" class="fw-semibold">房客基本守則</a>、
+                    <a href="" class="fw-semibold">《重新預訂和退款政策》</a>，且允許 Airbnb 在我應負責賠償損壞時，可以
+                    <a href="" class="fw-semibold">向我的付款方式扣款</a>。
+                </p>
+                <div class="booking-button rounded">
+                    <button type="submit" class="btn confirm-and-pay px-5 py-3 fs-5 text-center text-white w-100">
+                        確認並付款
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</form>
+
+
+
+

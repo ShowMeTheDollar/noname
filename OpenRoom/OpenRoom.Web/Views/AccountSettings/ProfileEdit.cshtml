@@ -1,0 +1,209 @@
+﻿@model UserProfileViewModel
+@{
+    Layout = "_LayoutCustomer";
+    var viewModel = Model;
+}
+
+@section topCSS {
+    <link href="~/css/accountsettingscss/profileedit.css" rel="stylesheet" asp-append-version="true" />
+}
+
+@section endJS {
+    <script src="~/lib/vue/vue.global.min.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    jobInfo: "@Html.Raw(viewModel.Job)",
+                    liveInfo: "@Html.Raw(viewModel.Live)",
+                    obsessionInfo: "@Html.Raw(viewModel.Obsession)",
+                    petInfo: "@Html.Raw(viewModel.Pet)",
+                    languagesInfo: @Html.Raw(JsonConvert.SerializeObject(viewModel.Language == "" ? new string[0] : viewModel.Language.Split(" and "))),
+                    profiles: "@Html.Raw(viewModel.SelfIntroduction)",
+                    avatarUrl: "@Html.Raw(viewModel.AvatarUrl)" || "/svgs/avatar.jpg"
+                }
+            },
+            methods: {
+                uploadAvatar(file) {
+                    const formData = new FormData();
+                    formData.append("files", file);
+
+                    return fetch("/api/UploadImage/upload", {
+                        method: "POST",
+                        body: formData
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                return response.json();
+                            } else {
+                                throw new Error('Network response was not ok');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            throw error;
+                        });
+                },
+                handleFileUpload(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.uploadAvatar(file)
+                            .then((url) => {
+                                this.avatarUrl = url[0];
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '上傳成功',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '上傳失敗',
+                                    text: error.toString(),
+                                });
+                            });
+                        }
+
+                        reader.readAsDataURL(file);
+                    }
+                }
+            },
+            mounted() {
+                this.$watch("languagesInfo", {
+                    handler(newVal) {
+                        document.getElementById("my-language").value = newVal.join(" and ");
+                    },
+                    immediate: true
+                });
+            }
+        }).mount("#vuejs")
+    </script>
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+<main id="vuejs" class="container">
+    <form asp-action="ProfileEdit" class="row g-0 my-3 my-md-5">
+        <div class="d-md-none">
+            <a href="/Users/Show">
+                <span class="material-symbols-outlined fs-6 align-middle text-black">arrow_back_ios</span>
+            </a>
+        </div>
+        <div class="col-12 col-md-5 mt-4 mb-5 mb-md-0">
+            <div class="avatar-upload mx-auto position-sticky">
+                <div class="w-100 h-100 border border-1 border-black rounded-circle overflow-hidden">
+                    <img :src="avatarUrl" class="img-fluid" alt="" />
+                </div>
+                <label class="btn btn-light rounded-pill position-absolute" for="avatar-input">
+                    <i class="fas fa-camera fa-3x fs-6">
+                        <span class="ms-1">新增</span>
+                    </i>
+                    <input id="avatar-input" class="avatar-input d-none" type="file" accept="image/png" @@change="handleFileUpload" />
+                    <input :value="avatarUrl" name="avatarurl" type="hidden" />
+                </label>
+            </div>
+        </div>
+        <div class="col-12 col-md-7">
+            <h2 class="fs-2 fw-bold mb-3">你的個人資料</h2>
+            <p class="mb-5">你分享的資訊將會出現在 Airbnb 上，以便其他用戶認識你。</p>
+            <div class="d-flex align-items-center">
+                <div class="me-1">
+                    <span class="material-symbols-outlined align-middle">business_center</span>
+                </div>
+                <label for="my-job" class="align-middle">我的工作：</label>
+                <div class="flex-grow-1">
+                    <input v-model="jobInfo" name="job" type="text" class="form-control form-control-sm" id="my-job" placeholder="你做什麼工作？" maxlength="40">
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex align-items-center">
+                <div class="me-1">
+                    <span class="material-symbols-outlined align-middle">person_pin_circle</span>
+                </div>
+                <label for="live" class="align-middle">我居住在：</label>
+                <div class="flex-grow-1">
+                    <input v-model="liveInfo" name="live" type="text" class="form-control form-control-sm" id="live" placeholder="你的居住地 例如:臺北, 臺灣" maxlength="15">
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex align-items-center mt-4">
+                <div class="me-1">
+                    <span class="material-symbols-outlined align-middle">favorite</span>
+                </div>
+                <label for="my-obsession" class="align-middle">我熱衷於：</label>
+                <div class="flex-grow-1">
+                    <input v-model="obsessionInfo" name="obsession" type="text" class="form-control form-control-sm" id="my-obsession" placeholder="你熱衷於哪些事？" maxlength="20">
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex align-items-center mt-4">
+                <div class="me-1">
+                    <span class="material-symbols-outlined align-middle">pets</span>
+                </div>
+                <label for="my-pet" class="align-middle">我的寵物：</label>
+                <div class="flex-grow-1">
+                    <input v-model="petInfo" name="pet" type="text" class="form-control form-control-sm" id="my-pet" placeholder="你有養寵物嗎？例如：我的三花貓叫 Whiskers" maxlength="20">
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex align-items-center mt-4">
+                <div class="mt-1 mb-auto me-1">
+                    <span class="material-symbols-outlined align-middle">language</span>
+                </div>
+                <label for="my-language" class="lh-lg align-self-start">我的語言：</label>
+                <div class="flex-grow-1">
+                    <input type="text" readonly class="form-control form-control-sm" id="my-language" placeholder="你會講的語言" data-bs-toggle="collapse" data-bs-target="#languageCollapse">
+                    <ul class="list-group collapse" id="languageCollapse">
+                        <li class="list-group-item">
+                            <input v-model="languagesInfo" name="languages" class="form-check-input me-1" type="checkbox" value="中文" id="chineseCheckbox">
+                            <label class="form-check-label" for="chinese">中文</label>
+                        </li>
+                        <li class="list-group-item">
+                            <input v-model="languagesInfo" name="languages" class="form-check-input me-1" type="checkbox" value="英語" id="englishCheckbox">
+                            <label class="form-check-label" for="englishCheckbox">英語</label>
+                        </li>
+                        <li class="list-group-item">
+                            <input v-model="languagesInfo" name="languages" class="form-check-input me-1" type="checkbox" value="西班牙語" id="spanishCheckbox">
+                            <label class="form-check-label" for="spanishCheckbox">西班牙語</label>
+                        </li>
+                        <li class="list-group-item">
+                            <input v-model="languagesInfo" name="languages" class="form-check-input me-1" type="checkbox" value="日語" id="japaneseCheckbox">
+                            <label class="form-check-label" for="japaneseCheckbox">日語</label>
+                        </li>
+                        <li class="list-group-item">
+                            <input v-model="languagesInfo" name="languages" class="form-check-input me-1" type="checkbox" value="德語" id="germanCheckbox">
+                            <label class="form-check-label" for="germanCheckbox">德語</label>
+                        </li>
+                        <li class="list-group-item">
+                            <input v-model="languagesInfo" name="languages" class="form-check-input me-1" type="checkbox" value="法語" id="frenchCheckbox">
+                            <label class="form-check-label" for="frenchCheckbox">法語</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <label for="about-you" class="fs-3 fw-bold my-4">關於你</label>
+            <div class="">
+                <textarea v-model="profiles" name="selfIntroduction" class="form-control" placeholder="簡短介紹一下自己，這樣其他用戶就能更進一步認識你。" id="about-you" rows="5" maxlength="450"></textarea>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-lg btn-dark d-block ms-auto">完成</button>
+        </div>
+    </form>
+</main>
+

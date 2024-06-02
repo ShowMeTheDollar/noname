@@ -1,0 +1,49 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+    text-align: center;
+}
+
+span {
+    font-size: 18px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* This centers the .main-content vertically */
+    align-items: center;
+    /* This centers the .main-content horizontally */
+}
+
+.input-group {
+    max-width: 600px;
+    /* Match the width of the map for alignment */
+    width: 100%;
+    /* Ensure it takes the full width of its parent */
+}
+
+.map-container {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+@media (max-width: 768px) {
+    .map-container {
+        max-width: 100%;
+        height: 100%;
+    }
+
+        .map-container iframe {
+            width: 100%;
+        }
+}
+
+

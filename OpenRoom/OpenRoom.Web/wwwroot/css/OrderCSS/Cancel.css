@@ -1,0 +1,312 @@
+﻿/*取消 footer*/
+.footer-set, .phone-nav-set {
+    display: none;
+}
+
+.reservation-change-container {
+    padding-top: 10px;
+}
+
+.main-title,
+.change-btn {
+    font-weight: bold;
+}
+
+.main-title {
+    text-shadow: 5px 5px 3px #b0aeae;
+}
+
+/* 傳送申請 繼續按鈕---------- */
+.send-request-div {
+    position: relative;
+    padding: 0px 10px;
+    position: fixed;
+    z-index: 3;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    height: 70px;
+    border-top: 1px solid #d1d1d1;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+.up-page,
+.get-receipt,
+.read-details {
+    text-decoration: underline;
+    text-decoration: underline;
+    color: #000;
+}
+
+/* 新增的絕對定位元素 */
+.centered-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.send-request-a,
+.complete-a {
+    background-color:#000000;
+    margin-left: auto;
+    text-decoration: none;
+    font-weight: bold;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+    .send-request-a:hover,
+    .complete-a:hover {
+        background-color: #000000;
+        color: #fff;
+        transform: scale(0.96);
+        transition: transform 0.3s;
+    }
+
+/* 第三選項 ----------------- */
+.refund-details {
+    margin-bottom: 110px;
+}
+
+.confirm-cancel,
+.flex-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.option-three {
+    padding: 0 10px;
+}
+
+.lodging-total-paid-div,
+.service-total-paid-div,
+.tax-total-paid-div {
+    color: #7f7e7e;
+}
+
+/* 選擇radio--------- */
+.option1-div div,
+.option2-div div {
+    text-indent: 17px;
+}
+
+.booking-fund-btn,
+.credit-card-btn, .cancellation-policy-details {
+    color: #000;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+    /* 顯示詳情 ----------------- */
+    .cancellation-policy-details:hover {
+        color: #000;
+        text-decoration: underline;
+    }
+
+/* 你的預訂已取消 彈跳視窗---------- */
+#to-send-request section + section {
+    border-top: 5px solid #e0e0e0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.to-lodging-header {
+    align-items: end;
+    margin-top: -25px;
+    margin-bottom: -5px;
+}
+
+#to-send-request .message-btn,
+.rules-btn,
+.airbnb-support-btn,
+.help-center-btn {
+    border: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-left-icon {
+    margin-left: -10px;
+}
+
+.rules-btn {
+    border: none;
+    margin-bottom: -10px;
+}
+
+    .rules-btn:hover, .message-btn:hover {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .confirmation-code-div,
+    .cancellation-policy-div,
+    .total-div {
+        line-height: 1.5;
+        padding: 6px 0;
+    }
+
+.cancellation-policy-title {
+    margin-left: -6px;
+}
+
+.get-receipt:hover,
+.read-details:hover {
+    color: #000;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.customer-support-section i {
+    margin-right: 5px;
+}
+
+/* 退訂政策 閱讀詳情 彈跳視窗------------- */
+.to-cancellation-header {
+    align-items: start;
+    margin-top: -25px;
+    margin-bottom: -2px;
+}
+
+.full-refund-div,
+.non-refundable-div {
+    display: flex;
+    gap: 30px;
+}
+
+.full-refund-time,
+.non-refundable-time,
+.non-refundable-check-out {
+    font-size: 13px;
+}
+
+.non-refundable-p {
+    cursor: pointer;
+}
+
+/* Swiper 照片幻燈片--------------------- */
+.swiper {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+:root {
+    --swiper-theme-color: #ededed;
+}
+
+@media screen and (max-width:767px) {
+    .send-request-desktop {
+        display: none;
+    }
+
+    .send-request-div {
+        padding: 3rem 1rem;
+    }
+
+    .desktop-div,
+    .centered-text {
+        display: none;
+    }
+}
+
+@media screen and (min-width:768px) {
+
+    .send-request-phone {
+        display: none;
+    }
+
+    .sub-gp {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        padding: 10px 0px;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .send-request-desktop {
+        font-weight: bold;
+        width: 60px;
+        text-align: center;
+        padding: 6px 0;
+    }
+
+        .send-request-desktop:hover {
+            background-color: #dcdcdc;
+            border-radius: 20px;
+        }
+
+    .cancellation-policy-section {
+        font-size: 13px;
+    }
+
+    .my-room-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-items: start;
+        margin-bottom: 15px;
+    }
+
+    .room-item-pic img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        vertical-align: top;
+        box-shadow: 8px 8px 3px #939393;
+    }
+
+    .room-item-tag {
+        font-size: 12px;
+        margin-top: -4px;
+    }
+
+    .room-item-title,
+    .landlord-title {
+        font-size: 12px;
+    }
+
+    .landlord-name {
+        text-decoration: underline;
+    }
+
+    .cancellation-policy-section {
+        padding: 10px 0;
+    }
+
+    .desktop-div {
+        border: 1px solid #dcdcdc;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .desktop-gp,
+    .desktop-paid-gp,
+    .cancellation-policy-section {
+        border-top: 1px solid #cfcfcf;
+    }
+}

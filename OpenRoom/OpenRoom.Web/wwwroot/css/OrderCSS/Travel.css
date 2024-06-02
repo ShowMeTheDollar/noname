@@ -1,0 +1,198 @@
+﻿/*照片轉轉*/
+.loader-container {
+    width: 400px;
+    height: 400px;
+    position: relative
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #309C6A;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+/*主頁*/
+
+.main-travel-title {
+    margin-top: 10px;
+}
+
+a, a:hover {
+    color: #000;
+}
+img {
+    vertical-align: bottom;
+}
+
+.room-item {
+    border-radius: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0px 5px 15px 5px #cbcbcb;
+}
+
+.room-img {
+    object-fit: cover;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+}
+
+.trip-pic {
+    position: relative;
+}
+
+.room-introduce {
+    padding: 30px;
+}
+
+.room-item-main-title-p {
+    border-bottom: 1px solid #c5c1c1;
+    padding-bottom: 10px;
+}
+
+.room-item-footer {
+    display: grid;
+    grid-template-columns: 1fr auto 3fr;
+    gap: 0px;
+}
+
+.room-item-date + .subtitle {
+    justify-items: center;
+}
+
+h2,
+h3 {
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 開始搜尋 按鈕------- */
+.start-search {
+    padding: 10px 10px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px #cbcbcb;
+}
+
+    .start-search:hover {
+        border: 1px solid #000;
+        transform: scale(0.95);
+        transition: transform 0.3s;
+    }
+
+/* 已取消的旅程----------- */
+
+.cancell-room-item {
+    display: flex;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+
+.cancell-room-img {
+    max-width: 250px; /* 最大寬度為250px */
+    max-height: 250px; /* 最大高度為250px */
+    height: auto; /* 高度自動調整以保持縱橫比 */
+    object-fit: cover;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.cancell-room-introduce {
+    padding: 0 10px;
+}
+
+
+    .cancell-room-introduce div {
+        color: #7e7d7d;
+    }
+
+.cancell-room-item-main-title {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+
+/* footer---------------- */
+.trip-list-footer {
+    margin-top: 20px;
+}
+
+.line {
+    color: #cbcbcb;
+    border-left: 1px solid #cbcbcb;
+    margin: 0 10px;
+}
+
+.help-center-p {
+    border-top: 1px solid #cbcbcb;
+    padding: 20px;
+}
+
+.help-center-span {
+    text-decoration: underline;
+}
+
+@media screen and (max-width:767px) {
+    /*取消桌機 footer*/
+    .footer-set {
+        display: none;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .room-link {
+        display: flex;
+        align-items: center;
+    }
+
+    .room-img {
+        max-height: 380px;
+        width: 100%;
+        height: auto; 
+        object-fit: cover;  
+        border-radius: 0px 20px 20px 0px;
+    }
+
+    .trip-pic-col {
+        order: 1;
+    }
+
+    .room-introduce {
+        padding: 0px 30px;
+    }
+
+    .start-before-container {
+        display: none;
+    }
+}
+
+/*覆寫loader的CSS*/
+/*.loader-container {
+    padding-top: 63%;
+}
+.loader {
+    left: 50%;*/
+}

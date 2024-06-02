@@ -1,0 +1,20 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+span,
+p {
+    font-size: 18px;
+}
+
+/* Adjustments for the left column */
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* This will vertically center the content in the left column */
+}
+
+

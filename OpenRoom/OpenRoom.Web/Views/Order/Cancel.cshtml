@@ -1,0 +1,353 @@
+﻿@model OpenRoom.Web.ViewModels.OrderCancellationViewModel
+@{
+    ViewData["Title"] = "Cancel";
+    Layout = "_LayoutCustomer";
+}
+
+@section topCSS {
+    <!-- Semantic UI  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <!-- CSS  -->
+    <link href="~/css/ordercss/cancel.css" rel="stylesheet" />
+}
+
+@section headSpace {
+    <partial name="_EmptyPartial" />
+}
+
+@section footer {
+    <partial name="_FooterPartial" />
+}
+
+<div class="reservation-change-container container">
+    <div class="reservation-change-row row">
+        <div class="cancel-div col-12 col-sm-12 col-md-6">
+            <section class="cancel-room-options-section">
+                <!-- 第一選項 -->
+                <!-- <div class="option-one">
+                  <h1 class="main-title">你是因為什麼原因需要取消預訂?</h1>
+                  <select class="cancel-menu form-select" aria-label="select">
+                    <option selected>我已不需要預定住宿</option>
+                    <option value="1">我不小心預定了住宿</option>
+                    <option value="2">我的房東需要取消預訂</option>
+                    <option value="3">我對房東不滿意</option>
+                    <option value="3">我的旅行日期變更了</option>
+                    <option value="3">其他</option>
+                  </select>
+                </div> -->
+                <!-- 第二選項 -->
+                <!-- <div class="option-two">
+                  <h1 class="main-title">告訴Adagio您必須取消的原因</h1>
+
+                  <div class="cancel-form form-floating">
+                    <textarea class="cancel-form-control form-control" placeholder="Leave a comment here"
+                      id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">請說明你的情況</label>
+                  </div>
+                </div> -->
+                <!-- 第三選項 ------------------------------------->
+                <div class="option-three">
+                    <h1 class="main-title">確定取消</h1>
+
+                    <div class="confirm-cancel">
+                        <div class="payment-div">
+                            <div class="payment-title">你已付款</div>
+                            <div class="payment-content fs-4">$838.76 TWD</div>
+                        </div>
+                        <div class="refund-div">
+                            <div class="refund-title">你的退款</div>
+                            <div class="refund-content fs-4">$838.76 TWD</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!---退款詳情-->
+                    <div class="refund-details">
+                        <p class="refund-details-p fw-bold">退款詳情</p>
+
+                        <div class="lodging-div flex-div">
+                            <div class="lodging-title fw-bold">住宿</div>
+                            <div class="lodging-content">$700.00 TWD</div>
+                        </div>
+
+                        <div class="lodging-total-paid-div flex-div mb-3">
+                            <div class="lodging-total-paid-title">全額退款</div>
+                            <div class="total-paid-content">已付總額：$700.00 TWD</div>
+                        </div>
+
+                        <div class="service-charge-div flex-div">
+                            <div class="service-charge-title fw-bold">服務費</div>
+                            <div class="service-charge-content">$103.76 TWD</div>
+                        </div>
+                        <div class="service-total-paid-div flex-div mb-3">
+                            <div class="service-total-paid-title">全額退款</div>
+                            <div class="service-total-paid-content">已付總額：$103.76 TWD</div>
+                        </div>
+                        <div class="tax-div flex-div">
+                            <div class="tax-title fw-bold">稅費</div>
+                            <div class="tax-content content">$35.00 TWD</div>
+                        </div>
+                        <div class="tax-total-paid-div flex-div">
+                            <div class="tax-total-paid-title">全額退款</div>
+                            <div class="tax-total-paid-content content">已付總額：$35.00 TWD</div>
+                        </div>
+                        <hr>
+
+                        <div class="total-refund-amount-div flex-div fs-5 fw-bold">
+                            <div class="total-refund-amount-title">退款總額</div>
+                            <div class="total-refund-amount-content">$838.76 TWD</div>
+                        </div>
+                        <hr>
+
+                        <div class="choose-refund-method-div">
+                            <div class="choose-refund-method-title fw-bold mb-2">選擇拿回退款的方式</div>
+
+                            <div class="option1-div">
+                                <input type="radio" id="booking-fund" name="options">
+
+                                <label for="booking-fund">預訂基金</label>
+                                <div class="booking-fund-content">可立即使用且永久有效。</div>
+                                <div class="booking-fund-btn">了解詳情</div>
+                            </div>
+                            <hr>
+                            <div class="option2-div">
+                                <input type="radio" id="credit-card" name="options">
+                                <label for="credit-card">VISA .....0105</label>
+                                <div class="credit-card-content">一般會在15個工作天內收到。</div>
+                                <div class="credit-card-btn">了解詳情</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!---------- 下方 sticky 繼續-------- -->
+                    <div class="send-request-div cancel-div col-12 col-sm-12 col-md-6">
+                        <!-- 手機 -->
+                        <div class="send-request-phone">
+                            <div class="refund-title fw-bold">退款總額</div>
+                            <div class="refund-content fw-bold">$874.65 TWD</div>
+                            <a href="#" class="cancellation-policy-details" data-bs-toggle="modal"
+                               data-bs-target="#to-cancellation">顯示詳情</a>
+                        </div>
+
+                        <!-- 桌機 -->
+                        <a href="/Order/MainAmend" class="send-request-desktop text-black">
+                            <i class="fa-solid fa-angle-left fa-sm"></i>
+                            <span class="up-page">返回</span>
+                        </a>
+                        <!-- 新增的絕對定位元素 -->
+                        <div class="centered-text">1/3</div>
+
+                        <!-- 繼續按鈕 ------------------->
+                        <a href="#" class="send-request-a" data-bs-toggle="modal" data-bs-target="#to-send-request">繼續</a>
+                        <!-- <a href="#" class="complete-a" data-bs-toggle="modal" data-bs-target="#to-send-request">完成</a> -->
+                    </div>
+            </section>
+        </div>
+        <!-- 桌機右方 -------------------------->
+        <div class="desktop-div col-12 col-sm-12 col-md-6">
+            <section class="cancel-room-section">
+                <div class="room-item">
+                    <div class="my-room-item">
+                        <div class="room-item-pic">
+                            <img src="~/images/wish/cancelled8.jpg" class="room-img">
+                        </div>
+                        <div class="room-introduce">
+                            <div class="room-item-tag fw-bold">房間</div>
+                            <div class="room-item-title title fw-bold">
+                                「全新」你所看到的一切都是新的！台中一中街乾淨明亮陽台雙人房
+                            </div>
+                            <div class="landlord-title">
+                                房東：
+                                <span class="landlord-name">Adagio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------ 桌機 ------->
+                <div class="desktop-gp">
+                    <div class="desktop-date-gp sub-gp">
+                        <span class="desktop-date-title fw-bold">日期</span>
+                        <span class="desktop-date-content">5月30日週四至31日週五</span>
+                    </div>
+                    <div class="desktop-traveler-gp sub-gp">
+                        <span class="desktop-traveler-title fw-bold">人數</span>
+                        <span class="desktop-traveler-content">1名成人</span>
+                    </div>
+                    <div class="desktop-paid-gp sub-gp">
+                        <span class="desktop-paid-title fw-bold">目前已支付的金額</span>
+                        <span class="desktop-paid-content">$874.65 TWD</span>
+                    </div>
+                    <div class="refund-total sub-gp">
+                        <span class="refund-total-title title fw-bold">退款總額</span>
+                        <span class="refund-total-content fw-bold">$874.65 TWD</span>
+                    </div>
+                </div>
+            </section>
+            <!------- 退訂政策 ------>
+            <section class="cancellation-policy-section">
+                <p class="cancellation-policy-title title fw-bold">《退訂政策》</p>
+                <p class="cancellation-policy-content fw-bold">全部退款：你將拿回已支付的全部款項。</p>
+                <a href="#" class="cancellation-policy-details fw-bold" data-bs-toggle="modal"
+                   data-bs-target="#to-cancellation">顯示詳情</a>
+            </section>
+        </div>
+    </div>
+
+    <!-- 你的預訂已取消 彈跳視窗----------- -->
+    <div class="modal fade" id="to-send-request">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-lodging-header d-flex">
+                        <button type="button" class="btn-close me-1 mb-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="to-lodging-title fs-4">你的預訂詳情</h1>
+                    </div>
+                </div>
+                <div class="modal-body p-4">
+                    <form>
+                        <section class="to-send-request-section">
+                            <div class="room-pic">
+                                <div class="swiper mySwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house4.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house1.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house4.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house3.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house2.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house1.jpg" class="room-img">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="~/images/wish/house.jpg" class="room-img">
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </div>
+                            </div>
+
+                            <!-- 傳送訊息給房東 按鈕-->
+                            <button class="message-btn btn" type="button" data-bs-toggle="modal" data-bs-target="">
+                                <div class="btn-left-icon">
+                                    <i class="fa-regular fa-comment fa-sm"></i>
+                                    <span class="message-btn-span">傳送訊息給房東</span>
+                                </div>
+                                <div class="btn-right-icon">
+                                    <i class="fa-solid fa-chevron-right fa-sm"></i>
+                                </div>
+                            </button>
+                        </section>
+
+                        <section class="booking-details-section">
+                            <h2 class="fs-3 fw-bold">預訂詳情</h2>
+                            <div class="confirmation-code-div">
+                                <div class="confirmation-code-title fw-bold fs-5">確認碼</div>
+                                <div class="confirmation-code">HMBYRA5CDE</div>
+                            </div>
+                            <div class="cancellation-policy-div">
+                                <div class="cancellation-policy-title fw-bold fs-5">《退訂政策》</div>
+                                <div class="cancellation-policy-content">5月29日下午3:00前可以免費取消在這之後，該筆預訂則無法退款。</div>
+                                <a class="read-details fw-bold" data-bs-toggle="modal" data-bs-target="#to-cancellation">
+                                    閱讀詳情
+                                </a>
+                            </div>
+                            <div class="total-div">
+                                <div class="total-title fw-bold fs-5">總費用</div>
+                                <div class="total-content">$0.00 TWD</div>
+                                <a href="/Order/Receipt" target="_blank"
+                                   class="get-receipt fw-bold">取得收據</a>
+                            </div>
+                            <a href="/Rooms/Room" class="rules-btn btn">
+                                <div class="btn-left-icon">
+                                    <i class="fa-solid fa-house-circle-check fa-sm"></i>
+                                    <span class="notice-btn-span">顯示房源</span>
+                                </div>
+                                <div class="btn-right-icon">
+                                    <i class="fa-solid fa-chevron-right fa-sm"></i>
+                                </div>
+                            </a>
+                        </section>
+
+                        <!-- 隨時取得用戶支援 section -->
+                        <section class="customer-support-section">
+                            <h2 class="fs-3 fw-bold">隨時取得用戶支援</h2>
+                            <div>無論你在哪裡，我們的用戶支援能全天候提供協助。</div>
+
+                            <a class="airbnb-support-btn btn">
+                                <div class="btn-left-icon">
+                                    <i class="fa-solid fa-headset fa-sm"></i>
+                                    <span class="receipt-btn-pan">聯絡 Airbnb 用戶支援</span>
+                                </div>
+                                <div class="btn-right-icon">
+                                    <i class="fa-solid fa-chevron-right fa-sm"></i>
+                                </div>
+                            </a>
+                            <a class="help-center-btn btn">
+                                <div class="btn-left-icon">
+                                    <i class="fa-solid fa-question"></i>
+                                    <span class="receipt-btn-pan">前往說明中心</span>
+                                </div>
+                                <div class="btn-right-icon">
+                                    <i class="fa-solid fa-chevron-right fa-sm"></i>
+                                </div>
+                            </a>
+                        </section>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 退訂政策 閱讀詳情 彈跳視窗 -->
+    <div class="modal fade" id="to-cancellation">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="to-cancellation-header d-flex">
+                        <button type="button" class="btn-close me-1 mt-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="to-cancellation-title fs-4 fw-bold" id="to-cancellation-ModalLabel">《退訂政策》</h1>
+                    </div>
+                </div>
+                <div class="modal-body">
+
+                    <div class="cancel-deadline fs-5 mb-3 fw-bold">取消截止時間</div>
+
+                    <div class="full-refund-div">
+                        <div class="full-refund-date-title fw-bold">
+                            10月27日
+                        </div>
+                        <div class="full-refund-date-content">全額退款：你將拿回已支付的全部款項。</div>
+                    </div>
+                    <div class="full-refund-time">下午3:00</div>
+                    <hr>
+                    <div class="non-refundable-div">
+                        <div class="non-refundable-date-title fw-bold">10月29日</div>
+                        <div class="non-refundable-date-content">無法退款。</div>
+                    </div>
+                    <div class="non-refundable-time">上午11:00</div>
+                    <div class="non-refundable-check-out">( 退房 )</div>
+                    <hr>
+                    <p class="non-refundable-p fw-bold"><u>了解更多有關《退訂政策》的事宜</u></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,27 @@
+﻿@model System.Collections.Generic.Dictionary<string, string>
+@inject IConfiguration Configuration
+
+@{
+    Layout = null;
+    var ecpayStage = Configuration["EcpaySettings:Ecpay_Stage"];
+}
+
+<!DOCTYPE html>
+<html>
+<body>
+
+    <form style="display:none" id="form" name="form" action="@ecpayStage" method="POST">
+        @foreach (var key in @Model.Keys.ToList())
+        {
+            @(key) <input type="text" name="@key" value="@Model[key]" />
+
+            <br />
+        }
+    </form>
+    <script type="text/javascript">
+        window.onload = function () {
+            document.getElementById("form").submit();
+        }
+    </script>
+</body>
+</html>

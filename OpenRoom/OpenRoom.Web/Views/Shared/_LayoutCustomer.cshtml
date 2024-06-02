@@ -1,0 +1,529 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewData["Title"] - OpenRoom.Web</title>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<!-- swiper -->
+	<link rel="stylesheet" href="~/lib/swiper/swiper-bundle.min.css" />
+	<!-- font-awesome -->
+	<link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+	<!-- flatpickr -->
+	<link rel="stylesheet" href="~/lib/flatpickr/dist/flatpickr.min.css" />
+	<!-- googleapis -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- leaflet -->
+	<link rel="stylesheet" href="~/lib/leaflet/dist/leaflet.css" />
+	<link rel="stylesheet" href="~/lib/leaflet.markercluster/markercluster.css" />
+	<!-- sweetalert2 -->
+	<link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
+	<!-- _LayoutHome.css -->
+	<link rel="stylesheet" href="~/css/_Layout/_LayoutCustomer.css" />
+	@await RenderSectionAsync("topCSS", required: false)
+	@await RenderSectionAsync("topJS", required: false)
+</head>
+
+<body>
+	@await RenderSectionAsync("advertise", required: false)
+	<header class="header-set container">
+		<div class="header-info">
+			<div class="brand-icon col">
+				<div class="d-flex">
+					<a asp-controller="Home" asp-action="Index">
+						<img width="auto" height="50" src="~/images/_Layout/icon/_logo-txt.jpg" alt="header-icon" />
+					</a>
+				</div>
+			</div>
+			@await RenderSectionAsync("headSpace", required: false)
+			@if (Context.User.Identity.IsAuthenticated)
+			{
+				<partial name="_MemberBtnLoginPartial" />
+			}
+			else
+			{
+				<partial name="_MemberBtnLogoutPartial" />
+			}
+		</div>
+		@await RenderSectionAsync("searchBar", required: false)
+	</header>
+
+	@await RenderSectionAsync("phoneHead", required: false)
+
+	<main role="main">
+		@RenderBody()
+	</main>
+
+	@await RenderSectionAsync("footer", required: false)
+	@await RenderSectionAsync("phoneNav", required: false)
+
+	<!-- phone-header modal -->
+	<div class="modal fade" id="phone-search-button" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<form action="/Search/BasicSearch" method="get">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">在OpenRoom上搜尋</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="accordion" id="accordionExample">
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="headingOne">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										想去哪?
+									</button>
+								</h2>
+								<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="input-group">
+											<span class="input-group-text" id="input-location">地點</span>
+											<input type="text" name="location" class="form-control" placeholder="搜尋目的地" aria-label="搜尋目的地" aria-describedby="input-location">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="headingTwo">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+										日期
+									</button>
+								</h2>
+								<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="check-in-content">
+											<div>入住</div>
+											<input class="form-control phone-timepickr" type="datetime-local" name="checkInDate" id="startDatePicker" style="border:none" placeholder="開始日期 ">
+										</div>
+										<div class="check-out-content">
+											<div>退房</div>
+											<input class="form-control phone-timepickr" type="datetime-local" name="checkOutDate" id="endDatePicker" style="border:none" placeholder="結束日期 ">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="headingThree">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+										旅客
+									</button>
+								</h2>
+								<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="input-group">
+											<span class="input-group-text" id="input-location">人數</span>
+											<input type="text" name="numberOfGuests" class="form-control" placeholder="輸入人數" aria-label="輸入人數" aria-describedby="input-numberOfGuests">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+						<button type="submit" class="btn btn-success">搜尋</button>
+					</div>
+				</form>				
+			</div>
+		</div>
+	</div>
+
+	<!-- filter-button modal -->
+	<div class="modal fade" id="filter-button" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">篩選條件</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<section>
+						<h4>價格範圍</h4>
+						<div class="price-slider wrapper">
+							<div class="slider-track" v-bind:style="trackColor"></div>
+							<input type="range" id="slider-1" v-model="currentMin" v-bind:min="minPrice" v-bind:max="maxPrice" v-on:input="handleRangeInput">
+							<input type="range" id="slider-2" v-model="currentMax" v-bind:min="minPrice" v-bind:max="maxPrice" v-on:input="handleRangeInput">
+						</div>
+						<div class="price-input-group">
+							<span>最低價格</span>
+							<input type="text" class="min-price" placeholder="最低價格" v-on:input="handlePriceInput" v-model="currentMin">
+							<span>-</span>
+							<span>最高價格</span>
+							<input type="text" class="max-price" placeholder="最高價格" v-on:input="handlePriceInput" v-model="currentMax">
+						</div>
+					</section>
+					<hr>
+					<section>
+						<h4>房源類型</h4>
+						<div class="row room-type">
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt1" name="roomType" class="d-none" v-model="roomCategory" value="1">
+									<div class="rt-type">
+										<label for="rt1">
+											<span class="material-symbols-outlined">apartment</span>
+											<p class="title">公寓</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt2" name="roomType" class="d-none" v-model="roomCategory" value="2">
+									<div class="rt-type">
+										<label for="rt2">
+											<span class="material-symbols-outlined">apartment</span>
+											<p class="title">獨棟</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt3" name="roomType" class="d-none" v-model="roomCategory" value="3">
+									<div class="rt-type">
+										<label for="rt3">
+											<span class="material-symbols-outlined">night_shelter</span>
+											<p class="title">家庭式</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt4" name="roomType" class="d-none" v-model="roomCategory" value="4">
+									<div class="rt-type">
+										<label for="rt4">
+											<span class="material-symbols-outlined">night_shelter</span>
+											<p class="title">精品</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt5" name="roomType" class="d-none" v-model="roomCategory" value="5">
+									<div class="rt-type">
+										<label for="rt5">
+											<span class="material-symbols-outlined">home_and_garden</span>
+											<p class="title">莊園</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt6" name="roomType" class="d-none" v-model="roomCategory" value="6">
+									<div class="rt-type">
+										<label for="rt6">
+											<span class="material-symbols-outlined">villa</span>
+											<p class="title">民宿</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt7" name="roomType" class="d-none" v-model="roomCategory" value="7">
+									<div class="rt-type">
+										<label for="rt7">
+											<span class="material-symbols-outlined">cabin</span>
+											<p class="title">小木屋</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt8" name="roomType" class="d-none" v-model="roomCategory" value="8">
+									<div class="rt-type">
+										<label for="rt8">
+											<span class="material-symbols-outlined">camping</span>
+											<p class="title">帳篷</p>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="rt-container">
+									<input type="radio" id="rt9" name="roomType" class="d-none" v-model="roomCategory" value="9">
+									<div class="rt-type">
+										<label for="rt9">
+											<span class="material-symbols-outlined">airport_shuttle</span>
+											<p class="title">露營車</p>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<hr>
+					<section>
+						<h4>臥室和床舖</h4>
+						<div class="room-info-group">
+							<div class="quantity-filter">
+								<h5>臥室</h5>
+								<div class="button-group room-quantity">
+									<input type="radio" name="bedrooms" id="br0" value="0" checked="checked" v-model="bedrooms"
+										   class="btn btn-check d-none">
+									<label for="br0" class="btn btn-outline-dark">任何</label>
+									<div>
+										<input type="radio" name="bedrooms" id="br1" class="btn btn-check d-none" v-model="bedrooms"
+											   value="1">
+										<label for="br1" class="btn btn-outline-dark">1</label>
+									</div>
+									<div>
+										<input type="radio" name="bedrooms" id="br2" class="btn btn-check d-none" v-model="bedrooms"
+											   value="2">
+										<label for="br2" class="btn btn-outline-dark">2</label>
+									</div>
+									<div>
+										<input type="radio" name="bedrooms" id="br3" class="btn btn-check d-none" v-model="bedrooms"
+											   value="3">
+										<label for="br3" class="btn btn-outline-dark">3</label>
+									</div>
+									<div>
+										<input type="radio" name="bedrooms" id="br4" class="btn btn-check d-none" v-model="bedrooms"
+											   value="4">
+										<label for="br4" class="btn btn-outline-dark">4</label>
+									</div>
+									<div>
+										<input type="radio" name="bedrooms" id="br5" class="btn btn-check d-none" v-model="bedrooms"
+											   value="5">
+										<label for="br5" class="btn btn-outline-dark">5</label>
+									</div>
+									<div>
+										<input type="radio" name="bedrooms" id="br6" class="btn btn-check d-none" v-model="bedrooms"
+											   value="6">
+										<label for="br6" class="btn btn-outline-dark">6</label>
+									</div>
+									<div>
+										<input type="radio" name="bedrooms" id="br7" class="btn btn-check d-none" v-model="bedrooms"
+											   value="7">
+										<label for="br7" class="btn btn-outline-dark">7</label>
+									</div>
+									<input type="radio" name="bedrooms" id="br8" value="8" class="btn btn-check d-none" v-model="bedrooms">
+									<label for="br8" class="btn btn-outline-dark">8+</label>
+								</div>
+							</div>
+							<div class="quantity-filter">
+								<h5>床位</h5>
+								<div class="button-group room-quantity">
+									<input type="radio" id="bd0" name="beds" value="0" checked="checked" v-model="beds"
+										   class="btn btn-check d-none">
+									<label for="bd0" class="btn btn-outline-dark">任何</label>
+									<div>
+										<input type="radio" id="bd1" name="beds" class="btn btn-check d-none" value="1" v-model="beds">
+										<label for="bd1" class="btn btn-outline-dark">1</label>
+									</div>
+									<div>
+										<input type="radio" id="bd2" name="beds" class="btn btn-check d-none" value="2" v-model="beds">
+										<label for="bd2" class="btn btn-outline-dark">2</label>
+									</div>
+									<div>
+										<input type="radio" id="bd3" name="beds" class="btn btn-check d-none" value="3" v-model="beds">
+										<label for="bd3" class="btn btn-outline-dark">3</label>
+									</div>
+									<div>
+										<input type="radio" id="bd4" name="beds" class="btn btn-check d-none" value="4" v-model="beds">
+										<label for="bd4" class="btn btn-outline-dark">4</label>
+									</div>
+									<div>
+										<input type="radio" id="bd5" name="beds" class="btn btn-check d-none" value="5" v-model="beds">
+										<label for="bd5" class="btn btn-outline-dark">5</label>
+									</div>
+									<div>
+										<input type="radio" id="bd6" name="beds" class="btn btn-check d-none" value="6" v-model="beds">
+										<label for="bd6" class="btn btn-outline-dark">6</label>
+									</div>
+									<div>
+										<input type="radio" id="bd7" name="beds" class="btn btn-check d-none" value="7" v-model="beds">
+										<label for="bd7" class="btn btn-outline-dark">7</label>
+									</div>
+									<input type="radio" id="bd8" name="beds" value="8" class="btn btn-check d-none" v-model="beds">
+									<label for="bd8" class="btn btn-outline-dark">8+</label>
+								</div>
+							</div>
+							<div class="quantity-filter">
+								<h5>衛浴</h5>
+								<div class="button-group room-quantity">
+									<input type="radio" value="0" id="bath0" name="bathrooms" checked="checked" v-model="bathrooms"
+										   class="btn btn-check d-none">
+									<label for="bath0" class="btn btn-outline-dark">任何</label>
+									<div>
+										<input type="radio" id="bath1" name="bathrooms" class="btn btn-check d-none" v-model="bathrooms"
+											   value="1">
+										<label for="bath1" class="btn btn-outline-dark">1</label>
+									</div>
+									<div>
+										<input type="radio" id="bath2" name="bathrooms" class="btn btn-check d-none" v-model="bathrooms"
+											   value="2">
+										<label for="bath2" class="btn btn-outline-dark">2</label>
+									</div>
+									<div>
+										<input type="radio" id="bath3" name="bathrooms" class="btn btn-check d-none" v-model="bathrooms"
+											   value="3">
+										<label for="bath3" class="btn btn-outline-dark">3</label>
+									</div>
+									<div>
+										<input type="radio" id="bath4" name="bathrooms" class="btn btn-check d-none" v-model="bathrooms"
+											   value="4">
+										<label for="bath4" class="btn btn-outline-dark">4</label>
+									</div>
+									<div>
+										<input type="radio" id="bath5" name="bathrooms" class="btn btn-check d-none" v-model="bathrooms"
+											   value="5">
+										<label for="bath5" class="btn btn-outline-dark">5</label>
+									</div>
+									<div>
+										<input type="radio" id="bath6" name="bathrooms" class="btn btn-check d-none" v-model="bathrooms"
+											   value="6">
+										<label for="bath6" class="btn btn-outline-dark">6</label>
+									</div>
+									<div>
+										<input type="radio" id="bath7" name="bathrooms" class="btn btn-check d-none" v-model="bathrooms"
+											   value="7">
+										<label for="bath7" class="btn btn-outline-dark">7</label>
+									</div>
+									<input type="radio" value="8" id="bath8" name="bathrooms" v-model="bathrooms"
+										   class="btn btn-check d-none">
+									<label for="bath8" class="btn btn-outline-dark">8+</label>
+								</div>
+							</div>
+						</div>
+					</section>
+					<hr>
+					<section>
+						<h4>設備與服務</h4>
+						<div>基本設施</div>
+						<div class="checkbox-group">
+							<div class="checkbox-item">
+								<input type="checkbox" id="services1" value="1" v-model="amenities">
+								<label for="services1">Wifi</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="services2" value="2" v-model="amenities">
+								<label for="services2">電視</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="services3" value="3" v-model="amenities">
+								<label for="services3">廚房</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="services4" value="4" v-model="amenities">
+								<label for="services4">洗衣機</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="services5" value="5" v-model="amenities">
+								<label for="services5">室內免費停車</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="services6" value="6" v-model="amenities">
+								<label for="services6">空調設備</label>
+							</div>							
+						</div>
+						<div>獨特設施</div>
+						<div class="checkbox-group">
+							<div class="checkbox-item">
+								<input type="checkbox" id="unique1" value="7" v-model="amenities">
+								<label for="unique1">游泳池</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="unique2" value="8" v-model="amenities">
+								<label for="unique2">按摩浴缸</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="unique3" value="9" v-model="amenities">
+								<label for="unique3">庭院</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="unique4" value="10" v-model="amenities">
+								<label for="unique4">烤肉區</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="unique5" value="11" v-model="amenities">
+								<label for="unique5">戶外用餐區</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="unique6" value="12" v-model="amenities">
+								<label for="unique6">火坑</label>
+							</div>
+						</div>
+						<div>安全設施</div>
+						<div class="checkbox-group">
+							<div class="checkbox-item">
+								<input type="checkbox" id="security1" value="13" v-model="amenities">
+								<label for="security1">煙霧警報器</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="security2" value="14" v-model="amenities">
+								<label for="security2">急救包</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="security3" value="15" v-model="amenities">
+								<label for="security3">一氧化碳警報器</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="security4" value="16" v-model="amenities">
+								<label for="security4">滅火器</label>
+							</div>							
+						</div>
+					</section>				
+					<hr>
+					<section>
+						<h4>房東語言</h4>
+						<div class="checkbox-group language">
+							<div class="checkbox-item">
+								<input type="checkbox" id="language1" value="0" v-model="languages">
+								<label for="language1">中文</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="language2" value="1" v-model="languages">
+								<label for="language2">西班牙語</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="language3" value="2" v-model="languages">
+								<label for="language3">英語</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="language4" value="3" v-model="languages">
+								<label for="language4">日語</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="language5" value="4" v-model="languages">
+								<label for="language5">德語</label>
+							</div>
+							<div class="checkbox-item">
+								<input type="checkbox" id="language6" value="5" v-model="languages">
+								<label for="language6">法語</label>
+							</div>
+						</div>
+					</section>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn btn-secondary" @@click="clearCheck">清除全部</button>
+					<button type="button" class="btn btn-success" @@click="passData">搜尋房源</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="~/lib/swiper/swiper-bundle.min.js"></script>
+	<script src="~/lib/flatpickr/dist/flatpickr.min.js"></script>
+	<script src="~/lib/leaflet/dist/leaflet.js"></script>
+	<script src="~/lib/leaflet.markercluster/leaflet.markercluster.min.js"></script>
+	<script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>	
+	<script src="~/lib/axios/axios.min.js"></script>
+	<script src="~/lib/vue/vue.global.min.js"></script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	@await RenderSectionAsync("endJS", required: false)
+	@await RenderSectionAsync("Scripts", required: false)
+	
+</body>
+</html>

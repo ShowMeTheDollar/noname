@@ -1,0 +1,59 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+p {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+span {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.price-container .row {
+    /*align-items: center;*/
+}
+
+.price-container input[type="text"] {
+    /*text-align: center;*/
+}
+
+
+.price-container input {
+    border: 1px solid #000;
+    max-width: 630px;
+    line-height: 1.5;
+    height: 50px;
+    display: inline-block;
+    /* Align with other inline or inline-block elements */
+    text-align: center;
+}
+
+.text-grey {
+    color: grey;
+}
+
+.price-tip {
+    font-size: 16px;
+}
+
+.sale {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+a {
+    color: #000;
+}
+
+.text-sale {
+    color: #000;
+}
+
+

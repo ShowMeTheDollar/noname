@@ -1,0 +1,202 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "WishListTable";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">收藏單Table資訊</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="~/Home/Dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item active">收藏單Table資訊</li>
+    </ol>
+
+    <div class="container">
+        <div id="app" class="">
+            <div class="col-12 d-flex ">
+                <button type="button" class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#create-modal">
+                    新增
+                    <i class="fa-solid fa-circle-plus"></i>
+                </button>
+            </div>
+
+            <easy-data-table show-index buttons-pagination alternating :headers="headers" :items="items">
+                <!-- 使用 slot render 選項自訂 "operation" 欄位的內容 -->
+                <template #item-operation="item">
+                    <div class="operation-wrapper">
+                        <button v-on:click="handleEdit(item)" class="btn btn-primary me-2" data-bs-toggle="modal"
+                                data-bs-target="#edit-modal">
+                            Edit
+                        </button>
+
+                        <button v-on:click="handleDelete(item)" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </div>
+                </template>
+            </easy-data-table>
+
+
+            <!-- 新增 Modal-->
+            <div class="modal fade" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">新增資料</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>MemberID</label>
+                                    <input v-model="createData.MemberID" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>WishlistID</label>
+                                    <input v-model="createData.WishlistID" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>RoomID</label>
+                                    <input v-model="createData.RoomID" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>RoomName</label>
+                                    <input v-model="createData.RoomName" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>RoomCategory</label>
+                                    <input v-model="createData.RoomCategory" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" v-on:click="createMethod">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 編輯 Modal -->
+            <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">編輯資料</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>MemberID</label>
+                                    <input v-model="currentData.MemberID" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>WishlistID</label>
+                                    <input v-model="currentData.WishlistID" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>RoomID</label>
+                                    <input v-model="currentData.RoomID" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>RoomID</label>
+                                    <input v-model="currentData.MemberID" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>RoomName</label>
+                                    <input v-model="currentData.RoomName" class="form-control" type="text">
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <label>RoomCategory</label>
+                                    <input v-model="currentData.RoomCategory" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" v-on:click="updateMethod">更新</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const App = Vue.createApp({
+            components: {
+                EasyDataTable: window['vue3-easy-data-table'],
+            },
+            data() {
+                return {
+                    createData: {
+                        MemberID: 0,
+                        WishlistID: 0,
+                        RoomID: 0
+                    },
+                    currentData: {
+                        MemberID: 0,
+                        WishlistID: 0,
+                        RoomID: 0
+                    },
+                    headers: [
+                        { text: "MemberID", value: "memberID" },
+                        { text: "WishlistID", value: "wishlistID" },
+                        { text: "WishDetailID", value: "wishDetailID" },
+                        { text: "RoomID", value: "roomID" },
+                        { text: "RoomName", value: "roomName" },
+                        { text: "RoomCategory", value: "roomCategory" }
+                    ],
+                    items: [],
+                    loading: false // 新增 loading 狀態屬性
+                }
+            },
+            created() {
+                this.getAll();
+            },
+            methods: {
+                handleEdit(row) {
+                    this.currentData = { ...row };
+                    console.log('編輯操作，資料為：', this.currentData);
+                },
+                handleDelete(row) {
+                    console.log('刪除操作，資料為：', row);
+                },
+                createMethod() {
+                    // todo: 執行新增操作
+                },
+                updateMethod() {
+                    // todo: 執行更新操作
+                },
+                getAll() {
+                    this.loading = true;
+                    const url = new URL('/api/WishList/GetWishs', window.location.origin).href;
+                    axios.get(url)
+                        .then(res => {
+                            if (res.status === 200) {
+                                toastr.success("Data loaded successfully!");
+                                console.log("Loaded data:", res.data);
+                                this.items = res.data;
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                            toastr.error("Failed to load data.");
+                        })
+                        .finally(() => {
+                            this.loading = false;
+                        });
+                }
+            },
+            mounted() {
+                // 從 mounted 執行初始化邏輯
+                this.getAll();
+            }
+        }).mount('#app');
+    </script>
+}

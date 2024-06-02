@@ -1,0 +1,54 @@
+﻿
+h1 {
+    font-size: 48px;
+    font-weight: 800;
+}
+
+
+p {
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+
+.option-input {
+    /* 隱藏原生復選框 */
+    display: none;
+}
+
+.option-label {
+    display: block;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 15px;
+    transition: border-color 0.3s;
+    cursor: pointer;
+}
+/* 使用偽類改變選中狀態的邊框顏色 */
+.option-input:checked + .option-label {
+    border-color: #000;
+    background-color: #dddddd;
+}
+/* 調整原有的hover效果應用到label上 */
+.option-label:hover {
+    border-color: #000;
+    background-color: #dddddd;
+}
+/* Add grid layout for buttons */
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.option-item p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+}
