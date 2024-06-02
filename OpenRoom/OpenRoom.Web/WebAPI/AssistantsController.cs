@@ -34,7 +34,7 @@ namespace OpenRoom.Web.WebAPI
                 var client = _httpClientFactory.CreateClient();
 
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", "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");
+                    new AuthenticationHeaderValue("Bearer", "密鑰Key號碼");
 
                 var messages = new List<ChatMessage>
                     {
